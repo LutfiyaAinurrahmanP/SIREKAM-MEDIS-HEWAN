@@ -44,8 +44,19 @@ Response Body (Failed) :
 ```json
 {
   "errors": {
-    "username": "Username sudah dipakai",
-    "email": "Email sudah dipakai"
+    "validation": {
+      "username.unique": "Username sudah dipakai",
+      "username.required": "Username harus diisi",
+      "fullname.required": "Nama lengkap harus diisi",
+      "email.unique": "Email sudah dipakai",
+      "email.required": "Email harus diisi",
+      "password.required": "Password harus diisi",
+      "role.required": "Hak akses harus dipilih",
+      "phone.required": "Nomor telp harus diisi",
+      "phone.min": "Nomor telp memiliki minimal 11 angka",
+      "phone.max": "Nomor telp tidak boleh melebihi 14 angka"
+    },
+    "session": "Sesi tidak valid atau kadaluarsa"
   }
 }
 ```
@@ -83,7 +94,12 @@ Response Body (Success) :
       "created_at": "2025-08-14",
       "updated_at": "2025-08-14"
     }
-  ]
+  ],
+  "meta": {
+    "total": 2,
+    "page": 1,
+    "limit": 10
+  }
 }
 ```
 
@@ -91,7 +107,10 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors": "Data user tidak ditemukan"
+  "errors": {
+    "empty": "Data user tidak ditemukan",
+    "session": "Sesi tidak valid atau kadaluarsa"
+  }
 }
 ```
 
@@ -124,7 +143,10 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors": "Data user tidak ditemukan"
+  "errors": {
+    "empty": "Data user tidak ditemukan",
+    "session": "Sesi tidak valid atau kadaluarsa"
+  }
 }
 ```
 
@@ -153,7 +175,7 @@ Response Body (Success) :
 
 ```json
 {
-  "message": "Data user berhasil diperbaharui!",
+  "message": "Data user berhasil diperbarui!",
   "data": {
     "id": 1,
     "username": "lutfiyapr",
@@ -172,8 +194,19 @@ Response Body (Failed) :
 ```json
 {
   "errors": {
-    "username": "Username sudah dipakai",
-    "email": "Email sudah dipakai"
+    "validation": {
+      "username.unique": "Username sudah dipakai",
+      "username.required": "Username harus diisi",
+      "fullname.required": "Nama lengkap harus diisi",
+      "email.unique": "Email sudah dipakai",
+      "email.required": "Email harus diisi",
+      "password.required": "Password harus diisi",
+      "role.required": "Hak akses harus dipilih",
+      "phone.required": "Nomor telp harus diisi",
+      "phone.min": "Nomor telp memiliki minimal 11 angka",
+      "phone.max": "Nomor telp tidak boleh melebihi 14 angka"
+    },
+    "session": "Sesi tidak valid atau kadaluarsa"
   }
 }
 ```
@@ -191,5 +224,16 @@ Response Body (Success) :
 ```json
 {
   "message": "Data user berhasil dihapus!"
+}
+```
+
+Response Body (Failed) :
+
+```json
+{
+  "errors": {
+    "empty": "Data user tidak ditemukan",
+    "session": "Sesi tidak valid atau kadaluarsa"
+  }
 }
 ```
