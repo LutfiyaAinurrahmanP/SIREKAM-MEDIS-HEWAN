@@ -135,5 +135,17 @@ model PrescriptionsItems {
 
   prescription Prescriptions @relation(fields: [prescription_id], references: [id])
   medicine Medicines @relation(fields: [medicine_id], references: [id])
-  @@map("prescriptions_items")
+  @@map("prescription_items")
+}
+
+model ServiceCategories {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(64)
+  description String? @db.Text
+  price Decimal @db.Decimal(10,2)
+  is_active Boolean @default(true)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt()
+
+  @@map("service_categories")
 }
