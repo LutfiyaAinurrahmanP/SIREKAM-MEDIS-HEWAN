@@ -68,6 +68,8 @@ model User {
   updated_at DateTime? @updatedAt()
 
   pets Pets[]
+  treatment_notes TreatmentNotes[]
+  
   medical_records MedicalRecords[]
   prescriptions Prescriptions[]
   appointments Appointments[]
@@ -206,9 +208,24 @@ model MedicalRecords {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt()
 
+  treatment_notes TreatmentNotes[]
+
   pet Pets @relation(fields: [pet_id], references: [id])
   service ServiceCategories @relation(fields: [service_id], references: [id])
   appointment Appointments? @relation(fields: [appointment_id], references: [id])
   veterinarian User @relation(fields: [veterinarian_id], references: [id])
   @@map("medical_records")
+}
+
+model TreatmentNotes {
+  id Int @id @default(autoincrement())
+  created_by Int
+  medical_record_id Int
+  notes String @db.Text
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt()
+
+  createdBy User @relation(fields: [created_by], references: [id])
+  medical_record MedicalRecords @relation(fields: [medical_record_id], references: [id])
+  @@map("treatment_notes")
 }
