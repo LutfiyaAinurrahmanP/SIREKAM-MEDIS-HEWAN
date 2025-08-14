@@ -56,6 +56,7 @@ model User {
   updated_at DateTime? @updatedAt()
 
   pets Pets[]
+  prescriptions Prescriptions[]
   @@map("users")
 }
 
@@ -102,4 +103,16 @@ model Medicines {
   updated_at DateTime? @updatedAt()
 
   @@map("medicines")
+}
+
+model Prescriptions {
+  id Int @id @default(autoincrement())
+  medical_record_id Int
+  veterinarian_id Int
+  notes String? @db.Text
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt()
+
+  veterinarian User @relation(fields: [veterinarian_id], references: [id])
+  @@map("prescriptions")
 }
