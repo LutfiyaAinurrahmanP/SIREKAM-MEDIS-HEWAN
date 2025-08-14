@@ -14,3 +14,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Roles {
+  admin
+  staff
+  veterinarian
+  client
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique @db.VarChar(64)
+  fullname String @db.VarChar(64)
+  email String @unique @db.VarChar(64)
+  password String @db.VarChar(128)
+  role Roles
+  phone String @db.VarChar(14)
+  token String? @db.VarChar(128)
+  created_at DateTime? @default(now()) 
+  updated_at DateTime? @updatedAt
+  @@map("users")
+}
