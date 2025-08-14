@@ -2,7 +2,7 @@
 
 ## REGISTER USER API
 
-Endpoint : POST /users/
+Endpoint : POST /users
 
 Request Header :
 
@@ -52,7 +52,7 @@ Response Body (Failed) :
 
 ## LIST USER API
 
-Endpoint : GET /users/
+Endpoint : GET /users
 
 Request Header :
 
