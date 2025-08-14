@@ -27,6 +27,22 @@ enum Gender {
   unknown
 }
 
+enum MedicinesType {
+  tablets // tablet
+  syrups // sirup
+  ointments // salep
+  injections // injeksi
+  others // lainnya
+}
+
+enum MedicineUnit {
+  tablets // tablet
+  ml // mili
+  vials // vial
+  bottles // botol
+  pcs // pcs
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique @db.VarChar(64)
@@ -71,4 +87,19 @@ model Pets {
   owner User @relation(fields: [owner_id], references: [id])
   animal_type AnimalTypes? @relation(fields: [animal_type_id], references: [id])
   @@map("pets")
+}
+
+model Medicines {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(64)
+  code String @unique @db.VarChar(64)
+  type MedicinesType
+  unit MedicineUnit
+  stock_qty Int @default(0)
+  price Decimal @db.Decimal(10,2)
+  is_active Boolean @default(true)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt()
+
+  @@map("medicines")
 }
