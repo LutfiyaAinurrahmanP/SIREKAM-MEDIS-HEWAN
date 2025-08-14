@@ -50,6 +50,11 @@ enum AppointmentStatus {
   no_show
 }
 
+enum MedicalRecordsStatus {
+  draft
+  final
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique @db.VarChar(64)
@@ -63,6 +68,7 @@ model User {
   updated_at DateTime? @updatedAt()
 
   pets Pets[]
+  medical_records MedicalRecords[]
   prescriptions Prescriptions[]
   appointments Appointments[]
   @@map("users")
@@ -94,6 +100,7 @@ model Pets {
   updated_at DateTime? @updatedAt()
 
   appointments Appointments[]
+  medical_records MedicalRecords[]
 
   owner User @relation(fields: [owner_id], references: [id])
   animal_type AnimalTypes @relation(fields: [animal_type_id], references: [id])
@@ -157,6 +164,8 @@ model ServiceCategories {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt()
 
+  medical_records MedicalRecords[]
+
   @@map("service_categories")
 }
 
@@ -172,7 +181,34 @@ model Appointments {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt()
 
+  medical_records MedicalRecords[]
+
   pet Pets @relation(fields: [pet_id], references: [id])
   createdBy User @relation(fields: [created_by], references: [id])
   @@map("appointments")
+}
+
+model MedicalRecords {
+  id Int @id @default(autoincrement())
+  pet_id Int
+  service_id Int
+  appointment_id Int?
+  veterinarian_id Int
+  visit_date DateTime @db.Date
+  subject String? @db.Text
+  objective String? @db.Text
+  assessment String? @db.Text
+  plan String? @db.Text
+  weight Decimal? @db.Decimal(5,2)
+  temperature_celsius Decimal? @db.Decimal(4,2)
+  next_visit_date DateTime? @db.Date
+  status MedicalRecordsStatus @default(draft)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt()
+
+  pet Pets @relation(fields: [pet_id], references: [id])
+  service ServiceCategories @relation(fields: [service_id], references: [id])
+  appointment Appointments? @relation(fields: [appointment_id], references: [id])
+  veterinarian User @relation(fields: [veterinarian_id], references: [id])
+  @@map("medical_records")
 }
