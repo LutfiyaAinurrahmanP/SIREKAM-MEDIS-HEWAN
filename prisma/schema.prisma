@@ -55,6 +55,19 @@ enum MedicalRecordsStatus {
   final
 }
 
+enum PaymentStatus {
+  pending
+  partial
+  paid
+}
+
+enum PaymentMethod {
+  transfer
+  card
+  cash
+  other
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique @db.VarChar(64)
@@ -65,11 +78,12 @@ model User {
   phone String @db.VarChar(14)
   token String? @db.VarChar(128)
   created_at DateTime? @default(now()) 
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   pets Pets[]
   treatment_notes TreatmentNotes[]
-  
+  transactions Transactions[]
+
   medical_records MedicalRecords[]
   prescriptions Prescriptions[]
   appointments Appointments[]
@@ -81,7 +95,7 @@ model AnimalTypes {
   name String @unique @db.VarChar(64)
   description String? @db.Text
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   pets Pets[]
   @@map("animal_types")
@@ -99,10 +113,11 @@ model Pets {
   color String? @db.VarChar(64)
   notes String? @db.Text
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   appointments Appointments[]
   medical_records MedicalRecords[]
+  transactions Transactions[]
 
   owner User @relation(fields: [owner_id], references: [id])
   animal_type AnimalTypes @relation(fields: [animal_type_id], references: [id])
@@ -119,7 +134,7 @@ model Medicines {
   price Decimal @db.Decimal(10,2)
   is_active Boolean @default(true)
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   prescription_items PrescriptionsItems[]
 
@@ -132,7 +147,7 @@ model Prescriptions {
   veterinarian_id Int
   notes String? @db.Text
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   prescription_items PrescriptionsItems[]
 
@@ -150,7 +165,7 @@ model PrescriptionsItems {
   duration_days Int?
   instructions String? @db.Text
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   prescription Prescriptions @relation(fields: [prescription_id], references: [id])
   medicine Medicines @relation(fields: [medicine_id], references: [id])
@@ -164,7 +179,7 @@ model ServiceCategories {
   price Decimal @db.Decimal(10,2)
   is_active Boolean @default(true)
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   medical_records MedicalRecords[]
 
@@ -181,7 +196,7 @@ model Appointments {
   reason String? @db.Text
   notes String? @db.Text
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   medical_records MedicalRecords[]
 
@@ -206,9 +221,10 @@ model MedicalRecords {
   next_visit_date DateTime? @db.Date
   status MedicalRecordsStatus @default(draft)
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   treatment_notes TreatmentNotes[]
+  transactions Transactions[]
 
   pet Pets @relation(fields: [pet_id], references: [id])
   service ServiceCategories @relation(fields: [service_id], references: [id])
@@ -223,9 +239,29 @@ model TreatmentNotes {
   medical_record_id Int
   notes String @db.Text
   created_at DateTime? @default(now())
-  updated_at DateTime? @updatedAt()
+  updated_at DateTime? @updatedAt
 
   createdBy User @relation(fields: [created_by], references: [id])
   medical_record MedicalRecords @relation(fields: [medical_record_id], references: [id])
   @@map("treatment_notes")
+}
+
+model Transactions {
+  id Int @id @default(autoincrement())
+  created_by Int
+  pet_id Int
+  medical_record_id Int
+  total_amount Decimal @db.Decimal(10,2)
+  paid_amount Decimal @db.Decimal(10,2)
+  payment_status PaymentStatus @default(pending)
+  payment_method PaymentMethod @default(cash)
+  invoice_date DateTime @db.Date
+  notes String? @db.Text
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
+
+  createdBy User @relation(fields: [created_by], references: [id])
+  pet Pets @relation(fields: [pet_id], references: [id])
+  medical_record MedicalRecords @relation(fields: [medical_record_id], references: [id])
+  @@map("transactions")
 }
