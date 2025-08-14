@@ -38,7 +38,8 @@ Response Body (Failed) :
 {
   "errors": {
     "validation": {
-      "name": "Data jenis hewan harus diisi"
+      "name.unique": "Nama jenis hewan sudah dipakai",
+      "name.required": "Data jenis hewan harus diisi"
     },
     "session": "Sesi tidak valid atau kadaluarsa"
   }
@@ -163,7 +164,8 @@ Response Body (Failed) :
 {
   "errors": {
     "validation": {
-      "name": "Data jenis hewan harus diisi"
+      "name.unique": "Nama jenis hewan sudah dipakai",
+      "name.required": "Data jenis hewan harus diisi"
     },
     "session": "Sesi tidak valid atau kadaluarsa"
   }
