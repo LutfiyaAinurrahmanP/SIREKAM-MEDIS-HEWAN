@@ -43,6 +43,13 @@ enum MedicineUnit {
   pcs // pcs
 }
 
+enum AppointmentStatus {
+  scheduled
+  completed
+  canceled
+  no_show
+}
+
 model User {
   id Int @id @default(autoincrement())
   username String @unique @db.VarChar(64)
@@ -57,6 +64,7 @@ model User {
 
   pets Pets[]
   prescriptions Prescriptions[]
+  appointments Appointments[]
   @@map("users")
 }
 
@@ -85,8 +93,10 @@ model Pets {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt()
 
+  appointments Appointments[]
+
   owner User @relation(fields: [owner_id], references: [id])
-  animal_type AnimalTypes? @relation(fields: [animal_type_id], references: [id])
+  animal_type AnimalTypes @relation(fields: [animal_type_id], references: [id])
   @@map("pets")
 }
 
@@ -148,4 +158,21 @@ model ServiceCategories {
   updated_at DateTime? @updatedAt()
 
   @@map("service_categories")
+}
+
+model Appointments {
+  id Int @id @default(autoincrement())
+  pet_id Int
+  created_by Int
+  schedule_date DateTime @db.Date
+  schedule_time DateTime @db.Time
+  status AppointmentStatus? @default(scheduled)
+  reason String? @db.Text
+  notes String? @db.Text
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt()
+
+  pet Pets @relation(fields: [pet_id], references: [id])
+  createdBy User @relation(fields: [created_by], references: [id])
+  @@map("appointments")
 }
