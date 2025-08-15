@@ -77,7 +77,8 @@ Response Body (Success) :
   "meta": {
     "total": 2,
     "page": 1,
-    "limit": 10
+    "limit": 10,
+    "total_page": 1
   }
 }
 ```
