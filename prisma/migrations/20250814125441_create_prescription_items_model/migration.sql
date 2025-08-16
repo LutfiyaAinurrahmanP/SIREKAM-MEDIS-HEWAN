@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `prescriptions_items` (
+CREATE TABLE `prescription_items` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `prescription_id` INTEGER NOT NULL,
     `medicine_id` INTEGER NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE `prescriptions_items` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `prescriptions_items` ADD CONSTRAINT `prescriptions_items_prescription_id_fkey` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `prescription_items` ADD CONSTRAINT `prescription_items_prescription_id_fkey` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `prescriptions_items` ADD CONSTRAINT `prescriptions_items_medicine_id_fkey` FOREIGN KEY (`medicine_id`) REFERENCES `medicines`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `prescription_items` ADD CONSTRAINT `prescription_items_medicine_id_fkey` FOREIGN KEY (`medicine_id`) REFERENCES `medicines`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

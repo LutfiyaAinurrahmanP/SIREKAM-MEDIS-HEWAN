@@ -1,17 +1,17 @@
 /*
   Warnings:
 
-  - You are about to drop the `prescriptions_items` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `prescription_items` table. If the table is not empty, all the data it contains will be lost.
 
 */
 -- DropForeignKey
-ALTER TABLE `prescriptions_items` DROP FOREIGN KEY `prescriptions_items_medicine_id_fkey`;
+ALTER TABLE `prescription_items` DROP FOREIGN KEY `prescription_items_medicine_id_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `prescriptions_items` DROP FOREIGN KEY `prescriptions_items_prescription_id_fkey`;
+ALTER TABLE `prescription_items` DROP FOREIGN KEY `prescription_items_prescription_id_fkey`;
 
 -- DropTable
-DROP TABLE `prescriptions_items`;
+DROP TABLE `prescription_items`;
 
 -- CreateTable
 CREATE TABLE `prescription_items` (

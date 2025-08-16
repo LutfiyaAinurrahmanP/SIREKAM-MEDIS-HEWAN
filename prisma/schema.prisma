@@ -135,7 +135,7 @@ model Medicines {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
 
-  prescription_items PrescriptionsItems[]
+  prescription_items PrescriptionItems[]
 
   @@map("medicines")
 }
@@ -148,7 +148,7 @@ model Prescriptions {
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
 
-  prescription_items PrescriptionsItems[]
+  prescription_items PrescriptionItems[]
 
   veterinarian User @relation(fields: [veterinarian_id], references: [id])
   medical_record MedicalRecords @relation(fields: [medical_record_id], references: [id])
@@ -156,7 +156,7 @@ model Prescriptions {
   @@map("prescriptions")
 }
 
-model PrescriptionsItems {
+model PrescriptionItems {
   id Int @id @default(autoincrement())
   prescription_id Int
   medicine_id Int
