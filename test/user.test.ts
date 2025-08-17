@@ -4,13 +4,13 @@ import { web } from "../src/backend/application/web";
 import { logger } from "../src/backend/application/logging";
 import e from "express";
 
-describe("POST /users", () => {
+describe("POST /register", () => {
   beforeEach(async () => {
     await UserTest.deleteUser();
   });
 
   it("should create a new user", async () => {
-    const response = await supertest(web).post("/users").send({
+    const response = await supertest(web).post("/register").send({
       username: "lutfiyapr",
       fullname: "Lutfiya Ainurrahman Prasetyo",
       email: "lutfiyapr.stu@pnc.ac.id",
