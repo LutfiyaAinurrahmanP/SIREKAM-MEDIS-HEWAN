@@ -1,6 +1,6 @@
 # USER API SPEC
 
-## REGISTER USER API
+## CREATE USER API
 
 Endpoint : POST /users
 
