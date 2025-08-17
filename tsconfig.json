@@ -1,15 +1,19 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
+  "include": ["./src/backend/**/*"],
+  "exclude": ["./src/backend/**/*.spec.ts", "./src/backend/**/*.test.ts"],
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src/**/*",
+    "rootDir": "./src/backend",
     "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "esnext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2022",
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -36,7 +40,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    // "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
