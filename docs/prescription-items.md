@@ -50,9 +50,9 @@ Response Body (Failed) :
     "errors": {
       "validation": {
         // resep
-        "prescription_id.required": "Resep harus diisi",
+        "prescription_id.required": "Resep harus diisi!",
         // obat
-        "medicine_id.required": "Obat harus diisi"
+        "medicine_id.required": "Obat harus diisi!"
       }
     }
   },
@@ -244,9 +244,9 @@ Response Body (Failed) :
     "errors": {
       "validation": {
         // resep
-        "prescription_id.required": "Resep harus diisi",
+        "prescription_id.required": "Resep harus diisi!",
         // obat
-        "medicine_id.required": "Obat harus diisi"
+        "medicine_id.required": "Obat harus diisi!"
       }
     }
   },
