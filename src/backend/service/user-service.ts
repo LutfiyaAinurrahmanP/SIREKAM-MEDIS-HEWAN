@@ -1,6 +1,8 @@
 import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response-error";
+import { UniqueError } from "../error/unique-error";
 import {
+  LoginUserRequest,
   RegisterUserRequest,
   toUserResponse,
   UserResponse,
@@ -8,6 +10,7 @@ import {
 import { UserValidation } from "../validation/user-validation";
 import { Validation } from "../validation/validation";
 import bcrypt from "bcrypt";
+import { v4 as uuid } from "uuid";
 
 export class UserService {
   static async register(req: RegisterUserRequest): Promise<UserResponse> {
@@ -19,7 +22,17 @@ export class UserService {
     });
 
     if (checkUserExists != 0) {
-      throw new ResponseError(400, "Username sudah dipakai!");
+      throw new UniqueError("username", "Username sudah dipakai!");
+    }
+
+    const checkEmailExists = await prismaClient.user.count({
+      where: {
+        email: registerRequest.email,
+      },
+    });
+
+    if (checkEmailExists != 0) {
+      throw new UniqueError("email", "Email sudah dipakai!");
     }
 
     registerRequest.password = await bcrypt.hash(registerRequest.password, 10);
@@ -29,5 +42,42 @@ export class UserService {
     });
 
     return toUserResponse(user);
+  }
+
+  static async login(req: LoginUserRequest): Promise<UserResponse> {
+    const loginRequest = Validation.validate(UserValidation.LOGIN, req);
+
+    let user = await prismaClient.user.findUnique({
+      where: {
+        username: loginRequest.username,
+      },
+    });
+
+    if (!user) {
+      throw new ResponseError(400, "Username atau password salah!");
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      loginRequest.password,
+      user.password
+    );
+
+    if (!isPasswordValid) {
+      throw new ResponseError(400, "Username atau password salah!");
+    }
+
+    user = await prismaClient.user.update({
+      where: {
+        username: loginRequest.username,
+      },
+      data: {
+        token: uuid(),
+      },
+    });
+
+    const response = toUserResponse(user);
+    response.token = user.token;
+
+    return response;
   }
 }
