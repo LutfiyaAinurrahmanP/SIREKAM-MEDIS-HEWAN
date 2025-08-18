@@ -2,7 +2,7 @@
 
 ## CREATE TRANSACTIONS API
 
-Endpoint : POST /transactions
+Endpoint : POST /role/transactions
 
 Request Header :
 
@@ -28,6 +28,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data transaksi berhasil dibuat!",
   "data": {
     "id": 1,
@@ -49,27 +50,48 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "created_by.required": "Pembuat transaksi harus diisi",
-      "pet_id.required": "Hewan peliharaan harus diisi",
-      "total_amount.required": "Total biaya harus diisi",
-      "total_amount.numeric": "Total biaya harus berupa angka",
-      "paid_amount.required": "Biaya transaksi harus diisi",
-      "paid_amount.numeric": "Biaya transaksi harus berupa angka",
-      "payment_status.required": "Status pembayaran harus diisi",
-      "payment_method.required": "Metode pembayaran harus diisi",
-      "invoice_date.required": "Tanggal traksaksi harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // pembuat
+        "created_by.required": "Pembuat transaksi harus diisi!",
+        // hewan peliharaan
+        "pet_id.required": "Hewan peliharaan harus diisi!",
+        // total biaya
+        "total_amount.required": "Total biaya harus diisi!",
+        "total_amount.numeric": "Total biaya harus berupa angka!",
+        // biaya transaksi
+        "paid_amount.required": "Biaya transaksi harus diisi!",
+        "paid_amount.numeric": "Biaya transaksi harus berupa angka!",
+        // status pembayaran
+        "payment_status.required": "Status pembayaran harus diisi!",
+        // metode pembayaran
+        "payment_method.required": "Metode pembayaran harus diisi!",
+        // tanggal transaksi
+        "invoice_date.required": "Tanggal traksaksi harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST TRANSACTIONS API
 
-Endpoint : GET /transactions
+Endpoint : GET /role/transactions
 
 Request Header :
 
@@ -79,6 +101,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -121,17 +144,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data transaksi tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data transaksi tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET TRANSACTIONS API
 
-Endpoint : GET /transactions/:id
+Endpoint : GET /role/transactions/:id
 
 Request Header :
 
@@ -141,6 +178,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "created_by": 1,
@@ -161,17 +199,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data transaksi tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data transaksi tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE TRANSACTIONS API
 
-Endpoint : PATCH /transactions/:id
+Endpoint : PATCH /role/transactions/:id
 
 Request Header :
 
@@ -197,6 +249,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data transaksi berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -218,27 +271,54 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "created_by.required": "Pembuat transaksi harus diisi",
-      "pet_id.required": "Hewan peliharaan harus diisi",
-      "total_amount.required": "Total biaya harus diisi",
-      "total_amount.numeric": "Total biaya harus berupa angka",
-      "paid_amount.required": "Biaya transaksi harus diisi",
-      "paid_amount.numeric": "Biaya transaksi harus berupa angka",
-      "payment_status.required": "Status pembayaran harus diisi",
-      "payment_method.required": "Metode pembayaran harus diisi",
-      "invoice_date.required": "Tanggal traksaksi harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // pembuat
+        "created_by.required": "Pembuat transaksi harus diisi!",
+        // hewan peliharaan
+        "pet_id.required": "Hewan peliharaan harus diisi!",
+        // total biaya
+        "total_amount.required": "Total biaya harus diisi!",
+        "total_amount.numeric": "Total biaya harus berupa angka!",
+        // biaya transaksi
+        "paid_amount.required": "Biaya transaksi harus diisi!",
+        "paid_amount.numeric": "Biaya transaksi harus berupa angka!",
+        // status pembayaran
+        "payment_status.required": "Status pembayaran harus diisi!",
+        // metode pembayaran
+        "payment_method.required": "Metode pembayaran harus diisi!",
+        // tanggal transaksi
+        "invoice_date.required": "Tanggal traksaksi harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data transaksi tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE TRANSACTIONS API
 
-Endpoint : DELETE /transactions/:id
+Endpoint : DELETE /role/transactions/:id
 
 Request Header :
 
@@ -248,6 +328,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data transaksi berhasil dihapus!"
 }
 ```
@@ -255,10 +336,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data transaksi tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data transaksi tidak ditemukan!"
+    }
   }
-}
+]
 ```
