@@ -296,6 +296,12 @@ Response Body (Failed) :
     "errors": {
       "auth": "Anda tidak memiliki hak akses pada halaman ini!"
     }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data user tidak ditemukan!"
+    }
   }
 ]
 ```

@@ -2,7 +2,7 @@
 
 ## CREATE TREATMENT NOTES API
 
-Endpoint : POST /treatment-notes
+Endpoint : POST /role/treatment-notes
 
 Request Header :
 
@@ -22,6 +22,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data catatan perawatan berhasil dibuat!",
   "data": {
     "id": 1,
@@ -37,21 +38,39 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "created_by.required": "Pembuat catatan harus diisi",
-      "medical_record_id.required": "Rekam medis harus diisi",
-      "notes.required": "Catatan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // pembuat catatan
+        "created_by.required": "Pembuat catatan harus diisi!",
+        // rekam medis
+        "medical_record_id.required": "Rekam medis harus diisi!",
+        // catatan
+        "notes.required": "Catatan harus diisi!",
+        "notes.min": "Catatan memiliki minimal 5 karakter!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST TREATMENT NOTES API
 
-Endpoint : GET /treatment-notes
+Endpoint : GET /role/treatment-notes
 
 Request Header :
 
@@ -61,6 +80,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -91,17 +111,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data catatan perawatan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data catatan perawatan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET TREATMENT NOTES API
 
-Endpoint : GET /treatment-notes/:id
+Endpoint : GET /role/treatment-notes/:id
 
 Request Header :
 
@@ -111,6 +145,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "created_by": 1,
@@ -125,17 +160,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data catatan perawatan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data catatan perawatan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE TREATMENT NOTES API
 
-Endpoint : PATCH /treatment-notes/:id
+Endpoint : PATCH /role/treatment-notes/:id
 
 Request Header :
 
@@ -155,6 +204,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data catatan perawatan berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -170,21 +220,45 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "created_by.required": "Pembuat catatan harus diisi",
-      "medical_record_id.required": "Rekam medis harus diisi",
-      "notes.required": "Catatan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // pembuat catatan
+        "created_by.required": "Pembuat catatan harus diisi!",
+        // rekam medis
+        "medical_record_id.required": "Rekam medis harus diisi!",
+        // catatan
+        "notes.required": "Catatan harus diisi!",
+        "notes.min": "Catatan memiliki minimal 5 karakter!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data catatan perawatan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE TREATMENT NOTES API
 
-Endpoint : DELETE /treatment-notes/:id
+Endpoint : DELETE /role/treatment-notes/:id
 
 Request Header :
 
@@ -194,6 +268,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data catatan perawatan berhasil dihapus!"
 }
 ```
@@ -201,10 +276,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data catatan perawatan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data catatan perawatan tidak ditemukan!"
+    }
   }
-}
+]
 ```
