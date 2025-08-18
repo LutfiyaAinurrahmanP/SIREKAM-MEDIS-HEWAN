@@ -2,7 +2,7 @@
 
 ## CREATE USER API
 
-Endpoint : POST /users
+Endpoint : POST /role/users
 
 Request Header :
 
@@ -25,6 +25,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data user berhasil dibuat!",
   "data": {
     "id": 1,
@@ -42,28 +43,56 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "username.unique": "Username sudah dipakai",
-      "username.required": "Username harus diisi",
-      "fullname.required": "Nama lengkap harus diisi",
-      "email.unique": "Email sudah dipakai",
-      "email.required": "Email harus diisi",
-      "password.required": "Password harus diisi",
-      "role.required": "Hak akses harus dipilih",
-      "phone.required": "Nomor telp harus diisi",
-      "phone.min": "Nomor telp memiliki minimal 11 angka",
-      "phone.max": "Nomor telp tidak boleh melebihi 14 angka"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // username
+        "username.unique": "Username sudah dipakai!",
+        "username.required": "Username harus diisi!",
+        "username.min": "Username memiliki minimal 5 karakter!",
+        "username.max": "Username tidak boleh melebihi 64 karakter!",
+        // fullname
+        "fullname.required": "Nama lengkap harus diisi!",
+        "fullname.min": "Nama lengkap memiliki minimal 5 karakter!",
+        "fullname.max": "Nama lengkap tidak boleh melebihi 64 karakter!",
+        // email
+        "email.unique": "Email sudah dipakai!",
+        "email.required": "Email harus diisi!",
+        "email.min": "Email memiliki minimal 5 karakter!",
+        "email.max": "Email tidak boleh melebihi 64 karakter!",
+        // password
+        "password.required": "Password harus diisi!",
+        "password.min": "Password memiliki minimal 8 karakter!",
+        "password.max": "Password tidak boleh melebihi 64 karakter!",
+        // role
+        "role.required": "Hak akses harus dipilih!",
+        // phone
+        "phone.required": "Nomor telp harus diisi!",
+        "phone.min": "Nomor telp memiliki minimal 11 angka!",
+        "phone.max": "Nomor telp tidak boleh melebihi 14 angka!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST USER API
 
-Endpoint : GET /users
+Endpoint : GET /role/users
 
 Request Header :
 
@@ -73,6 +102,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -107,17 +137,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data user tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data user tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET USER API
 
-Endpoint : GET /users/:id
+Endpoint : GET /role/users/:id
 
 Request Header :
 
@@ -127,6 +171,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "username": "lutfiyapr",
@@ -143,17 +188,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data user tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data user tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE USER API
 
-Endpoint : PATCH /users/:id
+Endpoint : PATCH /role/users/:id
 
 Request Header :
 
@@ -176,6 +235,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data user berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -193,28 +253,56 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "username.unique": "Username sudah dipakai",
-      "username.required": "Username harus diisi",
-      "fullname.required": "Nama lengkap harus diisi",
-      "email.unique": "Email sudah dipakai",
-      "email.required": "Email harus diisi",
-      "password.required": "Password harus diisi",
-      "role.required": "Hak akses harus dipilih",
-      "phone.required": "Nomor telp harus diisi",
-      "phone.min": "Nomor telp memiliki minimal 11 angka",
-      "phone.max": "Nomor telp tidak boleh melebihi 14 angka"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // username
+        "username.unique": "Username sudah dipakai!",
+        "username.required": "Username harus diisi!",
+        "username.min": "Username memiliki minimal 5 karakter!",
+        "username.max": "Username tidak boleh melebihi 64 karakter!",
+        // fullname
+        "fullname.required": "Nama lengkap harus diisi!",
+        "fullname.min": "Nama lengkap memiliki minimal 5 karakter!",
+        "fullname.max": "Nama lengkap tidak boleh melebihi 64 karakter!",
+        // email
+        "email.unique": "Email sudah dipakai!",
+        "email.required": "Email harus diisi!",
+        "email.min": "Email memiliki minimal 5 karakter!",
+        "email.max": "Email tidak boleh melebihi 64 karakter!",
+        // password
+        "password.required": "Password harus diisi!",
+        "password.min": "Password memiliki minimal 8 karakter!",
+        "password.max": "Password tidak boleh melebihi 64 karakter!",
+        // role
+        "role.required": "Hak akses harus dipilih!",
+        // phone
+        "phone.required": "Nomor telp harus diisi!",
+        "phone.min": "Nomor telp memiliki minimal 11 angka!",
+        "phone.max": "Nomor telp tidak boleh melebihi 14 angka!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## DELETE USER API
 
-Endpoint : DELETE /users/:id
+Endpoint : DELETE /role/users/:id
 
 Request Header :
 
@@ -224,6 +312,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data user berhasil dihapus!"
 }
 ```
@@ -231,10 +320,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data user tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data user tidak ditemukan!"
+    }
   }
-}
+]
 ```
