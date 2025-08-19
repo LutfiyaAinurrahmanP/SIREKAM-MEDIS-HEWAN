@@ -2,7 +2,7 @@
 
 ## CREATE APPOINTMENTS API
 
-Endpoint : POST /appointments
+Endpoint : POST /role/appointments
 
 Request Header :
 
@@ -26,6 +26,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data janji temu berhasil dibuat!",
   "data": {
     "id": 1,
@@ -45,23 +46,42 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "pet_id.required": "Hewan peliharaan harus dipilih",
-      "created_by.required": "Pembuat janji temu harus diisi",
-      "schedule_date.required": "Tanggal janji temu harus diisi",
-      "schedule_time.required": "Jam janji temu harus diisi",
-      "status.required": "Status harus dipilih"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // hewan peliharaan
+        "pet_id.required": "Hewan peliharaan harus dipilih!",
+        // pembuat janji temu
+        "created_by.required": "Pembuat janji temu harus diisi!",
+        // tanggal janji temu
+        "schedule_date.required": "Tanggal janji temu harus diisi!",
+        // jam janji temu
+        "schedule_time.required": "Jam janji temu harus diisi!",
+        // status janji temu
+        "status.required": "Status harus dipilih!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST APPOINTMENTS API
 
-Endpoint : GET /appointments
+Endpoint : GET /role/appointments
 
 Request Header :
 
@@ -71,6 +91,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -109,17 +130,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data janji temu tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data janji temu tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET APPOINTMENTS API
 
-Endpoint : GET /appointments/:id
+Endpoint : GET /role/appointments/:id
 
 Request Header :
 
@@ -129,6 +164,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "pet_id": 1,
@@ -147,17 +183,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data janji temu tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data janji temu tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE APPOINTMENTS API
 
-Endpoint : PATCH /appointments/:id
+Endpoint : PATCH /role/appointments/:id
 
 Request Header :
 
@@ -181,6 +231,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data janji temu berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -200,23 +251,48 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "pet_id.required": "Hewan peliharaan harus dipilih",
-      "created_by.required": "Pembuat janji temu harus diisi",
-      "schedule_date.required": "Tanggal janji temu harus diisi",
-      "schedule_time.required": "Jam janji temu harus diisi",
-      "status.required": "Status harus dipilih"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // hewan peliharaan
+        "pet_id.required": "Hewan peliharaan harus dipilih!",
+        // pembuat janji temu
+        "created_by.required": "Pembuat janji temu harus diisi!",
+        // tanggal janji temu
+        "schedule_date.required": "Tanggal janji temu harus diisi!",
+        // jam janji temu
+        "schedule_time.required": "Jam janji temu harus diisi!",
+        // status janji temu
+        "status.required": "Status harus dipilih!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data janji temu tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE APPOINTMENTS API
 
-Endpoint : DELETE /appointments/:id
+Endpoint : DELETE /role/appointments/:id
 
 Request Header :
 
@@ -226,6 +302,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data janji temu berhasil dihapus!"
 }
 ```
@@ -233,10 +310,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data janji temu tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data janji temu tidak ditemukan!"
+    }
   }
-}
+]
 ```
