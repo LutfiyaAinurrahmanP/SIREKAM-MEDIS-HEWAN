@@ -2,7 +2,7 @@
 
 ## CREATE MEDICINES API
 
-Endpoint : POST /medicines
+Endpoint : POST /role/medicines
 
 Request Header :
 
@@ -26,6 +26,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data obat berhasil dibuat!",
   "data": {
     "id": 1,
@@ -45,31 +46,56 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "name.required": "Nama obat harus diisi",
-      "code.required": "Kode obat harus diisi",
-      "code.unique": "Kode obat sudah dipakai",
-      "type.required": "Tipe obat harus diisi",
-      "unit.required": "Unit obat harus diisi",
-      "stock_qty.required": "Stok obat harus diisi",
-      "stock_qty.numeric": "Stok harus berupa angka",
-      "stock_qty.min": "Stok tidak boleh kurang dari 0",
-      "price.required": "Harga obat harus diisi",
-      "price.numeric": "Harga harus berupa angka",
-      "price.min": "Harga tidak boleh kurang dari 0",
-      "is_active.required": "Status keaktifan harus diisi",
-      "is_active.boolean": "Status keaktifan harus berupa aktif atau tidak aktif"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // nama
+        "name.required": "Nama obat harus diisi!",
+        "name.min": "Nama obat memiliki minimal 5 karakter!",
+        "name.max": "Nama obat tidak boleh melebihi 64 karakter!",
+        // kode obat
+        "code.required": "Kode obat harus diisi!",
+        "code.unique": "Kode obat sudah dipakai!",
+        "code.min": "Kode obat memiliki minimal 5 karakter!",
+        "code.max": "Kode obat tidak boleh melebihi 64 karakter!",
+        // tipe obat
+        "type.required": "Tipe obat harus diisi!",
+        // Unit obat
+        "unit.required": "Unit obat harus diisi!",
+        // stok obat
+        "stock_qty.required": "Stok obat harus diisi!",
+        "stock_qty.numeric": "Stok harus berupa angka!",
+        "stock_qty.min": "Stok tidak boleh kurang dari 0!",
+        // harga obat
+        "price.required": "Harga obat harus diisi!",
+        "price.numeric": "Harga harus berupa angka!",
+        "price.min": "Harga tidak boleh kurang dari 0!",
+        // status keaktifan obat
+        "is_active.required": "Status keaktifan harus diisi!",
+        "is_active.boolean": "Status keaktifan harus berupa aktif atau tidak aktif!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST MEDICINES API
 
-Endpoint : GET /medicines
+Endpoint : GET /role/medicines
 
 Request Header :
 
@@ -79,6 +105,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -117,17 +144,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data obat tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET MEDICINES API
 
-Endpoint : GET /medicines/:id
+Endpoint : GET /role/medicines/:id
 
 Request Header :
 
@@ -137,6 +178,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "name": "Amoxicillin 500mg",
@@ -155,17 +197,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data obat tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE MEDICINES API
 
-Endpoint : PATCH /medicines/:id
+Endpoint : PATCH /role/medicines/:id
 
 Request Header :
 
@@ -189,6 +245,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data obat berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -208,31 +265,62 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "name.required": "Nama obat harus diisi",
-      "code.required": "Kode obat harus diisi",
-      "code.unique": "Kode obat sudah dipakai",
-      "type.required": "Tipe obat harus diisi",
-      "unit.required": "Unit obat harus diisi",
-      "stock_qty.required": "Stok obat harus diisi",
-      "stock_qty.numeric": "Stok harus berupa angka",
-      "stock_qty.min": "Stok tidak boleh kurang dari 0",
-      "price.required": "Harga obat harus diisi",
-      "price.numeric": "Harga harus berupa angka",
-      "price.min": "Harga tidak boleh kurang dari 0",
-      "is_active.required": "Status keaktifan harus diisi",
-      "is_active.boolean": "Status keaktifan harus berupa aktif atau tidak aktif"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // nama
+        "name.required": "Nama obat harus diisi!",
+        "name.min": "Nama obat memiliki minimal 5 karakter!",
+        "name.max": "Nama obat tidak boleh melebihi 64 karakter!",
+        // kode obat
+        "code.required": "Kode obat harus diisi!",
+        "code.unique": "Kode obat sudah dipakai!",
+        "code.min": "Kode obat memiliki minimal 5 karakter!",
+        "code.max": "Kode obat tidak boleh melebihi 64 karakter!",
+        // tipe obat
+        "type.required": "Tipe obat harus diisi!",
+        // Unit obat
+        "unit.required": "Unit obat harus diisi!",
+        // stok obat
+        "stock_qty.required": "Stok obat harus diisi!",
+        "stock_qty.numeric": "Stok harus berupa angka!",
+        "stock_qty.min": "Stok tidak boleh kurang dari 0!",
+        // harga obat
+        "price.required": "Harga obat harus diisi!",
+        "price.numeric": "Harga harus berupa angka!",
+        "price.min": "Harga tidak boleh kurang dari 0!",
+        // status keaktifan obat
+        "is_active.required": "Status keaktifan harus diisi!",
+        "is_active.boolean": "Status keaktifan harus berupa aktif atau tidak aktif!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE MEDICINES API
 
-Endpoint : DELETE /medicines/:id
+Endpoint : DELETE /role/medicines/:id
 
 Request Header :
 
@@ -242,6 +330,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data obat berhasil dihapus!"
 }
 ```
@@ -249,10 +338,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data obat tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
