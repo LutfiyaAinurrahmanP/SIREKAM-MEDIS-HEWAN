@@ -26,7 +26,7 @@ Response Body (Success) :
 
 ```json
 {
-  "status": 200,
+  "status": 201,
   "message": "Data obat berhasil dibuat!",
   "data": {
     "id": 1,

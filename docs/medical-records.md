@@ -2,7 +2,7 @@
 
 ## CREATE MEDICAL RECORDS API
 
-Endpoint : POST /medical-records
+Endpoint : POST /role/medical-records
 
 Request Header :
 
@@ -32,6 +32,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data rekam medis berhasil dibuat!",
   "data": {
     "id": 1,
@@ -57,25 +58,46 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "pet_id.required": "Hewan peliharaan harus dipilih",
-      "service_id.required": "Kategori layanan harus dipilih",
-      "veterinarian_id.required": "Dokter hewan harus dipilih",
-      "visit_date.required": "Tanggal kunjungan harus diisi",
-      "weight.numeric": "Berat badan harus berupa angka",
-      "temperature_celsius.numeric": "Suhu tubuh harus berupa angka",
-      "status.required": "Status harus dipilih"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // hewan peliharaan
+        "pet_id.required": "Hewan peliharaan harus dipilih!",
+        // kategori layanan
+        "service_id.required": "Kategori layanan harus dipilih!",
+        // dokter hewan
+        "veterinarian_id.required": "Dokter hewan harus dipilih!",
+        // tanggal kunjungan
+        "visit_date.required": "Tanggal kunjungan harus diisi!",
+        // berat badan hewan peliharaan
+        "weight.numeric": "Berat badan harus berupa angka!",
+        // suhu tubuh hewan peliharaan
+        "temperature_celsius.numeric": "Suhu tubuh harus berupa angka!",
+        // status rekam medis
+        "status.required": "Status harus dipilih!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST MEDICAL RECORDS API
 
-Endpoint : GET /medical-records
+Endpoint : GET /role/medical-records
 
 Request Header :
 
@@ -85,6 +107,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -135,17 +158,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data rekam medis tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data rekam medis tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET MEDICAL RECORDS API
 
-Endpoint : GET /medical-records/:id
+Endpoint : GET /role/medical-records/:id
 
 Request Header :
 
@@ -155,6 +192,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "pet_id": 1,
@@ -179,17 +217,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data rekam medis tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data rekam medis tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE MEDICAL RECORDS API
 
-Endpoint : PATCH /medical-records/:id
+Endpoint : PATCH /role/medical-records/:id
 
 Request Header :
 
@@ -219,6 +271,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data rekam medis berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -244,25 +297,52 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "pet_id.required": "Hewan peliharaan harus dipilih",
-      "service_id.required": "Kategori layanan harus dipilih",
-      "veterinarian_id.required": "Dokter hewan harus dipilih",
-      "visit_date.required": "Tanggal kunjungan harus diisi",
-      "weight.numeric": "Berat badan harus berupa angka",
-      "temperature_celsius.numeric": "Suhu tubuh harus berupa angka",
-      "status.required": "Status harus dipilih"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // hewan peliharaan
+        "pet_id.required": "Hewan peliharaan harus dipilih!",
+        // kategori layanan
+        "service_id.required": "Kategori layanan harus dipilih!",
+        // dokter hewan
+        "veterinarian_id.required": "Dokter hewan harus dipilih!",
+        // tanggal kunjungan
+        "visit_date.required": "Tanggal kunjungan harus diisi!",
+        // berat badan hewan peliharaan
+        "weight.numeric": "Berat badan harus berupa angka!",
+        // suhu tubuh hewan peliharaan
+        "temperature_celsius.numeric": "Suhu tubuh harus berupa angka!",
+        // status rekam medis
+        "status.required": "Status harus dipilih!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data rekam medis tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE MEDICAL RECORDS API
 
-Endpoint : DELETE /medical-records/:id
+Endpoint : DELETE /role/medical-records/:id
 
 Request Header :
 
@@ -272,6 +352,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data rekam medis berhasil dihapus!"
 }
 ```
@@ -279,10 +360,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data rekam medis tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data rekam medis tidak ditemukan!"
+    }
   }
-}
+]
 ```
