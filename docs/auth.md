@@ -21,6 +21,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data user berhasil dibuat!",
   "data": {
     "id": 1,
@@ -38,23 +39,45 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "username.unique": "Username sudah dipakai",
-      "username.required": "Username harus diisi",
-      "fullname.required": "Nama lengkap harus diisi",
-      "email.unique": "Email sudah dipakai",
-      "email.required": "Email harus diisi",
-      "password.required": "Password harus diisi",
-      "role.required": "Hak akses harus dipilih",
-      "phone.required": "Nomor telp harus diisi",
-      "phone.min": "Nomor telp memiliki minimal 11 angka",
-      "phone.max": "Nomor telp tidak boleh melebihi 14 angka"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // username
+        "username.unique": "Username sudah dipakai!",
+        "username.required": "Username harus diisi!",
+        "username.min": "Username memiliki minimal 5 karakter!",
+        "username.max": "Username tidak boleh melebihi 64 karakter!",
+        // fullname
+        "fullname.required": "Nama lengkap harus diisi!",
+        "fullname.min": "Nama lengkap memiliki minimal 5 karakter!",
+        "fullname.max": "Nama lengkap tidak boleh melebihi 64 karakter!",
+        // email
+        "email.unique": "Email sudah dipakai!",
+        "email.required": "Email harus diisi!",
+        "email.min": "Email memiliki minimal 5 karakter!",
+        "email.max": "Email tidak boleh melebihi 64 karakter!",
+        // password
+        "password.required": "Password harus diisi!",
+        "password.min": "Password memiliki minimal 8 karakter!",
+        "password.max": "Password tidak boleh melebihi 64 karakter!",
+        // role
+        "role.required": "Hak akses harus dipilih!",
+        // phone
+        "phone.required": "Nomor telp harus diisi!",
+        "phone.min": "Nomor telp memiliki minimal 11 angka!",
+        "phone.max": "Nomor telp tidak boleh melebihi 14 angka!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
   }
-}
+]
 ```
 
 ## LOGIN USER API
@@ -74,6 +97,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Selamat datang Lutfiya Ainurrahman Prasetyo!",
   "data": {
     "id": 1,
@@ -92,14 +116,23 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": "Username atau kata sandi salah"
-}
+[
+  {
+    "status": 400,
+    "errors": "Username atau kata sandi salah!"
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  }
+]
 ```
 
 ## LOGOUT USER API
 
-Endpoint : DELETE /logout
+Endpoint : DELETE /role/logout
 
 Request Header :
 
@@ -109,6 +142,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Berhasil keluar dari sesi!"
 }
 ```
@@ -117,6 +151,9 @@ Response Body (Failed) :
 
 ```json
 {
-  "errors": "Sesi tidak valid atau kadaluarsa"
+  "status": 401,
+  "errors": {
+    "session": "Sesi tidak valid atau kadaluarsa!"
+  }
 }
 ```

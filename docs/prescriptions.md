@@ -2,7 +2,7 @@
 
 ## CREATE PRESCRIPTIONS API
 
-Endpoint : POST /prescriptions
+Endpoint : POST /role/prescriptions
 
 Request Header :
 
@@ -22,6 +22,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data resep berhasil dibuat!",
   "data": {
     "id": 1,
@@ -37,20 +38,36 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "medical_record_id.required": "Rekam medis harus diisi",
-      "veterinarian_id.required": "Dokter hewan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // rekam medis
+        "medical_record_id.required": "Rekam medis harus diisi!",
+        // dokter
+        "veterinarian_id.required": "Dokter hewan harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST PRESCRIPTIONS API
 
-Endpoint : GET /prescriptions
+Endpoint : GET /role/prescriptions
 
 Request Header :
 
@@ -60,6 +77,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -90,17 +108,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data resep tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET PRESCRIPTIONS API
 
-Endpoint : GET /prescriptions/:id
+Endpoint : GET /role/prescriptions/:id
 
 Request Header :
 
@@ -110,6 +142,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "medical_record_id": 1,
@@ -124,17 +157,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data resep tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE PRESCRIPTIONS API
 
-Endpoint : PATCH /prescriptions/:id
+Endpoint : PATCH /role/prescriptions/:id
 
 Request Header :
 
@@ -154,6 +201,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data resep berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -169,20 +217,42 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "medical_record_id.required": "Rekam medis harus diisi",
-      "veterinarian_id.required": "Dokter hewan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // rekam medis
+        "medical_record_id.required": "Rekam medis harus diisi!",
+        // dokter
+        "veterinarian_id.required": "Dokter hewan harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE PRESCRIPTIONS API
 
-Endpoint : DELETE /prescriptions/:id
+Endpoint : DELETE /role/prescriptions/:id
 
 Request Header :
 
@@ -192,6 +262,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data resep berhasil dihapus!"
 }
 ```
@@ -199,10 +270,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data resep tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep tidak ditemukan!"
+    }
   }
-}
+]
 ```

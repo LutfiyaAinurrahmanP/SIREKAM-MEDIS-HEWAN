@@ -2,7 +2,7 @@
 
 ## CREATE ANIMAL TYPES API
 
-Endpoint : POST /animal-types
+Endpoint : POST /role/animal-types
 
 Request Header :
 
@@ -21,6 +21,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data jenis hewan berhasil dibuat!",
   "data": {
     "id": 1,
@@ -35,20 +36,35 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "name.unique": "Nama jenis hewan sudah dipakai",
-      "name.required": "Data jenis hewan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // jenis hewan
+        "name.unique": "Nama jenis hewan sudah dipakai!",
+        "name.required": "Data jenis hewan harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST ANIMAL TYPES API
 
-Endpoint : GET /animal-types
+Endpoint : GET /role/animal-types
 
 Request Header :
 
@@ -58,6 +74,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -86,17 +103,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data jenis hewan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis hewan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET ANIMAL TYPES API
 
-Endpoint : GET /animal-types/:id
+Endpoint : GET /role/animal-types/:id
 
 Request Header :
 
@@ -106,6 +137,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "name": "Kucing",
@@ -119,17 +151,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data jenis hewan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis hewan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE ANIMAL TYPES API
 
-Endpoint : PATCH /animal-types/:id
+Endpoint : PATCH /role/animal-types/:id
 
 Request Header :
 
@@ -148,6 +194,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data jenis hewan berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -162,20 +209,35 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "name.unique": "Nama jenis hewan sudah dipakai",
-      "name.required": "Data jenis hewan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // jenis hewan
+        "name.unique": "Nama jenis hewan sudah dipakai!",
+        "name.required": "Data jenis hewan harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## DELETE ANIMAL TYPES API
 
-Endpoint : DELETE /animal-types/:id
+Endpoint : DELETE /role/animal-types/:id
 
 Request Header :
 
@@ -185,6 +247,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data jenis hewan berhasil dihapus!"
 }
 ```
@@ -192,10 +255,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data jenis hewan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis hewan tidak ditemukan!"
+    }
   }
-}
+]
 ```

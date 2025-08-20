@@ -2,7 +2,7 @@
 
 ## CREATE SERVICE CATEGORIES API
 
-Endpoint : POST /service-categories
+Endpoint : POST /role/service-categories
 
 Request Header :
 
@@ -23,6 +23,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data jenis layanan berhasil dibuat!",
   "data": {
     "id": 1,
@@ -39,21 +40,41 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "name.required": "Nama jenis layanan harus diisi",
-      "price.required": "Harga jenis layanan harus diisi",
-      "is_active.required": "Status layanan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // jenis layanan
+        "name.required": "Nama jenis layanan harus diisi!",
+        "name.min": "Nama jenis layanan memiliki minimal 5 karakter!!",
+        "name.max": "Nama jenis layanan tidak boleh melebihi 64 karakter!!",
+        // harga layanan
+        "price.required": "Harga jenis layanan harus diisi!",
+        "price.numeric": "Harga jenis layanan harus berupa angka!",
+        // status layanan
+        "is_active.required": "Status layanan harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST SERVICE CATEGORIES API
 
-Endpoint : GET /service-categories
+Endpoint : GET /role/service-categories
 
 Request Header :
 
@@ -63,6 +84,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": [
     {
       "id": 1,
@@ -95,17 +117,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data jenis layanan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis layanan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET SERVICE CATEGORIES API
 
-Endpoint : GET /service-categories/:id
+Endpoint : GET /role/service-categories/:id
 
 Request Header :
 
@@ -115,6 +151,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "name": "Konsultasi Umum",
@@ -130,17 +167,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data jenis layanan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis layanan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE SERVICE CATEGORIES API
 
-Endpoint : PATCH /service-categories/:id
+Endpoint : PATCH /role/service-categories/:id
 
 Request Header :
 
@@ -161,6 +212,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data jenis layanan berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -177,21 +229,47 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "name.required": "Nama jenis layanan harus diisi",
-      "price.required": "Harga jenis layanan harus diisi",
-      "is_active.required": "Status layanan harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // jenis layanan
+        "name.required": "Nama jenis layanan harus diisi!",
+        "name.min": "Nama jenis layanan memiliki minimal 5 karakter!!",
+        "name.max": "Nama jenis layanan tidak boleh melebihi 64 karakter!!",
+        // harga layanan
+        "price.required": "Harga jenis layanan harus diisi!",
+        "price.numeric": "Harga jenis layanan harus berupa angka!",
+        // status layanan
+        "is_active.required": "Status layanan harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis layanan tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE SERVICE CATEGORIES API
 
-Endpoint : DELETE /service-categories/:id
+Endpoint : DELETE /role/service-categories/:id
 
 Request Header :
 
@@ -201,6 +279,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data jenis layanan berhasil dihapus!"
 }
 ```
@@ -208,10 +287,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data jenis layanan tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data jenis layanan tidak ditemukan!"
+    }
   }
-}
+]
 ```

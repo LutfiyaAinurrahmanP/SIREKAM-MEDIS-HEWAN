@@ -2,7 +2,7 @@
 
 ## CREATE PRESCRIPTION ITEMS API
 
-Endpoint : POST /prescription-items
+Endpoint : POST /role/prescription-items
 
 Request Header :
 
@@ -25,6 +25,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 201,
   "message": "Data resep obat berhasil dibuat!",
   "data": {
     "id": 1,
@@ -43,20 +44,36 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "prescription_id.required": "Resep harus diisi",
-      "medicine_id.required": "Obat harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // resep
+        "prescription_id.required": "Resep harus diisi!",
+        // obat
+        "medicine_id.required": "Obat harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
   }
-}
+]
 ```
 
 ## LIST PRESCRIPTION ITEMS API
 
-Endpoint : GET /prescription-items
+Endpoint : GET /role/prescription-items
 
 Request Header :
 
@@ -66,6 +83,7 @@ Response Body (Success) :
 
 ```json
 {
+  "ststus": 200,
   "data": [
     {
       "id": 1,
@@ -102,17 +120,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data resep obat tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## GET PRESCRIPTION ITEMS API
 
-Endpoint : GET /prescription-items/:id
+Endpoint : GET /role/prescription-items/:id
 
 Request Header :
 
@@ -122,6 +154,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "data": {
     "id": 1,
     "prescription_id": 1,
@@ -139,17 +172,31 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data resep obat tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## UPDATE PRESCRIPTION ITEMS API
 
-Endpoint : PATCH /prescription-items/:id
+Endpoint : PATCH /role/prescription-items/:id
 
 Request Header :
 
@@ -172,6 +219,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data resep obat berhasil diperbarui!",
   "data": {
     "id": 1,
@@ -190,20 +238,42 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "validation": {
-      "prescription_id.required": "Resep harus diisi",
-      "medicine_id.required": "Obat harus diisi"
-    },
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 400,
+    "errors": {
+      "validation": {
+        // resep
+        "prescription_id.required": "Resep harus diisi!",
+        // obat
+        "medicine_id.required": "Obat harus diisi!"
+      }
+    }
+  },
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
 
 ## DELETE PRESCRIPTION ITEMS API
 
-Endpoint : DELETE /prescription-items/:id
+Endpoint : DELETE /role/prescription-items/:id
 
 Request Header :
 
@@ -213,6 +283,7 @@ Response Body (Success) :
 
 ```json
 {
+  "status": 200,
   "message": "Data resep obat berhasil dihapus!"
 }
 ```
@@ -220,10 +291,24 @@ Response Body (Success) :
 Response Body (Failed) :
 
 ```json
-{
-  "errors": {
-    "empty": "Data resep obat tidak ditemukan",
-    "session": "Sesi tidak valid atau kadaluarsa"
+[
+  {
+    "status": 401,
+    "errors": {
+      "session": "Sesi tidak valid atau kadaluarsa!"
+    }
+  },
+  {
+    "status": 403,
+    "errors": {
+      "auth": "Anda tidak memiliki hak akses pada halaman ini!"
+    }
+  },
+  {
+    "status": 404,
+    "errors": {
+      "empty": "Data resep obat tidak ditemukan!"
+    }
   }
-}
+]
 ```
