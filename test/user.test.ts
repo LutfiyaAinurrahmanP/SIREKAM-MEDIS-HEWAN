@@ -114,7 +114,7 @@ describe("POST /register", () => {
     );
     expect(response.body.errors.role.enum).toBe("Hak akses harus dipilih!");
     expect(response.body.errors.phone.min).toBe(
-      "Nomor telepon memiliki minimal 11 angka!"
+      "Nomor telp memiliki minimal 11 angka!"
     );
   });
 });
@@ -148,7 +148,7 @@ describe("POST /login", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(400);
-    expect(response.body.errors).toBe("Username atau password salah!");
+    expect(response.body.errors).toBe("Username atau kata sandi salah!");
   });
 
   it("should return error if password invalid", async () => {
@@ -159,6 +159,32 @@ describe("POST /login", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(400);
-    expect(response.body.errors).toBe("Username atau password salah!");
+    expect(response.body.errors).toBe("Username atau kata sandi salah!");
+  });
+});
+
+describe("DELETE /role/user/logout", () => {
+  beforeEach(async () => {
+    await UserTest.deleteUser();
+    await UserTest.createUser();
+  });
+
+  it("should logout an existing user", async () => {
+    const response = await supertest(web)
+      .delete("/role/user/logout")
+      .set("SESSION-TOKEN", "token123")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("User berhasil logout!");
+  });
+
+  it("should return error if user not authenticated", async () => {
+    const response = await supertest(web).delete("/role/user/logout").send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(401);
+    expect(response.body.errors).toBe("Unauthorized");
   });
 });

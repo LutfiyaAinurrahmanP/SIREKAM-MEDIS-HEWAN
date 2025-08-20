@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { LoginUserRequest, RegisterUserRequest } from "../model/user-model";
 import { UserService } from "../service/user-service";
+import { UserRequest } from "../type/user-request";
 
 export class UserController {
   static async register(req: Request, res: Response, next: NextFunction) {
@@ -25,6 +26,17 @@ export class UserController {
       });
     } catch (e) {
       next(e);
+    }
+  }
+
+  static async logout(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      await UserService.logout(req.user!);
+      res.status(200).json({
+        message: "User berhasil logout!",
+      });
+    } catch (error) {
+      next(error);
     }
   }
 }

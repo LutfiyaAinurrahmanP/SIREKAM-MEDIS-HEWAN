@@ -24,6 +24,7 @@ export class UserTest {
         password: await bcrypt.hash("password", 10),
         role: "admin",
         phone: "081915133813",
+        token: "token123",
       },
     });
   }

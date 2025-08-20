@@ -1,6 +1,7 @@
 import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response-error";
 import { UniqueError } from "../error/unique-error";
+import { User } from "../generated/prisma";
 import {
   LoginUserRequest,
   RegisterUserRequest,
@@ -54,7 +55,7 @@ export class UserService {
     });
 
     if (!user) {
-      throw new ResponseError(400, "Username atau password salah!");
+      throw new ResponseError(400, "Username atau kata sandi salah!");
     }
 
     const isPasswordValid = await bcrypt.compare(
@@ -63,7 +64,7 @@ export class UserService {
     );
 
     if (!isPasswordValid) {
-      throw new ResponseError(400, "Username atau password salah!");
+      throw new ResponseError(400, "Username atau kata sandi salah!");
     }
 
     user = await prismaClient.user.update({
@@ -79,5 +80,18 @@ export class UserService {
     response.token = user.token;
 
     return response;
+  }
+
+  static async logout(user: User): Promise<UserResponse> {
+    const result = await prismaClient.user.update({
+      where: {
+        username: user.username,
+      },
+      data: {
+        token: null,
+      },
+    });
+
+    return toUserResponse(result);
   }
 }

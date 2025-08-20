@@ -34,10 +34,10 @@ export class UserValidation {
     ),
     phone: z
       .string()
-      .nonempty("Nomor telepon harus diisi!")
-      .min(1, "Nomor telepon harus diisi!")
-      .min(11, "Nomor telepon memiliki minimal 11 angka!")
-      .max(14, "Nomor telepon memiliki maksimal 14 angka!"),
+      .nonempty("Nomor telp harus diisi!")
+      .min(1, "Nomor telp harus diisi!")
+      .min(11, "Nomor telp memiliki minimal 11 angka!")
+      .max(14, "Nomor telp memiliki maksimal 14 angka!"),
   });
 
   static readonly LOGIN: ZodType = z.object({
