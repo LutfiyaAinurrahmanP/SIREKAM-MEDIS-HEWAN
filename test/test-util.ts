@@ -31,10 +31,23 @@ export class UserTest {
 }
 
 export class AnimalTypesTest {
+  static async createAnimalTypes() {
+    await prismaClient.animalTypes.createMany({
+      data: [
+        { name: "Kucing", description: "Mamalia kecil dengan bulu halus" },
+        { name: "Anjing", description: "Mamalia setia dan bersahabat" },
+      ],
+    });
+  }
   static async deleteAnimalTypes() {
     await prismaClient.animalTypes.deleteMany({
       where: {
         name: "Kucing",
+      },
+    });
+    await prismaClient.animalTypes.deleteMany({
+      where: {
+        name: "Anjing",
       },
     });
   }

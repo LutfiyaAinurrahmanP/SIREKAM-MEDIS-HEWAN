@@ -12,13 +12,13 @@ export const roleMiddleware = (roles: UserRole[]) => {
   return (req: UserRequest, res: Response, next: NextFunction) => {
     if (!req.user) {
       return res.status(401).json({
-        errors: "Unauthorized",
+        errors: "Sesi tidak valid atau kadaluarsa!",
       });
     }
 
     if (!roles.includes(req.user.role as UserRole)) {
       return res.status(403).json({
-        errors: "Forbidden",
+        errors: "Anda tidak memiliki hak akses pada halaman ini!",
       });
     }
 

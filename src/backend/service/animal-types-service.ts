@@ -11,7 +11,6 @@ import { Validation } from "../validation/validation";
 
 export class AnimalTypesService {
   static async create(
-    user: User,
     req: CreateAnimalTypesRequest
   ): Promise<AnimalTypesResponse> {
     const createRequest = Validation.validate(
@@ -21,7 +20,6 @@ export class AnimalTypesService {
 
     const record = {
       ...createRequest,
-      
       created_at: new Date(),
     };
 
@@ -40,5 +38,15 @@ export class AnimalTypesService {
     });
 
     return toAnimalTypesResponse(animalTypes);
+  }
+
+  static async list(): Promise<AnimalTypesResponse[]> {
+    const animalTypes = await prismaClient.animalTypes.findMany({
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+
+    return animalTypes.map(toAnimalTypesResponse);
   }
 }
