@@ -8,5 +8,4 @@ export const web = express();
 web.use(express.json());
 web.use(guestRouter);
 web.use(apiRouter);
-web.use(authMiddleware);
 web.use(errorValidationMiddleware);

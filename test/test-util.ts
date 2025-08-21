@@ -29,3 +29,13 @@ export class UserTest {
     });
   }
 }
+
+export class AnimalTypesTest {
+  static async deleteAnimalTypes() {
+    await prismaClient.animalTypes.deleteMany({
+      where: {
+        name: "Kucing",
+      },
+    });
+  }
+}
