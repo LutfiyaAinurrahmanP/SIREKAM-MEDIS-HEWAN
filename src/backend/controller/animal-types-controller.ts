@@ -1,5 +1,4 @@
 import { NextFunction, Response } from "express";
-import { AnimalTypesRequest } from "../type/animal-types-request";
 import { AnimalTypesService } from "../service/animal-types-service";
 import { UserRequest } from "../type/user-request";
 import { CreateAnimalTypesRequest } from "../model/animal-types-model";
@@ -22,6 +21,20 @@ export class AnimalTypesController {
   static async list(req: UserRequest, res: Response, next: NextFunction) {
     try {
       const response = await AnimalTypesService.list();
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async get(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const animalTypesId = Number(req.params.id);
+      const response = await AnimalTypesService.get(
+        animalTypesId
+      );
       res.status(200).json({
         data: response,
       });

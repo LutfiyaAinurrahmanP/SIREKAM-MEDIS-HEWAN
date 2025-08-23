@@ -1,6 +1,7 @@
 import { prismaClient } from "../application/database";
+import { ResponseError } from "../error/response-error";
 import { UniqueError } from "../error/unique-error";
-import { User } from "../generated/prisma";
+import { AnimalTypes, User } from "../generated/prisma";
 import {
   AnimalTypesResponse,
   CreateAnimalTypesRequest,
@@ -48,5 +49,24 @@ export class AnimalTypesService {
     });
 
     return animalTypes.map(toAnimalTypesResponse);
+  }
+
+  static async checkAnimalTypesMustExists(animalTypesId: number) {
+    const animalTypes = await prismaClient.animalTypes.findUnique({
+      where: {
+        id: animalTypesId,
+      },
+    });
+
+    if (!animalTypes) {
+      throw new ResponseError(404, "Jenis hewan tidak ditemukan!");
+    }
+
+    return animalTypes;
+  }
+
+  static async get(animalTypesId: number): Promise<AnimalTypesResponse> {
+    const animalTypes = await this.checkAnimalTypesMustExists(animalTypesId);
+    return toAnimalTypesResponse(animalTypes!);
   }
 }

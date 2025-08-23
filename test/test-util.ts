@@ -34,9 +34,19 @@ export class AnimalTypesTest {
   static async createAnimalTypes() {
     await prismaClient.animalTypes.createMany({
       data: [
-        { name: "Kucing", description: "Mamalia kecil dengan bulu halus" },
+        {
+          name: "Kucing",
+          description: "Mamalia kecil dengan bulu halus",
+        },
         { name: "Anjing", description: "Mamalia setia dan bersahabat" },
       ],
+    });
+  }
+  static async getAnimalTypesId() {
+    return await prismaClient.animalTypes.findFirst({
+      where: {
+        name: "Kucing",
+      },
     });
   }
   static async deleteAnimalTypes() {
