@@ -58,4 +58,16 @@ export class AnimalTypesController {
       next(e);
     }
   }
+
+  static async delete(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const animalTypesId = Number(req.params.id);
+      await AnimalTypesService.delete(animalTypesId);
+      res.status(200).json({
+        message: "Data jenis hewan berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

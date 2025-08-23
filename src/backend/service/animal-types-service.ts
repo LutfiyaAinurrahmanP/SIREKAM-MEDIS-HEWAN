@@ -93,4 +93,13 @@ export class AnimalTypesService {
 
     return toAnimalTypesResponse(animalTypes!);
   }
+
+  static async delete(animalTypesId: number): Promise<void> {
+    await this.checkAnimalTypesMustExists(animalTypesId);
+    await prismaClient.animalTypes.delete({
+      where: {
+        id: animalTypesId,
+      },
+    });
+  }
 }
