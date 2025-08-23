@@ -60,5 +60,10 @@ export class AnimalTypesTest {
         name: "Anjing",
       },
     });
+    await prismaClient.animalTypes.deleteMany({
+      where: {
+        name: "Otter",
+      },
+    });
   }
 }

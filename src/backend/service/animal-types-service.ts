@@ -6,6 +6,7 @@ import {
   AnimalTypesResponse,
   CreateAnimalTypesRequest,
   toAnimalTypesResponse,
+  UpdateAnimalTypesRequest,
 } from "../model/animal-types-model";
 import { AnimalTypesValidation } from "../validation/animal-types-validation";
 import { Validation } from "../validation/validation";
@@ -67,6 +68,29 @@ export class AnimalTypesService {
 
   static async get(animalTypesId: number): Promise<AnimalTypesResponse> {
     const animalTypes = await this.checkAnimalTypesMustExists(animalTypesId);
+    return toAnimalTypesResponse(animalTypes!);
+  }
+
+  static async update(
+    req: UpdateAnimalTypesRequest
+  ): Promise<AnimalTypesResponse> {
+    const updateRequest = Validation.validate(
+      AnimalTypesValidation.UPDATE,
+      req
+    );
+
+    await this.checkAnimalTypesMustExists(updateRequest.id);
+
+    const animalTypes = await prismaClient.animalTypes.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
     return toAnimalTypesResponse(animalTypes!);
   }
 }

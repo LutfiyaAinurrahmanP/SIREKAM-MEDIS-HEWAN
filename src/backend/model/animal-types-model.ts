@@ -13,6 +13,12 @@ export type CreateAnimalTypesRequest = {
   description?: string | null;
 };
 
+export type UpdateAnimalTypesRequest = {
+  id: number;
+  name?: string;
+  description?: string | null;
+};
+
 export function toAnimalTypesResponse(
   animalTypes: AnimalTypes
 ): AnimalTypesResponse {

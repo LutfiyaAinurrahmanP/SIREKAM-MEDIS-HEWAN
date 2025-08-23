@@ -18,6 +18,7 @@ adminRouter.use(roleMiddleware([UserRole.ADMIN]));
 adminRouter.post("/animal-types", AnimalTypesController.create);
 adminRouter.get("/animal-types", AnimalTypesController.list);
 adminRouter.get("/animal-types/:id", AnimalTypesController.get);
+adminRouter.patch("/animal-types/:id", AnimalTypesController.update);
 
 // Mount admin router
 apiRouter.use("/admin", adminRouter);
