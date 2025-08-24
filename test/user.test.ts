@@ -180,6 +180,17 @@ describe("DELETE /role/user/logout", () => {
     expect(response.body.message).toBe("User berhasil logout!");
   });
 
+  it("should error if user not logged in", async () => {
+    const response = await supertest(web)
+      .delete("/role/user/logout")
+      .set("SESSION-TOKEN", "invalid_token")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(401);
+    expect(response.body.errors).toBe("Unauthorized");
+  });
+  
   it("should return error if user not authenticated", async () => {
     const response = await supertest(web).delete("/role/user/logout").send();
 
