@@ -16,16 +16,26 @@ export class UserTest {
   }
 
   static async createUser() {
-    await prismaClient.user.create({
-      data: {
-        username: "lutfiyapr",
-        fullname: "Lutfiya Ainurrahman Prasetyo",
-        email: "lutfiyapr.stu@pnc.ac.id",
-        password: await bcrypt.hash("password", 10),
-        role: "admin",
-        phone: "081915133813",
-        token: "token123",
-      },
+    await prismaClient.user.createMany({
+      data: [
+        {
+          username: "lutfiyapr",
+          fullname: "Lutfiya Ainurrahman Prasetyo",
+          email: "lutfiyapr.stu@pnc.ac.id",
+          password: await bcrypt.hash("password", 10),
+          role: "admin",
+          phone: "081915133813",
+          token: "token123",
+        },
+        {
+          username: "dummy data",
+          fullname: "Lutfiya Ainurrahman Prasetyo",
+          email: "dummy-data.stu@pnc.ac.id",
+          password: "password",
+          role: "client",
+          phone: "081915133813",
+        },
+      ],
     });
   }
 }
@@ -63,6 +73,88 @@ export class AnimalTypesTest {
     await prismaClient.animalTypes.deleteMany({
       where: {
         name: "Otter",
+      },
+    });
+  }
+}
+
+export class PetsTest {
+  static async getUserId1() {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        username: "lutfiyapr",
+      },
+    });
+    return user?.id;
+  }
+
+  static async getUserId2() {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        username: "dummy data",
+      },
+    });
+    return user?.id;
+  }
+
+  static async getAnimalTypesId1() {
+    const animalTypes = await prismaClient.animalTypes.findFirst({
+      where: {
+        name: "Kucing",
+      },
+    });
+    return animalTypes?.id;
+  }
+
+  static async getAnimalTypesId2() {
+    const animalTypes = await prismaClient.animalTypes.findFirst({
+      where: {
+        name: "Anjing",
+      },
+    });
+    return animalTypes?.id;
+  }
+
+  static async createPets() {
+    const userId1: number | undefined = await this.getUserId1();
+    const animalTypesId1: number | undefined = await this.getAnimalTypesId1();
+    const userId2: number | undefined = await this.getUserId2();
+    const animalTypesId2: number | undefined = await this.getAnimalTypesId2();
+
+    await prismaClient.pets.createMany({
+      data: [
+        {
+          owner_id: userId1!,
+          name: "Luna",
+          animal_type_id: animalTypesId1!,
+          breed: "Persian",
+          gender: "female",
+          birth_date: new Date("2022-05-14"),
+          weight: 3.4,
+          color: "Putih",
+          notes: "Kucing sangat aktif, suka bermain bola mainan",
+        },
+        {
+          owner_id: userId2!,
+          name: "Max",
+          animal_type_id: animalTypesId2!,
+          breed: "Golden Retriever",
+          gender: "male",
+          birth_date: new Date("2021-09-08"),
+          weight: 28.5,
+          color: "Emas",
+          notes: "Anjing ramah, rutin vaksinasi lengkap",
+        },
+      ],
+    });
+  }
+
+  static async deletePets() {
+    await prismaClient.pets.deleteMany({
+      where: {
+        name: {
+          in: ["Luna", "Max"],
+        },
       },
     });
   }
