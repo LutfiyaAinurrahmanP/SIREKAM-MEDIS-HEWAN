@@ -157,3 +157,15 @@ export class PetsTest {
     });
   }
 }
+
+export class MedicinesTest {
+  static async deleteMedicines() {
+    await prismaClient.medicines.deleteMany({
+      where: {
+        code: {
+          in: ["OBT-AX500", "OBT-PC500"],
+        },
+      },
+    });
+  }
+}

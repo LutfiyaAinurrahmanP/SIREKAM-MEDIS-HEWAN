@@ -3,6 +3,7 @@ import { authMiddleware } from "../middleware/auth-middleware";
 import { UserController } from "../controller/user-controller";
 import { AnimalTypesController } from "../controller/animal-types-controller";
 import { roleMiddleware, UserRole } from "../middleware/role-middleware";
+import { MedicinesController } from "../controller/medicines-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -20,6 +21,9 @@ adminRouter.get("/animal-types", AnimalTypesController.list);
 adminRouter.get("/animal-types/:id", AnimalTypesController.get);
 adminRouter.patch("/animal-types/:id", AnimalTypesController.update);
 adminRouter.delete("/animal-types/:id", AnimalTypesController.delete);
+
+// Medicines API
+adminRouter.post("/medicines", MedicinesController.create);
 
 // Mount admin router
 apiRouter.use("/admin", adminRouter);
