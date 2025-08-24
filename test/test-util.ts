@@ -5,12 +5,9 @@ export class UserTest {
   static async deleteUser() {
     await prismaClient.user.deleteMany({
       where: {
-        username: "lutfiyapr",
-      },
-    });
-    await prismaClient.user.deleteMany({
-      where: {
-        username: "dummy data",
+        username: {
+          in: ["lutfiyapr", "dummy data", "dummy data2"],
+        },
       },
     });
   }
@@ -34,6 +31,7 @@ export class UserTest {
           password: "password",
           role: "client",
           phone: "081915133813",
+          token: "token234",
         },
       ],
     });

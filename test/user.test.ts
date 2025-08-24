@@ -1,13 +1,19 @@
 import supertest from "supertest";
-import { UserTest } from "./test-util";
+import { AnimalTypesTest, PetsTest, UserTest } from "./test-util";
 import { web } from "../src/backend/application/web";
 import { logger } from "../src/backend/application/logging";
 import e from "express";
 
 describe("POST /register", () => {
   beforeEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
-    // await UserTest.createUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
   });
 
   it("should create a new user", async () => {
@@ -121,8 +127,12 @@ describe("POST /register", () => {
 
 describe("POST /login", () => {
   beforeEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.createUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
   });
 
   it("should login an existing user", async () => {
@@ -165,8 +175,12 @@ describe("POST /login", () => {
 
 describe("DELETE /role/user/logout", () => {
   beforeEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.createUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
   });
 
   it("should logout an existing user", async () => {
@@ -190,7 +204,7 @@ describe("DELETE /role/user/logout", () => {
     expect(response.status).toBe(401);
     expect(response.body.errors).toBe("Unauthorized");
   });
-  
+
   it("should return error if user not authenticated", async () => {
     const response = await supertest(web).delete("/role/user/logout").send();
 

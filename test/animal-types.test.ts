@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { AnimalTypesTest, UserTest } from "./test-util";
+import { AnimalTypesTest, PetsTest, UserTest } from "./test-util";
 import { web } from "../src/backend/application/web";
 import { logger } from "../src/backend/application/logging";
 import { prismaClient } from "../src/backend/application/database";
@@ -7,9 +7,15 @@ import bcrypt from "bcrypt";
 
 describe("POST /admin/animal-types", () => {
   beforeEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
     await UserTest.createUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
   });
 
   it("should create a new animal type", async () => {
@@ -82,7 +88,7 @@ describe("POST /admin/animal-types", () => {
   it("should return error if role not admin", async () => {
     await prismaClient.user.create({
       data: {
-        username: "dummy data",
+        username: "dummy data2",
         fullname: "Lutfiya Ainurrahman Prasetyo",
         email: "lutfiyapr2.stu@pnc.ac.id",
         password: await bcrypt.hash("password", 10),
@@ -110,11 +116,15 @@ describe("POST /admin/animal-types", () => {
 
 describe("GET /admin/animal-types", () => {
   beforeEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.createUser();
-    await AnimalTypesTest.deleteAnimalTypes();
     await AnimalTypesTest.createAnimalTypes();
   });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+  });
+
   it("should return a list of animal types", async () => {
     const response = await supertest(web)
       .get("/admin/animal-types")
@@ -137,7 +147,7 @@ describe("GET /admin/animal-types", () => {
   it("should return error if role not admin", async () => {
     await prismaClient.user.create({
       data: {
-        username: "dummy data",
+        username: "dummy data2",
         fullname: "Lutfiya Ainurrahman Prasetyo",
         email: "lutfiyapr2.stu@pnc.ac.id",
         password: await bcrypt.hash("password", 10),
@@ -165,10 +175,13 @@ describe("GET /admin/animal-types", () => {
 
 describe("GET /admin/animal-types/:id", () => {
   beforeEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.createUser();
-    await AnimalTypesTest.deleteAnimalTypes();
     await AnimalTypesTest.createAnimalTypes();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
   });
 
   it("should get an existing animal type", async () => {
@@ -209,7 +222,7 @@ describe("GET /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     await prismaClient.user.create({
       data: {
-        username: "dummy data",
+        username: "dummy data2",
         fullname: "Lutfiya Ainurrahman Prasetyo",
         email: "lutfiyapr2.stu@pnc.ac.id",
         password: await bcrypt.hash("password", 10),
@@ -237,11 +250,15 @@ describe("GET /admin/animal-types/:id", () => {
 
 describe("PATCH /admin/animal-types/:id", () => {
   beforeEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.createUser();
-    await AnimalTypesTest.deleteAnimalTypes();
     await AnimalTypesTest.createAnimalTypes();
   });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+  });
+
   it("should update an existing animal type", async () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const response = await supertest(web)
@@ -311,7 +328,7 @@ describe("PATCH /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     await prismaClient.user.create({
       data: {
-        username: "dummy data",
+        username: "dummy data2",
         fullname: "Lutfiya Ainurrahman Prasetyo",
         email: "lutfiyapr2.stu@pnc.ac.id",
         password: await bcrypt.hash("password", 10),
@@ -339,10 +356,13 @@ describe("PATCH /admin/animal-types/:id", () => {
 
 describe("DELETE /admin/animal-types/:id", () => {
   beforeEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.createUser();
-    await AnimalTypesTest.deleteAnimalTypes();
     await AnimalTypesTest.createAnimalTypes();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
   });
 
   it("should delete an existing animal type", async () => {
@@ -382,7 +402,7 @@ describe("DELETE /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     await prismaClient.user.create({
       data: {
-        username: "dummy data",
+        username: "dummy data2",
         fullname: "Lutfiya Ainurrahman Prasetyo",
         email: "lutfiyapr2.stu@pnc.ac.id",
         password: await bcrypt.hash("password", 10),
