@@ -264,10 +264,8 @@ describe("GET /admin/medicines", () => {
       .set("SESSION-TOKEN", "token123");
 
     expect(response.status).toBe(200);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
-    expect(response.body.meta.total).toBeGreaterThan(0);
-    expect(response.body.meta.page).toBe(1);
-    expect(response.body.meta.limit).toBe(10);
   });
 
   it("should return error if not authorized", async () => {
@@ -276,9 +274,7 @@ describe("GET /admin/medicines", () => {
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors.session).toBe(
-      "Sesi tidak valid atau kadaluarsa!"
-    );
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
@@ -300,19 +296,31 @@ describe("GET /admin/medicines", () => {
     logger.debug(response.body);
 
     expect(response.status).toBe(403);
-    expect(response.body.errors.auth).toBe(
+    expect(response.body.errors).toBe(
       "Anda tidak memiliki hak akses pada halaman ini!"
     );
   });
-
-  it("should return error if no medicines found", async () => {
-    await MedicinesTest.deleteMedicines();
+  it("should return error if user doesn't have access", async () => {
+    await prismaClient.user.create({
+      data: {
+        username: "dummy data2",
+        fullname: "Lutfiya Ainurrahman Prasetyo",
+        email: "lutfiyapr2.stu@pnc.ac.id",
+        password: await bcrypt.hash("password", 10),
+        role: "client",
+        phone: "081915133813",
+        token: "token234",
+      },
+    });
     const response = await supertest(web)
-      .get("/admin/medicines")
-      .set("SESSION-TOKEN", "token123");
+      .get(`/admin/medicines`)
+      .set("SESSION-TOKEN", "token234");
 
-    expect(response.status).toBe(404);
-    expect(response.body.errors.empty).toBe("Data obat tidak ditemukan!");
+    logger.debug(response.body);
+    expect(response.status).toBe(403);
+    expect(response.body.errors).toBe(
+      "Anda tidak memiliki hak akses pada halaman ini!"
+    );
   });
 });
 

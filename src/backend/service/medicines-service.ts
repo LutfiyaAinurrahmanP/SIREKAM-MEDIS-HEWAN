@@ -43,6 +43,9 @@ export class MedicinesService {
         created_at: "desc",
       },
     });
+    if (!medicines) {
+      throw new ResponseError(404, "Data obat tidak ditemukan!");
+    }
     return medicines.map(toMedicinesResponse);
   }
 
@@ -76,7 +79,7 @@ export class MedicinesService {
         updated_at: new Date(),
       },
     });
-    
+
     return toMedicinesResponse(medicines!);
   }
 
