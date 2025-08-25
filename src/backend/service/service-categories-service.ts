@@ -88,4 +88,19 @@ export class ServiceCategoriesService {
 
     return toServiceCategoriesResponse(serviceCategories!);
   }
+
+  static async delete(
+    serviceCategoriesId: number
+  ): Promise<ServiceCategoriesResponse> {
+    const deleteRequest = await this.checkServiceCategoriesMustExists(
+      serviceCategoriesId
+    );
+    const serviceCategories = await prismaClient.serviceCategories.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+
+    return toServiceCategoriesResponse(serviceCategories);
+  }
 }

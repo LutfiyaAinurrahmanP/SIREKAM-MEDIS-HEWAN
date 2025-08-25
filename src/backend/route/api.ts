@@ -38,10 +38,10 @@ adminRouter.patch(
   "/service-categories/:id",
   ServiceCategoriesController.update
 );
-// adminRouter.delete(
-//   "/service-categories/:id",
-//   ServiceCategoriesController.delete
-// );
+adminRouter.delete(
+  "/service-categories/:id",
+  ServiceCategoriesController.delete
+);
 
 // Mount admin router
 apiRouter.use("/admin", adminRouter);

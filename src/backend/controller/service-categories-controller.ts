@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, response, Response } from "express";
 import {
   CreateServiceCategoriesRequest,
   UpdateServiceCategoriesRequest,
@@ -51,6 +51,21 @@ export class ServiceCategoriesController {
       const response = await ServiceCategoriesService.update(request);
       res.status(200).json({
         message: "Data jenis layanan berhasil diperbarui!",
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const serviceCategoriesId = Number(req.params.id);
+      const response = await ServiceCategoriesService.delete(
+        serviceCategoriesId
+      );
+      res.status(200).json({
+        message: "Data jenis layanan berhasil dihapus!",
         data: response,
       });
     } catch (e) {
