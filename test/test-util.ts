@@ -168,4 +168,38 @@ export class MedicinesTest {
       },
     });
   }
+
+  static async createMedicines() {
+    await prismaClient.medicines.createMany({
+      data: [
+        {
+          name: "Amoxicillin 500mg",
+          code: "OBT-AX500",
+          type: "tablets",
+          unit: "pcs",
+          stock_qty: 120,
+          price: 7500,
+          is_active: true,
+        },
+        {
+          name: "Paracetamol 500mg",
+          code: "OBT-PC500",
+          type: "tablets",
+          unit: "pcs",
+          stock_qty: 200,
+          price: 1500,
+          is_active: true,
+        },
+      ],
+    });
+  }
+
+  static async getMedicineId() {
+    const medicines = await prismaClient.medicines.findFirst({
+      where: {
+        code: "OBT-AX500",
+      },
+    });
+    return medicines?.id;
+  }
 }

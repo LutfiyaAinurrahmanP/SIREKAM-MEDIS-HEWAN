@@ -17,4 +17,15 @@ export class MedicinesController {
       next(e);
     }
   }
+
+  static async list(req: UserRequest, res: Response, next: NextFunction) {
+    try {
+      const response = await MedicinesService.list();
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
