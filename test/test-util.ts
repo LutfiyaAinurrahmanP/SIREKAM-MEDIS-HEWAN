@@ -163,7 +163,7 @@ export class MedicinesTest {
     await prismaClient.medicines.deleteMany({
       where: {
         code: {
-          in: ["OBT-AX500", "OBT-PC500"],
+          in: ["OBT-AX500", "OBT-PC500", "OBT-PCX500"],
         },
       },
     });

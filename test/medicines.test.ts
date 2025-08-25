@@ -264,7 +264,7 @@ describe("GET /admin/medicines", () => {
       .set("SESSION-TOKEN", "token123");
 
     expect(response.status).toBe(200);
-    expect(response.body.data.length).toBe(2);
+    expect(response.body.data.length).toBe(3);
     expect(Array.isArray(response.body.data)).toBe(true);
   });
 
@@ -364,9 +364,7 @@ describe("GET /admin/medicines/:id", () => {
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe(
-      "Unauthorized"
-    );
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
@@ -412,9 +410,9 @@ describe("PATCH /admin/medicines/:id", () => {
       .set("SESSION-TOKEN", "token123")
       .send({
         name: "Paracetamol 500mg",
-        code: "OBT-PC500",
-        type: "tablet",
-        unit: "Tablet",
+        code: "OBT-PCX500",
+        type: "tablets",
+        unit: "pcs",
         stock_qty: 200,
         price: 1500,
         is_active: false,
@@ -425,8 +423,8 @@ describe("PATCH /admin/medicines/:id", () => {
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Data obat berhasil diperbarui!");
     expect(response.body.data.name).toBe("Paracetamol 500mg");
-    expect(response.body.data.code).toBe("OBT-PC500");
-    expect(response.body.data.type).toBe("tablet");
+    expect(response.body.data.code).toBe("OBT-PCX500");
+    expect(response.body.data.type).toBe("tablets");
     expect(response.body.data.stock_qty).toBe(200);
     expect(response.body.data.price).toBe(1500);
     expect(response.body.data.is_active).toBe(false);
@@ -460,8 +458,8 @@ describe("PATCH /admin/medicines/:id", () => {
       .send({
         name: "Paracetamol 500mg",
         code: "OBT-PC500",
-        type: "tablet",
-        unit: "Tablet",
+        type: "tablets",
+        unit: "pcs",
         stock_qty: 200,
         price: 1500,
         is_active: true,
@@ -470,7 +468,7 @@ describe("PATCH /admin/medicines/:id", () => {
     logger.debug(response.body);
 
     expect(response.status).toBe(404);
-    expect(response.body.errors.empty).toBe("Data obat tidak ditemukan!");
+    expect(response.body.errors).toBe("Data obat tidak ditemukan!");
   });
 
   it("should return error if not authorized", async () => {
@@ -489,9 +487,7 @@ describe("PATCH /admin/medicines/:id", () => {
       });
 
     expect(response.status).toBe(401);
-    expect(response.body.errors.session).toBe(
-      "Sesi tidak valid atau kadaluarsa!"
-    );
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
@@ -513,8 +509,8 @@ describe("PATCH /admin/medicines/:id", () => {
       .send({
         name: "Paracetamol 500mg",
         code: "OBT-PC500",
-        type: "tablet",
-        unit: "Tablet",
+        type: "tablets",
+        unit: "pcs",
         stock_qty: 200,
         price: 1500,
         is_active: true,
@@ -523,7 +519,7 @@ describe("PATCH /admin/medicines/:id", () => {
     logger.debug(response.body);
 
     expect(response.status).toBe(403);
-    expect(response.body.errors.auth).toBe(
+    expect(response.body.errors).toBe(
       "Anda tidak memiliki hak akses pada halaman ini!"
     );
   });
@@ -559,7 +555,7 @@ describe("DELETE /admin/medicines/:id", () => {
     logger.debug(response.body);
 
     expect(response.status).toBe(404);
-    expect(response.body.errors.empty).toBe("Data obat tidak ditemukan!");
+    expect(response.body.errors).toBe("Data obat tidak ditemukan!");
   });
 
   it("should return error if not authorized", async () => {
@@ -569,9 +565,7 @@ describe("DELETE /admin/medicines/:id", () => {
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors.session).toBe(
-      "Sesi tidak valid atau kadaluarsa!"
-    );
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
@@ -594,7 +588,7 @@ describe("DELETE /admin/medicines/:id", () => {
     logger.debug(response.body);
 
     expect(response.status).toBe(403);
-    expect(response.body.errors.auth).toBe(
+    expect(response.body.errors).toBe(
       "Anda tidak memiliki hak akses pada halaman ini!"
     );
   });

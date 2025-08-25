@@ -26,8 +26,8 @@ adminRouter.delete("/animal-types/:id", AnimalTypesController.delete);
 adminRouter.post("/medicines", MedicinesController.create);
 adminRouter.get("/medicines", MedicinesController.list);
 adminRouter.get("/medicines/:id", MedicinesController.get);
-// adminRouter.patch("/medicines/:id", MedicinesController.update);
-// adminRouter.delete("/medicines/:id", MedicinesController.delete);
+adminRouter.patch("/medicines/:id", MedicinesController.update);
+adminRouter.delete("/medicines/:id", MedicinesController.delete);
 
 // Mount admin router
 apiRouter.use("/admin", adminRouter);
