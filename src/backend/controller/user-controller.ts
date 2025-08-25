@@ -94,4 +94,16 @@ export class UserController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = Number(req.params.id);
+      const response = await UserService.delete(userId);
+      res.status(200).json({
+        message: "Data user berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

@@ -177,4 +177,14 @@ export class UserService {
     });
     return toUserResponse(user!);
   }
+
+  static async delete(userId: number): Promise<UserResponse> {
+    const deleteRequest = await this.checkUserMustExists(userId);
+    const user = await prismaClient.user.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+    return user;
+  }
 }
