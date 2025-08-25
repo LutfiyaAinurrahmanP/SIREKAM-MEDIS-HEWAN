@@ -203,3 +203,43 @@ export class MedicinesTest {
     // return medicines?.id;
   }
 }
+
+export class ServiceCategoriesTest {
+  static async deleteServiceCategories() {
+    return await prismaClient.serviceCategories.deleteMany({
+      where: {
+        name: {
+          in: ["Konsultasi Umum", "Vaksinasi"],
+        },
+      },
+    });
+  }
+
+  static async createServiceCategories() {
+    return await prismaClient.serviceCategories.createMany({
+      data: [
+        {
+          name: "Konsultasi Umum",
+          description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
+          price: 75000.0,
+          is_active: true,
+        },
+        {
+          name: "Vaksinasi",
+          description:
+            "Layanan vaksinasi rutin untuk kucing, anjing, dan kelinci",
+          price: 120000.0,
+          is_active: true,
+        },
+      ],
+    });
+  }
+
+  static async getServiceCategoriesId() {
+    return await prismaClient.serviceCategories.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
+}
