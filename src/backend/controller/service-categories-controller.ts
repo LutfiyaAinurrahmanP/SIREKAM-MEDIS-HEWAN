@@ -27,4 +27,16 @@ export class ServiceCategoriesController {
       next(e);
     }
   }
+
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const serviceCategoriesId = Number(req.params.id);
+      const response = await ServiceCategoriesService.get(serviceCategoriesId);
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

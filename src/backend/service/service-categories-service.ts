@@ -44,4 +44,26 @@ export class ServiceCategoriesService {
 
     return serviceCategories.map(toServiceCategoriesResponse);
   }
+
+  static async checkServiceCategoriesMustExists(serviceCategoriesId: number) {
+    const serviceCategories = await prismaClient.serviceCategories.findUnique({
+      where: {
+        id: serviceCategoriesId,
+      },
+    });
+
+    if (!serviceCategories) {
+      throw new ResponseError(404, "Data jenis layanan tidak ditemukan!");
+    }
+    return serviceCategories;
+  }
+
+  static async get(
+    serviceCategoriesId: number
+  ): Promise<ServiceCategoriesResponse> {
+    const serviceCategories = await this.checkServiceCategoriesMustExists(
+      serviceCategoriesId
+    );
+    return toServiceCategoriesResponse(serviceCategories);
+  }
 }

@@ -219,16 +219,16 @@ export class ServiceCategoriesTest {
     return await prismaClient.serviceCategories.createMany({
       data: [
         {
-          name: "Konsultasi Umum",
-          description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
-          price: 75000.0,
-          is_active: true,
-        },
-        {
           name: "Vaksinasi",
           description:
             "Layanan vaksinasi rutin untuk kucing, anjing, dan kelinci",
           price: 120000.0,
+          is_active: true,
+        },
+        {
+          name: "Konsultasi Umum",
+          description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
+          price: 75000.0,
           is_active: true,
         },
       ],
