@@ -22,9 +22,28 @@ export type RegisterUserRequest = {
 };
 
 export type LoginUserRequest = {
-    username: string;
-    password: string;
-}
+  username: string;
+  password: string;
+};
+
+export type CreateUserRequest = {
+  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+  role: Roles;
+  phone: string;
+};
+
+export type UpdateUserRequest = {
+  id: number;
+  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+  role: Roles;
+  phone: string;
+};
 
 export function toUserResponse(user: User): UserResponse {
   return {

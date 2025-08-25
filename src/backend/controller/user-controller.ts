@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { LoginUserRequest, RegisterUserRequest } from "../model/user-model";
+import {
+  CreateUserRequest,
+  LoginUserRequest,
+  RegisterUserRequest,
+} from "../model/user-model";
 import { UserService } from "../service/user-service";
 import { UserRequest } from "../type/user-request";
 
@@ -37,6 +41,19 @@ export class UserController {
       });
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async create(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: CreateUserRequest = req.body as CreateUserRequest;
+      const response = await UserService.create(request);
+      res.status(201).json({
+        message: "User berhasil dibuat!",
+        data: response,
+      });
+    } catch (e) {
+      next(e);
     }
   }
 }

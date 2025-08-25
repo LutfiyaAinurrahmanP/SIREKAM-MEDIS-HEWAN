@@ -36,6 +36,14 @@ export class UserTest {
       ],
     });
   }
+
+  static async getUserId() {
+    return await prismaClient.user.findFirst({
+      where: {
+        username: "lutfiyapr",
+      },
+    });
+  }
 }
 
 export class AnimalTypesTest {

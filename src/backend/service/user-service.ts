@@ -3,6 +3,7 @@ import { ResponseError } from "../error/response-error";
 import { UniqueError } from "../error/unique-error";
 import { User } from "../generated/prisma";
 import {
+  CreateUserRequest,
   LoginUserRequest,
   RegisterUserRequest,
   toUserResponse,
@@ -93,5 +94,42 @@ export class UserService {
     });
 
     return toUserResponse(result);
+  }
+
+  static async create(req: CreateUserRequest): Promise<UserResponse> {
+    const createRequest = Validation.validate(UserValidation.CREATE, req);
+
+    const record = {
+      ...createRequest,
+      created_at: new Date(),
+    };
+
+    const checkUserMustExists = await prismaClient.user.count({
+      where: {
+        username: req.username,
+      },
+    });
+
+    if (checkUserMustExists != 0) {
+      throw new UniqueError("username", "Username sudah dipakai!");
+    }
+
+    const checkEmailExists = await prismaClient.user.count({
+      where: {
+        email: createRequest.email,
+      },
+    });
+
+    if (checkEmailExists != 0) {
+      throw new UniqueError("email", "Email sudah dipakai!");
+    }
+
+    createRequest.password = await bcrypt.hash(createRequest.password, 10);
+
+    const user = await prismaClient.user.create({
+      data: record,
+    });
+
+    return toUserResponse(user);
   }
 }
