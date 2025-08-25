@@ -195,11 +195,11 @@ export class MedicinesTest {
   }
 
   static async getMedicineId() {
-    const medicines = await prismaClient.medicines.findFirst({
+    return await prismaClient.medicines.findFirst({
       where: {
         code: "OBT-AX500",
       },
     });
-    return medicines?.id;
+    // return medicines?.id;
   }
 }

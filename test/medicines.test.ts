@@ -354,7 +354,7 @@ describe("GET /admin/medicines/:id", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
-    expect(response.body.errors.empty).toBe("Data obat tidak ditemukan!");
+    expect(response.body.errors).toBe("Data obat tidak ditemukan!");
   });
 
   it("should return error if not authorized", async () => {
@@ -364,8 +364,8 @@ describe("GET /admin/medicines/:id", () => {
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors.session).toBe(
-      "Sesi tidak valid atau kadaluarsa!"
+    expect(response.body.errors).toBe(
+      "Unauthorized"
     );
   });
 
@@ -389,7 +389,7 @@ describe("GET /admin/medicines/:id", () => {
     logger.debug(response.body);
 
     expect(response.status).toBe(403);
-    expect(response.body.errors.auth).toBe(
+    expect(response.body.errors).toBe(
       "Anda tidak memiliki hak akses pada halaman ini!"
     );
   });
