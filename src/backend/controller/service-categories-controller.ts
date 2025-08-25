@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateServiceCategoriesRequest } from "../model/service-categories";
+import {
+  CreateServiceCategoriesRequest,
+  UpdateServiceCategoriesRequest,
+} from "../model/service-categories";
 import { ServiceCategoriesService } from "../service/service-categories-service";
 
 export class ServiceCategoriesController {
@@ -33,6 +36,21 @@ export class ServiceCategoriesController {
       const serviceCategoriesId = Number(req.params.id);
       const response = await ServiceCategoriesService.get(serviceCategoriesId);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdateServiceCategoriesRequest =
+        req.body as UpdateServiceCategoriesRequest;
+      request.id = Number(req.params.id);
+      const response = await ServiceCategoriesService.update(request);
+      res.status(200).json({
+        message: "Data jenis layanan berhasil diperbarui!",
         data: response,
       });
     } catch (e) {

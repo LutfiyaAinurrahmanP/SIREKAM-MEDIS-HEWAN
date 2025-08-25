@@ -34,10 +34,10 @@ adminRouter.delete("/medicines/:id", MedicinesController.delete);
 adminRouter.post("/service-categories", ServiceCategoriesController.create);
 adminRouter.get("/service-categories", ServiceCategoriesController.list);
 adminRouter.get("/service-categories/:id", ServiceCategoriesController.get);
-// adminRouter.patch(
-//   "/service-categories/:id",
-//   ServiceCategoriesController.update
-// );
+adminRouter.patch(
+  "/service-categories/:id",
+  ServiceCategoriesController.update
+);
 // adminRouter.delete(
 //   "/service-categories/:id",
 //   ServiceCategoriesController.delete

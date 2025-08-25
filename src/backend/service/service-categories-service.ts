@@ -3,6 +3,7 @@ import {
   CreateServiceCategoriesRequest,
   ServiceCategoriesResponse,
   toServiceCategoriesResponse,
+  UpdateServiceCategoriesRequest,
 } from "../model/service-categories";
 import { ServiceCategoriesValidation } from "../validation/service-categories-validation";
 import { Validation } from "../validation/validation";
@@ -65,5 +66,26 @@ export class ServiceCategoriesService {
       serviceCategoriesId
     );
     return toServiceCategoriesResponse(serviceCategories);
+  }
+
+  static async update(
+    req: UpdateServiceCategoriesRequest
+  ): Promise<ServiceCategoriesResponse> {
+    const updateRequest = Validation.validate(
+      ServiceCategoriesValidation.UPDATE,
+      req
+    );
+    await this.checkServiceCategoriesMustExists(updateRequest.id);
+    const serviceCategories = await prismaClient.serviceCategories.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
+    return toServiceCategoriesResponse(serviceCategories!);
   }
 }
