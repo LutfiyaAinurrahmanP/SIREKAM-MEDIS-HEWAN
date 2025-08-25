@@ -16,4 +16,15 @@ export class ServiceCategoriesController {
       next(e);
     }
   }
+
+  static async list(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await ServiceCategoriesService.list();
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

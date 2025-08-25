@@ -8,6 +8,7 @@ import { ServiceCategoriesValidation } from "../validation/service-categories-va
 import { Validation } from "../validation/validation";
 import { prismaClient } from "../application/database";
 import { UniqueError } from "../error/unique-error";
+import { ResponseError } from "../error/response-error";
 
 export class ServiceCategoriesService {
   static async create(
@@ -28,5 +29,19 @@ export class ServiceCategoriesService {
     });
 
     return toServiceCategoriesResponse(serviceCategoris);
+  }
+
+  static async list(): Promise<ServiceCategoriesResponse[]> {
+    const serviceCategories = await prismaClient.serviceCategories.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+
+    if (!serviceCategories) {
+      throw new ResponseError(404, "Data jenis layanan tidak ditemukan!");
+    }
+
+    return serviceCategories.map(toServiceCategoriesResponse);
   }
 }
