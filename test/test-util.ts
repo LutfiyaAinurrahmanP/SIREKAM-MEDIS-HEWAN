@@ -16,15 +16,6 @@ export class UserTest {
     await prismaClient.user.createMany({
       data: [
         {
-          username: "lutfiyapr",
-          fullname: "Lutfiya Ainurrahman Prasetyo",
-          email: "lutfiyapr.stu@pnc.ac.id",
-          password: await bcrypt.hash("password", 10),
-          role: "admin",
-          phone: "081915133813",
-          token: "token123",
-        },
-        {
           username: "dummy data",
           fullname: "Lutfiya Ainurrahman Prasetyo",
           email: "dummy-data.stu@pnc.ac.id",
@@ -33,14 +24,23 @@ export class UserTest {
           phone: "081915133813",
           token: "token234",
         },
+        {
+          username: "lutfiyapr",
+          fullname: "Lutfiya Ainurrahman Prasetyo",
+          email: "lutfiyapr.stu@pnc.ac.id",
+          password: await bcrypt.hash("password", 10),
+          role: "admin",
+          phone: "081915133813",
+          token: "token123",
+        },
       ],
     });
   }
 
   static async getUserId() {
     return await prismaClient.user.findFirst({
-      where: {
-        username: "lutfiyapr",
+      orderBy: {
+        id: "desc",
       },
     });
   }

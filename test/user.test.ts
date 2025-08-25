@@ -650,6 +650,7 @@ describe("GET /admin/users/:id", () => {
 
 describe("PATCH /admin/users/:id", () => {
   beforeEach(async () => {
+    await UserTest.deleteUser();
     await UserTest.createUser();
   });
   afterEach(async () => {
@@ -662,7 +663,7 @@ describe("PATCH /admin/users/:id", () => {
       .patch(`/admin/users/${user?.id}`)
       .set("SESSION-TOKEN", "token123")
       .send({
-        username: "updateduser",
+        username: "dummy data2",
         fullname: "Updated User Name",
         email: "updated@example.com",
         password: "newpassword",
@@ -671,10 +672,9 @@ describe("PATCH /admin/users/:id", () => {
       });
 
     logger.debug(response.body);
-
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Data user berhasil diperbarui!");
-    expect(response.body.data.username).toBe("updateduser");
+    expect(response.body.data.username).toBe("dummy data2");
     expect(response.body.data.fullname).toBe("Updated User Name");
     expect(response.body.data.email).toBe("updated@example.com");
     expect(response.body.data.role).toBe("client");

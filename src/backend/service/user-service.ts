@@ -7,6 +7,7 @@ import {
   LoginUserRequest,
   RegisterUserRequest,
   toUserResponse,
+  UpdateUserRequest,
   UserResponse,
 } from "../model/user-model";
 import { UserValidation } from "../validation/user-validation";
@@ -160,5 +161,20 @@ export class UserService {
   static async get(userId: number): Promise<UserResponse> {
     const user = await this.checkUserMustExists(userId);
     return toUserResponse(user);
+  }
+
+  static async update(req: UpdateUserRequest): Promise<UserResponse> {
+    const updateRequest = Validation.validate(UserValidation.UPDATE, req);
+    await this.checkUserMustExists(updateRequest.id);
+    const user = await prismaClient.user.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+    return toUserResponse(user!);
   }
 }

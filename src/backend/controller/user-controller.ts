@@ -3,6 +3,7 @@ import {
   CreateUserRequest,
   LoginUserRequest,
   RegisterUserRequest,
+  UpdateUserRequest,
 } from "../model/user-model";
 import { UserService } from "../service/user-service";
 import { UserRequest } from "../type/user-request";
@@ -73,6 +74,20 @@ export class UserController {
       const userId = Number(req.params.id);
       const response = await UserService.get(userId);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdateUserRequest = req.body as UpdateUserRequest;
+      request.id = Number(req.params.id);
+      const response = await UserService.update(request);
+      res.status(200).json({
+        message: "Data user berhasil diperbarui!",
         data: response,
       });
     } catch (e) {

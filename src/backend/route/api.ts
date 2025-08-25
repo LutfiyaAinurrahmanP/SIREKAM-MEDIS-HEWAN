@@ -47,7 +47,7 @@ adminRouter.delete(
 adminRouter.post("/users", UserController.create);
 adminRouter.get("/users", UserController.list);
 adminRouter.get("/users/:id", UserController.get);
-// adminRouter.patch("/users/:id", UserController.update);
+adminRouter.patch("/users/:id", UserController.update);
 // adminRouter.delete("/users/:id", UserController.delete);
 
 // Mount admin router
