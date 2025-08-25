@@ -142,4 +142,23 @@ export class UserService {
 
     return user.map(toUserResponse);
   }
+
+  static async checkUserMustExists(userId: number) {
+    const user = await prismaClient.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      throw new ResponseError(404, "Data user tidak ditemukan!");
+    }
+
+    return user;
+  }
+
+  static async get(userId: number): Promise<UserResponse> {
+    const user = await this.checkUserMustExists(userId);
+    return toUserResponse(user);
+  }
 }

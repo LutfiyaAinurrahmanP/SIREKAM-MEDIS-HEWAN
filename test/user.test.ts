@@ -584,10 +584,8 @@ describe("GET /admin/users", () => {
 describe("GET /admin/users/:id", () => {
   beforeEach(async () => {
     await UserTest.createUser();
-    await UserTest.createUser();
   });
   afterEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.deleteUser();
   });
 
@@ -653,10 +651,8 @@ describe("GET /admin/users/:id", () => {
 describe("PATCH /admin/users/:id", () => {
   beforeEach(async () => {
     await UserTest.createUser();
-    await UserTest.createUser();
   });
   afterEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.deleteUser();
   });
 
@@ -781,10 +777,8 @@ describe("PATCH /admin/users/:id", () => {
 describe("DELETE /admin/users/:id", () => {
   beforeEach(async () => {
     await UserTest.createUser();
-    await UserTest.createUser();
   });
   afterEach(async () => {
-    await UserTest.deleteUser();
     await UserTest.deleteUser();
   });
 

@@ -67,4 +67,16 @@ export class UserController {
       next(e);
     }
   }
+
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userId = Number(req.params.id);
+      const response = await UserService.get(userId);
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
