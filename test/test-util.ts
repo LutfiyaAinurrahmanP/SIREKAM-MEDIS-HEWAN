@@ -6,7 +6,7 @@ export class UserTest {
     await prismaClient.user.deleteMany({
       where: {
         username: {
-          in: ["lutfiyapr", "dummy data", "dummy data2"],
+          in: ["lutfiyapr", "dummy data", "dummy data2", "staff"],
         },
       },
     });
@@ -25,6 +25,15 @@ export class UserTest {
           token: "token234",
         },
         {
+          username: "staff",
+          fullname: "Lutfiya Ainurrahman Prasetyo",
+          email: "staff.stu@pnc.ac.id",
+          password: await bcrypt.hash("password", 10),
+          role: "staff",
+          phone: "081915133813",
+          token: "token222",
+        },
+        {
           username: "lutfiyapr",
           fullname: "Lutfiya Ainurrahman Prasetyo",
           email: "lutfiyapr.stu@pnc.ac.id",
@@ -41,6 +50,14 @@ export class UserTest {
     return await prismaClient.user.findFirst({
       orderBy: {
         id: "desc",
+      },
+    });
+  }
+
+  static async getUserStaffId() {
+    return await prismaClient.user.findFirst({
+      where: {
+        username: "staff",
       },
     });
   }

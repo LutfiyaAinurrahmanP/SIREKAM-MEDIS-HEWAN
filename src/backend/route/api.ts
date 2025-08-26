@@ -5,6 +5,7 @@ import { AnimalTypesController } from "../controller/animal-types-controller";
 import { roleMiddleware, UserRole } from "../middleware/role-middleware";
 import { MedicinesController } from "../controller/medicines-controller";
 import { ServiceCategoriesController } from "../controller/service-categories-controller";
+import { PetsController } from "../controller/pets-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -52,3 +53,16 @@ adminRouter.delete("/users/:id", UserController.delete);
 
 // Mount admin router
 apiRouter.use("/admin", adminRouter);
+
+// Staff
+export const staffRouter = express.Router();
+staffRouter.use(roleMiddleware([UserRole.STAFF]));
+
+// Pets API
+staffRouter.post("/pets", PetsController.create);
+// staffRouter.get("/pets", PetsController.list);
+// staffRouter.get("/pets/:id", PetsController.get);
+// staffRouter.patch("/pets/:id", PetsController.update);
+// staffRouter.delete("/pets/:id", PetsController.delete);
+
+apiRouter.use("/staff", staffRouter);
