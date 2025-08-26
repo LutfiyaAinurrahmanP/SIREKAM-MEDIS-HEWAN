@@ -251,3 +251,24 @@ export class ServiceCategoriesTest {
     });
   }
 }
+
+export class PrescriptionsTest {
+  static async createPrescriptions() {
+    await prismaClient.prescriptions.createMany({
+      data: [
+        {
+          medical_record_id: 1,
+          veterinarian_id: 1,
+          notes:
+            "Kucing mengalami demam ringan dan kehilangan nafsu makan. Diberikan obat antipiretik",
+        },
+        {
+          medical_record_id: 3,
+          veterinarian_id: 2,
+          notes:
+            "Kelinci diperiksa rutin, kondisi sehat, hanya disarankan untuk memperbaiki pola makan",
+        },
+      ],
+    });
+  }
+}
