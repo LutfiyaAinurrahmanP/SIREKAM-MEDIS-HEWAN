@@ -78,4 +78,17 @@ export class AppointmentsService {
 
     return toAppointmentsResponse(appointments!);
   }
+
+  static async delete(appointmentsId: number): Promise<AppointmentsResponse> {
+    const deleteRequest = await this.checkAppointmentsMustExists(
+      appointmentsId
+    );
+    const appointments = await prismaClient.appointments.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+
+    return appointments;
+  }
 }

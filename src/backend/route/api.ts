@@ -71,6 +71,6 @@ staffRouter.post("/appointments", AppointmentsController.create);
 staffRouter.get("/appointments", AppointmentsController.list);
 staffRouter.get("/appointments/:id", AppointmentsController.get);
 staffRouter.patch("/appointments/:id", AppointmentsController.update);
-// staffRouter.delete("/appointments/:id", AppointmentsController.delete);
+staffRouter.delete("/appointments/:id", AppointmentsController.delete);
 
 apiRouter.use("/staff", staffRouter);

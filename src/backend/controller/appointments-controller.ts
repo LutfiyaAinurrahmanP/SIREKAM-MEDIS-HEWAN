@@ -57,4 +57,16 @@ export class AppointmentsController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = Number(req.params.id);
+      await AppointmentsService.delete(request);
+      res.status(200).json({
+        message: "Data janji temu berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
