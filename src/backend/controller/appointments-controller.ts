@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateAppointmentsRequest } from "../model/appointments-model";
+import {
+  CreateAppointmentsRequest,
+  UpdateAppointmentsRequest,
+} from "../model/appointments-model";
 import { AppointmentsService } from "../service/appointments-service";
 
 export class AppointmentsController {
@@ -33,6 +36,21 @@ export class AppointmentsController {
       const appointmentsId = Number(req.params.id);
       const response = await AppointmentsService.get(appointmentsId);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdateAppointmentsRequest =
+        req.body as UpdateAppointmentsRequest;
+      request.id = Number(req.params.id);
+      const response = await AppointmentsService.update(request);
+      res.status(200).json({
+        message: "Data janji temu berhasil diperbarui!",
         data: response,
       });
     } catch (e) {

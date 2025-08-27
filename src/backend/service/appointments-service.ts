@@ -4,6 +4,7 @@ import {
   AppointmentsResponse,
   CreateAppointmentsRequest,
   toAppointmentsResponse,
+  UpdateAppointmentsRequest,
 } from "../model/appointments-model";
 import { AppointmentsValidation } from "../validation/appointments-validation";
 import { Validation } from "../validation/validation";
@@ -55,5 +56,26 @@ export class AppointmentsService {
   static async get(appointmentsId: number): Promise<AppointmentsResponse> {
     const appointments = await this.checkAppointmentsMustExists(appointmentsId);
     return toAppointmentsResponse(appointments);
+  }
+
+  static async update(
+    req: UpdateAppointmentsRequest
+  ): Promise<AppointmentsResponse> {
+    const updateRequest = Validation.validate(
+      AppointmentsValidation.UPDATE,
+      req
+    );
+    await this.checkAppointmentsMustExists(updateRequest.id);
+    const appointments = await prismaClient.appointments.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
+    return toAppointmentsResponse(appointments!);
   }
 }

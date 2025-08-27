@@ -391,9 +391,9 @@ describe("PATCH /staff/appointments/:id", () => {
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
-        schedule_date: "2025-08-16",
-        schedule_time: "09:00:00",
-        status: "confirmed",
+        schedule_date: new Date("2025-08-16"),
+        schedule_time: "09:00",
+        status: "completed",
         reason: "Pemeriksaan luka setelah kecelakaan",
         notes: "Pernah mengalami kecelakaan 2 minggu lalu",
       });
@@ -401,9 +401,9 @@ describe("PATCH /staff/appointments/:id", () => {
     logger.debug(response.body);
     expect(response.status).toBe(200);
     expect(response.body.message).toBe("Data janji temu berhasil diperbarui!");
-    expect(response.body.data.schedule_date).toBe("2025-08-16");
-    expect(response.body.data.schedule_time).toBe("09:00:00");
-    expect(response.body.data.status).toBe("confirmed");
+    expect(response.body.data.schedule_date).toBe("2025-08-16T00:00:00.000Z");
+    expect(response.body.data.schedule_time).toBe("09:00");
+    expect(response.body.data.status).toBe("completed");
     expect(response.body.data.reason).toBe(
       "Pemeriksaan luka setelah kecelakaan"
     );
@@ -421,8 +421,8 @@ describe("PATCH /staff/appointments/:id", () => {
       .set("SESSION-TOKEN", "token222")
       .send({
         created_by: user?.id,
-        schedule_date: "2025-08-15",
-        schedule_time: "08:00:00",
+        schedule_date: new Date("2025-08-15"),
+        schedule_time: "08:00",
         status: "scheduled",
         reason: "Vaksinasi rabies",
         notes: "Vaksinasi rabies tahunan",
@@ -431,7 +431,7 @@ describe("PATCH /staff/appointments/:id", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(400);
-    expect(response.body.errors.pet_id.required).toBe(
+    expect(response.body.errors.pet_id.number).toBe(
       "Hewan peliharaan harus dipilih!"
     );
   });
@@ -446,8 +446,8 @@ describe("PATCH /staff/appointments/:id", () => {
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
-        schedule_date: "2025-08-15",
-        schedule_time: "08:00:00",
+        schedule_date: new Date("2025-08-15"),
+        schedule_time: "08:00",
         status: "scheduled",
         reason: "Vaksinasi rabies",
         notes: "Vaksinasi rabies tahunan",
@@ -477,7 +477,7 @@ describe("PATCH /staff/appointments/:id", () => {
       });
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe("Sesi tidak valid atau kadaluarsa!");
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {

@@ -70,7 +70,7 @@ staffRouter.delete("/pets/:id", PetsController.delete);
 staffRouter.post("/appointments", AppointmentsController.create);
 staffRouter.get("/appointments", AppointmentsController.list);
 staffRouter.get("/appointments/:id", AppointmentsController.get);
-// staffRouter.patch("/appointments/:id", AppointmentsController.update);
+staffRouter.patch("/appointments/:id", AppointmentsController.update);
 // staffRouter.delete("/appointments/:id", AppointmentsController.delete);
 
 apiRouter.use("/staff", staffRouter);
