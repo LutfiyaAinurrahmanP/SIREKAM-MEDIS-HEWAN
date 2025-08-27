@@ -1,5 +1,6 @@
 import { prismaClient } from "../application/database";
 import { ResponseError } from "../error/response-error";
+import { Pets } from "../generated/prisma";
 import {
   CreatePetsRequest,
   PetsResponse,
@@ -36,5 +37,24 @@ export class PetsService {
     }
 
     return pets.map(toPetsResponse);
+  }
+
+  static async checkPetsMustExists(petsId: number) {
+    const pets = await prismaClient.pets.findUnique({
+      where: {
+        id: petsId,
+      },
+    });
+
+    if (!pets) {
+      throw new ResponseError(404, "Data hewan peliharaan tidak ditemukan!");
+    }
+
+    return pets;
+  }
+
+  static async get(petsId: number): Promise<PetsResponse> {
+    const pets = await this.checkPetsMustExists(petsId);
+    return toPetsResponse(pets!);
   }
 }

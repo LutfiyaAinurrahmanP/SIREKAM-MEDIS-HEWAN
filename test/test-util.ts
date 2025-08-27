@@ -181,6 +181,14 @@ export class PetsTest {
       },
     });
   }
+
+  static async getPetsId() {
+    return await prismaClient.pets.findFirst({
+      where: {
+        name: "Luna",
+      },
+    });
+  }
 }
 
 export class MedicinesTest {

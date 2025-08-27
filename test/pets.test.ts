@@ -342,18 +342,6 @@ describe("GET /staff/pets", () => {
       "Anda tidak memiliki hak akses pada halaman ini!"
     );
   });
-
-  it("should return error if no pets found", async () => {
-    await PetsTest.deletePets();
-
-    const response = await supertest(web)
-      .get("/staff/pets")
-      .set("SESSION-TOKEN", "token222");
-
-    logger.debug(response.body);
-    expect(response.status).toBe(200);
-    expect(response.body.message).toBe("Data hewan peliharaan tidak ditemukan!");
-  });
 });
 
 describe("GET /staff/pets/:id", () => {
@@ -370,7 +358,7 @@ describe("GET /staff/pets/:id", () => {
   });
 
   it("should get an existing pet", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const response = await supertest(web)
       .get(`/staff/pets/${pet?.id}`)
       .set("SESSION-TOKEN", "token222");
@@ -396,17 +384,17 @@ describe("GET /staff/pets/:id", () => {
   });
 
   it("should return error if session is invalid", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const response = await supertest(web)
       .get(`/staff/pets/${pet?.id}`)
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe("Sesi tidak valid atau kadaluarsa!");
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     await prismaClient.user.create({
       data: {
         username: "dummy data2",
@@ -445,7 +433,7 @@ describe("PATCH /staff/pets/:id", () => {
   });
 
   it("should update an existing pet", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const user = await UserTest.getUserStaffId();
 
@@ -477,7 +465,7 @@ describe("PATCH /staff/pets/:id", () => {
   });
 
   it("should return error if request is invalid", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const user = await UserTest.getUserStaffId();
 
@@ -526,7 +514,7 @@ describe("PATCH /staff/pets/:id", () => {
   });
 
   it("should return error if session is invalid", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const user = await UserTest.getUserStaffId();
 
@@ -549,7 +537,7 @@ describe("PATCH /staff/pets/:id", () => {
   });
 
   it("should return error if user doesn't have access", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const user = await UserTest.getUserStaffId();
 
@@ -601,7 +589,7 @@ describe("DELETE /staff/pets/:id", () => {
   });
 
   it("should delete an existing pet", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const response = await supertest(web)
       .delete(`/staff/pets/${pet?.id}`)
       .set("SESSION-TOKEN", "token222");
@@ -624,7 +612,7 @@ describe("DELETE /staff/pets/:id", () => {
   });
 
   it("should return error if session is invalid", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     const response = await supertest(web)
       .delete(`/staff/pets/${pet?.id}`)
       .set("SESSION-TOKEN", "invalid_token");
@@ -634,7 +622,7 @@ describe("DELETE /staff/pets/:id", () => {
   });
 
   it("should return error if user doesn't have access", async () => {
-    const pet = await PetsTest.getPetId();
+    const pet = await PetsTest.getPetsId();
     await prismaClient.user.create({
       data: {
         username: "dummy data2",

@@ -20,7 +20,18 @@ export class PetsController {
     try {
       const response = await PetsService.list();
       res.status(200).json({
-        message: "Data hewan peliharaan tidak ditemukan!",
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const petsId = Number(req.params.id);
+      const response = await PetsService.get(petsId);
+      res.status(200).json({
         data: response,
       });
     } catch (e) {
