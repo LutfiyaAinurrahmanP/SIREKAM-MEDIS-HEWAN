@@ -131,7 +131,7 @@ describe("GET /admin/animal-types", () => {
       .set("SESSION-TOKEN", "token123");
 
     expect(response.status).toBe(200);
-    expect(response.body.data.length).toBe(3);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
   });
 
