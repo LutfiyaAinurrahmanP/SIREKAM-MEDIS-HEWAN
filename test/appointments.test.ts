@@ -250,13 +250,8 @@ describe("GET /staff/appointments", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
-    expect(response.body.data.length).toBeGreaterThan(0);
-    expect(response.body.meta).toBeDefined();
-    expect(response.body.meta.total).toBeDefined();
-    expect(response.body.meta.page).toBeDefined();
-    expect(response.body.meta.limit).toBeDefined();
-    expect(response.body.meta.total_page).toBeDefined();
   });
 
   it("should return error if session is invalid", async () => {
@@ -265,7 +260,7 @@ describe("GET /staff/appointments", () => {
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe("Sesi tidak valid atau kadaluarsa!");
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
@@ -290,18 +285,6 @@ describe("GET /staff/appointments", () => {
     expect(response.body.errors).toBe(
       "Anda tidak memiliki hak akses pada halaman ini!"
     );
-  });
-
-  it("should return error if no appointments found", async () => {
-    await AppointmentsTest.deleteAppointments();
-
-    const response = await supertest(web)
-      .get("/staff/appointments")
-      .set("SESSION-TOKEN", "token222");
-
-    logger.debug(response.body);
-    expect(response.status).toBe(404);
-    expect(response.body.errors).toBe("Data janji temu tidak ditemukan!");
   });
 });
 

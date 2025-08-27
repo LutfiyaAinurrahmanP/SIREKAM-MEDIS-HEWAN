@@ -68,7 +68,7 @@ staffRouter.delete("/pets/:id", PetsController.delete);
 
 // Appointments API
 staffRouter.post("/appointments", AppointmentsController.create);
-// staffRouter.get("/appointments", AppointmentsController.list);
+staffRouter.get("/appointments", AppointmentsController.list);
 // staffRouter.get("/appointments/:id", AppointmentsController.get);
 // staffRouter.patch("/appointments/:id", AppointmentsController.update);
 // staffRouter.delete("/appointments/:id", AppointmentsController.delete);

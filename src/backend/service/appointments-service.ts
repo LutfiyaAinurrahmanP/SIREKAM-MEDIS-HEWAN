@@ -1,4 +1,5 @@
 import { prismaClient } from "../application/database";
+import { ResponseError } from "../error/response-error";
 import {
   AppointmentsResponse,
   CreateAppointmentsRequest,
@@ -24,5 +25,17 @@ export class AppointmentsService {
     });
 
     return toAppointmentsResponse(appointments);
+  }
+
+  static async list(): Promise<AppointmentsResponse[]> {
+    const appointments = await prismaClient.appointments.findMany({
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+    if (!appointments) {
+      throw new ResponseError(404, "Data janji temu tidak ditemukan!");
+    }
+    return appointments.map(toAppointmentsResponse);
   }
 }
