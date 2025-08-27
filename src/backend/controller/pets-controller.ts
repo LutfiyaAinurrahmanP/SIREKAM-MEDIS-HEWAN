@@ -15,4 +15,16 @@ export class PetsController {
       next(e);
     }
   }
+
+  static async list(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await PetsService.list();
+      res.status(200).json({
+        message: "Data hewan peliharaan tidak ditemukan!",
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
