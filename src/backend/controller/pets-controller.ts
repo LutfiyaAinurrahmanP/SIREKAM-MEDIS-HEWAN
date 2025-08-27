@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CreatePetsRequest } from "../model/pets-model";
+import { CreatePetsRequest, UpdatePetsRequest } from "../model/pets-model";
 import { PetsService } from "../service/pets-service";
 
 export class PetsController {
@@ -32,6 +32,20 @@ export class PetsController {
       const petsId = Number(req.params.id);
       const response = await PetsService.get(petsId);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdatePetsRequest = req.body as UpdatePetsRequest;
+      request.id = Number(req.params.id);
+      const response = await PetsService.update(request);
+      res.status(200).json({
+        message: "Data hewan peliharaan berhasil diperbarui!",
         data: response,
       });
     } catch (e) {

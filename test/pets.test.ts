@@ -69,7 +69,7 @@ describe("POST /staff/pets", () => {
         name: "Luna",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -95,7 +95,7 @@ describe("POST /staff/pets", () => {
         name: "",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -121,7 +121,7 @@ describe("POST /staff/pets", () => {
         name: longName,
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -143,7 +143,7 @@ describe("POST /staff/pets", () => {
         owner_id: user?.id,
         name: "Luna",
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -190,7 +190,7 @@ describe("POST /staff/pets", () => {
         name: "Luna",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         color: "Putih",
       });
@@ -213,7 +213,7 @@ describe("POST /staff/pets", () => {
         name: "Luna",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: "invalid",
         color: "Putih",
@@ -237,7 +237,7 @@ describe("POST /staff/pets", () => {
         name: "Luna",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -272,7 +272,7 @@ describe("POST /staff/pets", () => {
         name: "Luna",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -445,8 +445,8 @@ describe("PATCH /staff/pets/:id", () => {
         name: "Max Updated",
         animal_type_id: animalType?.id,
         breed: "Golden Retriever",
-        gender: "Jantan",
-        birth_date: "2021-09-08",
+        gender: "male",
+        birth_date: new Date("2021-09-08"),
         weight: 28.5,
         color: "Emas",
         notes: "Anjing ramah, rutin vaksinasi lengkap",
@@ -459,7 +459,7 @@ describe("PATCH /staff/pets/:id", () => {
     );
     expect(response.body.data.name).toBe("Max Updated");
     expect(response.body.data.breed).toBe("Golden Retriever");
-    expect(response.body.data.gender).toBe("Jantan");
+    expect(response.body.data.gender).toBe("male");
     expect(response.body.data.weight).toBe(28.5);
     expect(response.body.data.color).toBe("Emas");
   });
@@ -477,7 +477,7 @@ describe("PATCH /staff/pets/:id", () => {
         name: "", // Invalid empty name
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -502,7 +502,7 @@ describe("PATCH /staff/pets/:id", () => {
         name: "Luna Updated",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
@@ -526,14 +526,14 @@ describe("PATCH /staff/pets/:id", () => {
         name: "Luna Updated",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",
       });
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe("Sesi tidak valid atau kadaluarsa!");
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
@@ -561,7 +561,7 @@ describe("PATCH /staff/pets/:id", () => {
         name: "Luna Updated",
         animal_type_id: animalType?.id,
         breed: "Persian",
-        gender: "Betina",
+        gender: "female",
         birth_date: "2022-05-14",
         weight: 3.4,
         color: "Putih",

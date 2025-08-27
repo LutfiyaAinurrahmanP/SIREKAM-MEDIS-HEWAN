@@ -176,7 +176,7 @@ export class PetsTest {
     await prismaClient.pets.deleteMany({
       where: {
         name: {
-          in: ["Luna", "Max"],
+          in: ["Luna", "Max", "Max Updated"],
         },
       },
     });

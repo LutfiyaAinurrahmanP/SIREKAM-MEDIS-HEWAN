@@ -5,6 +5,7 @@ import {
   CreatePetsRequest,
   PetsResponse,
   toPetsResponse,
+  UpdatePetsRequest,
 } from "../model/pets-model";
 import { PetsValidation } from "../validation/pets-validation";
 import { Validation } from "../validation/validation";
@@ -56,5 +57,21 @@ export class PetsService {
   static async get(petsId: number): Promise<PetsResponse> {
     const pets = await this.checkPetsMustExists(petsId);
     return toPetsResponse(pets!);
+  }
+
+  static async update(req: UpdatePetsRequest): Promise<PetsResponse> {
+    const updateRequest = Validation.validate(PetsValidation.UPDATE, req);
+    await this.checkPetsMustExists(updateRequest.id);
+    const pets = await prismaClient.pets.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
+    return toPetsResponse(pets);
   }
 }
