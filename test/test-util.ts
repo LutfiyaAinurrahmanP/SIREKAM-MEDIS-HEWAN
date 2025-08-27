@@ -276,3 +276,78 @@ export class ServiceCategoriesTest {
     });
   }
 }
+
+export class AppointmentsTest {
+  static async getUserId1() {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        username: "lutfiyapr",
+      },
+    });
+    return user?.id;
+  }
+
+  static async getUserId2() {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        username: "dummy data",
+      },
+    });
+    return user?.id;
+  }
+
+  static async getPetId1() {
+    const pet = await prismaClient.pets.findFirst({
+      where: {
+        name: "Luna",
+      },
+    });
+    return pet?.id;
+  }
+
+  static async getPetId2() {
+    const pet = await prismaClient.pets.findFirst({
+      where: {
+        name: "Max",
+      },
+    });
+    return pet?.id;
+  }
+
+  static async createAppointments() {
+    const userId1: number | undefined = await this.getUserId1();
+    const userId2: number | undefined = await this.getUserId2();
+    const petId1: number | undefined = await this.getPetId1();
+    const petId2: number | undefined = await this.getPetId2();
+    await prismaClient.appointments.createMany({
+      data: [
+        {
+          pet_id: petId1!,
+          created_by: userId1!,
+          schedule_date: "2025-08-15",
+          schedule_time: "08:00",
+          status: "scheduled",
+          reason: "Vaksinasi rabies",
+          notes: "Vaksinasi rabies tahunan",
+          created_at: "2025-08-15",
+          updated_at: "2025-08-15",
+        },
+        {
+          pet_id: petId2!,
+          created_by: userId2!,
+          schedule_date: "2025-08-15",
+          schedule_time: "08:00",
+          status: "scheduled",
+          reason: "Pemeriksaan luka setelah kecelakaan",
+          notes: "Pernah mengalami kecelakaan 2 minggu lalu",
+          created_at: "2025-08-15",
+          updated_at: "2025-08-15",
+        },
+      ],
+    });
+  }
+
+  static async deleteAppointments() {
+    await prismaClient.appointments.deleteMany();
+  }
+}

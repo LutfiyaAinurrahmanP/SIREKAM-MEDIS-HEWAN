@@ -6,6 +6,7 @@ import { roleMiddleware, UserRole } from "../middleware/role-middleware";
 import { MedicinesController } from "../controller/medicines-controller";
 import { ServiceCategoriesController } from "../controller/service-categories-controller";
 import { PetsController } from "../controller/pets-controller";
+import { AppointmentsController } from "../controller/appointments-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -64,5 +65,12 @@ staffRouter.get("/pets", PetsController.list);
 staffRouter.get("/pets/:id", PetsController.get);
 staffRouter.patch("/pets/:id", PetsController.update);
 staffRouter.delete("/pets/:id", PetsController.delete);
+
+// Appointments API
+staffRouter.post("/appointments", AppointmentsController.create);
+// staffRouter.get("/appointments", AppointmentsController.list);
+// staffRouter.get("/appointments/:id", AppointmentsController.get);
+// staffRouter.patch("/appointments/:id", AppointmentsController.update);
+// staffRouter.delete("/appointments/:id", AppointmentsController.delete);
 
 apiRouter.use("/staff", staffRouter);
