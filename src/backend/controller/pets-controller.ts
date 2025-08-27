@@ -52,4 +52,16 @@ export class PetsController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const petsId = Number(req.params.id);
+      const response = await PetsService.delete(petsId);
+      res.status(200).json({
+        message: "Data hewan peliharaan berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

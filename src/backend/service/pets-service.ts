@@ -74,4 +74,14 @@ export class PetsService {
 
     return toPetsResponse(pets);
   }
+
+  static async delete(petsId: number): Promise<PetsResponse> {
+    const deleteRequest = await this.checkPetsMustExists(petsId);
+    const pets = await prismaClient.pets.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+    return toPetsResponse(pets);
+  }
 }

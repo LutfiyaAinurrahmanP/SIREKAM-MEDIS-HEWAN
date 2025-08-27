@@ -63,6 +63,6 @@ staffRouter.post("/pets", PetsController.create);
 staffRouter.get("/pets", PetsController.list);
 staffRouter.get("/pets/:id", PetsController.get);
 staffRouter.patch("/pets/:id", PetsController.update);
-// staffRouter.delete("/pets/:id", PetsController.delete);
+staffRouter.delete("/pets/:id", PetsController.delete);
 
 apiRouter.use("/staff", staffRouter);

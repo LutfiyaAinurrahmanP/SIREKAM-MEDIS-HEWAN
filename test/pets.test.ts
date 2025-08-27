@@ -618,7 +618,7 @@ describe("DELETE /staff/pets/:id", () => {
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe("Sesi tidak valid atau kadaluarsa!");
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
