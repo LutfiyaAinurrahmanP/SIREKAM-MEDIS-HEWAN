@@ -304,7 +304,7 @@ describe("GET /staff/appointments/:id", () => {
   });
 
   it("should get an existing appointment", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const response = await supertest(web)
       .get(`/staff/appointments/${appointment?.id}`)
       .set("SESSION-TOKEN", "token222");
@@ -330,17 +330,17 @@ describe("GET /staff/appointments/:id", () => {
   });
 
   it("should return error if session is invalid", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const response = await supertest(web)
       .get(`/staff/appointments/${appointment?.id}`)
       .set("SESSION-TOKEN", "invalid_token");
 
     expect(response.status).toBe(401);
-    expect(response.body.errors).toBe("Sesi tidak valid atau kadaluarsa!");
+    expect(response.body.errors).toBe("Unauthorized");
   });
 
   it("should return error if user doesn't have access", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     await prismaClient.user.create({
       data: {
         username: "dummy data2",
@@ -381,7 +381,7 @@ describe("PATCH /staff/appointments/:id", () => {
   });
 
   it("should update an existing appointment", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const pet = await PetsTest.getPetsId();
     const user = await UserTest.getUserId();
 
@@ -413,7 +413,7 @@ describe("PATCH /staff/appointments/:id", () => {
   });
 
   it("should return error if request is invalid", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const user = await UserTest.getUserId();
 
     const response = await supertest(web)
@@ -459,7 +459,7 @@ describe("PATCH /staff/appointments/:id", () => {
   });
 
   it("should return error if session is invalid", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const pet = await PetsTest.getPetsId();
     const user = await UserTest.getUserId();
 
@@ -481,7 +481,7 @@ describe("PATCH /staff/appointments/:id", () => {
   });
 
   it("should return error if user doesn't have access", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const pet = await PetsTest.getPetsId();
     const user = await UserTest.getUserId();
 
@@ -534,7 +534,7 @@ describe("DELETE /staff/appointments/:id", () => {
   });
 
   it("should delete an existing appointment", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const response = await supertest(web)
       .delete(`/staff/appointments/${appointment?.id}`)
       .set("SESSION-TOKEN", "token222");
@@ -555,7 +555,7 @@ describe("DELETE /staff/appointments/:id", () => {
   });
 
   it("should return error if session is invalid", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     const response = await supertest(web)
       .delete(`/staff/appointments/${appointment?.id}`)
       .set("SESSION-TOKEN", "invalid_token");
@@ -565,7 +565,7 @@ describe("DELETE /staff/appointments/:id", () => {
   });
 
   it("should return error if user doesn't have access", async () => {
-    const appointment = await AppointmentsTest.getAppointmentId();
+    const appointment = await AppointmentsTest.getAppointmentsId();
     await prismaClient.user.create({
       data: {
         username: "dummy data2",

@@ -38,4 +38,22 @@ export class AppointmentsService {
     }
     return appointments.map(toAppointmentsResponse);
   }
+
+  static async checkAppointmentsMustExists(appointmentsId: number) {
+    const appointments = await prismaClient.appointments.findUnique({
+      where: {
+        id: appointmentsId,
+      },
+    });
+
+    if (!appointments) {
+      throw new ResponseError(404, "Data janji temu tidak ditemukan!");
+    }
+    return appointments;
+  }
+
+  static async get(appointmentsId: number): Promise<AppointmentsResponse> {
+    const appointments = await this.checkAppointmentsMustExists(appointmentsId);
+    return toAppointmentsResponse(appointments);
+  }
 }

@@ -346,4 +346,12 @@ export class AppointmentsTest {
   static async deleteAppointments() {
     await prismaClient.appointments.deleteMany();
   }
+
+  static async getAppointmentsId() {
+    return await prismaClient.appointments.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
 }

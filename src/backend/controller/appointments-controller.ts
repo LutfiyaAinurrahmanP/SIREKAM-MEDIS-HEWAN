@@ -27,4 +27,16 @@ export class AppointmentsController {
       next(e);
     }
   }
+
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const appointmentsId = Number(req.params.id);
+      const response = await AppointmentsService.get(appointmentsId);
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
