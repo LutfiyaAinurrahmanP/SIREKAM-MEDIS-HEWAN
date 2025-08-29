@@ -6,7 +6,13 @@ export class UserTest {
     await prismaClient.user.deleteMany({
       where: {
         username: {
-          in: ["lutfiyapr", "dummy data", "dummy data2", "staff"],
+          in: [
+            "lutfiyapr",
+            "dummy data",
+            "dummy data2",
+            "staff",
+            "veterinarian",
+          ],
         },
       },
     });
@@ -34,6 +40,15 @@ export class UserTest {
           token: "token222",
         },
         {
+          username: "veterinarian",
+          fullname: "Lutfiya Ainurrahman Prasetyo",
+          email: "veterinarian.stu@pnc.ac.id",
+          password: await bcrypt.hash("password", 10),
+          role: "veterinarian",
+          phone: "081915133813",
+          token: "token-veterinarian",
+        },
+        {
           username: "lutfiyapr",
           fullname: "Lutfiya Ainurrahman Prasetyo",
           email: "lutfiyapr.stu@pnc.ac.id",
@@ -58,6 +73,14 @@ export class UserTest {
     return await prismaClient.user.findFirst({
       where: {
         username: "staff",
+      },
+    });
+  }
+
+  static async getUserVeterinarianId() {
+    return await prismaClient.user.findFirst({
+      where: {
+        username: "veterinarian",
       },
     });
   }
@@ -353,5 +376,11 @@ export class AppointmentsTest {
         id: "desc",
       },
     });
+  }
+}
+
+export class MedicalRecordsTest {
+  static async deleteMedicalRecords() {
+    return await prismaClient.medicalRecords.deleteMany();
   }
 }
