@@ -28,7 +28,7 @@ export class UserTest {
           password: "password",
           role: "client",
           phone: "081915133813",
-          token: "token234",
+          token: "token-client", //token 234
         },
         {
           username: "staff",
@@ -37,7 +37,7 @@ export class UserTest {
           password: await bcrypt.hash("password", 10),
           role: "staff",
           phone: "081915133813",
-          token: "token222",
+          token: "token-staff", //token222
         },
         {
           username: "veterinarian",
@@ -55,7 +55,7 @@ export class UserTest {
           password: await bcrypt.hash("password", 10),
           role: "admin",
           phone: "081915133813",
-          token: "token123",
+          token: "token-admin", // token123
         },
       ],
     });

@@ -35,7 +35,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -63,7 +63,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         created_by: user?.id,
         schedule_date: "2025-08-15",
@@ -85,7 +85,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         schedule_date: "2025-08-15",
@@ -108,7 +108,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -131,7 +131,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -154,7 +154,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -200,7 +200,7 @@ describe("POST /staff/appointments", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
@@ -209,7 +209,7 @@ describe("POST /staff/appointments", () => {
 
     const response = await supertest(web)
       .post("/staff/appointments")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -246,7 +246,7 @@ describe("GET /staff/appointments", () => {
   it("should return a list of appointments", async () => {
     const response = await supertest(web)
       .get("/staff/appointments")
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -272,13 +272,13 @@ describe("GET /staff/appointments", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .get("/staff/appointments")
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -307,7 +307,7 @@ describe("GET /staff/appointments/:id", () => {
     const appointment = await AppointmentsTest.getAppointmentsId();
     const response = await supertest(web)
       .get(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -322,7 +322,7 @@ describe("GET /staff/appointments/:id", () => {
   it("should return error if appointment not found", async () => {
     const response = await supertest(web)
       .get(`/staff/appointments/99999`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -349,13 +349,13 @@ describe("GET /staff/appointments/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .get(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -387,7 +387,7 @@ describe("PATCH /staff/appointments/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -418,7 +418,7 @@ describe("PATCH /staff/appointments/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         created_by: user?.id,
         schedule_date: new Date("2025-08-15"),
@@ -442,7 +442,7 @@ describe("PATCH /staff/appointments/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/appointments/99999`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -493,13 +493,13 @@ describe("PATCH /staff/appointments/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .patch(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         pet_id: pet?.id,
         created_by: user?.id,
@@ -537,7 +537,7 @@ describe("DELETE /staff/appointments/:id", () => {
     const appointment = await AppointmentsTest.getAppointmentsId();
     const response = await supertest(web)
       .delete(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -547,7 +547,7 @@ describe("DELETE /staff/appointments/:id", () => {
   it("should return error if appointment not found", async () => {
     const response = await supertest(web)
       .delete(`/staff/appointments/99999`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -574,13 +574,13 @@ describe("DELETE /staff/appointments/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .delete(`/staff/appointments/${appointment?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);

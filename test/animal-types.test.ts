@@ -21,7 +21,7 @@ describe("POST /admin/animal-types", () => {
   it("should create a new animal type", async () => {
     const response = await supertest(web)
       .post("/admin/animal-types")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Kucing",
         description: "Mamalia kecil dengan bulu halus",
@@ -36,14 +36,14 @@ describe("POST /admin/animal-types", () => {
   it("should return error if animal type name already exists", async () => {
     await supertest(web)
       .post("/admin/animal-types")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Kucing",
         description: "Mamalia kecil dengan bulu halus",
       });
     const response = await supertest(web)
       .post("/admin/animal-types")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Kucing",
         description: "Mamalia kecil dengan bulu halus",
@@ -57,7 +57,7 @@ describe("POST /admin/animal-types", () => {
   it("should return error if error request", async () => {
     const response = await supertest(web)
       .post("/admin/animal-types")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "",
       });
@@ -94,12 +94,12 @@ describe("POST /admin/animal-types", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .post("/admin/animal-types")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Kucing",
         description: "Mamalia kecil dengan bulu halus",
@@ -128,7 +128,7 @@ describe("GET /admin/animal-types", () => {
   it("should return a list of animal types", async () => {
     const response = await supertest(web)
       .get("/admin/animal-types")
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     expect(response.status).toBe(200);
     expect(response.body.data.length).toBe(2);
@@ -153,12 +153,12 @@ describe("GET /admin/animal-types", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get("/admin/animal-types")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Kucing",
         description: "Mamalia kecil dengan bulu halus",
@@ -188,7 +188,7 @@ describe("GET /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const response = await supertest(web)
       .get(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -201,7 +201,7 @@ describe("GET /admin/animal-types/:id", () => {
   it("should return error if animal type not found", async () => {
     const response = await supertest(web)
       .get(`/admin/animal-types/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -228,12 +228,12 @@ describe("GET /admin/animal-types/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Kucing",
         description: "Mamalia kecil dengan bulu halus",
@@ -263,7 +263,7 @@ describe("PATCH /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const response = await supertest(web)
       .patch(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Otter",
         description: "Mamalia setia dan bersahabat",
@@ -281,7 +281,7 @@ describe("PATCH /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const response = await supertest(web)
       .patch(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "",
         description: "Mamalia setia dan bersahabat",
@@ -298,7 +298,7 @@ describe("PATCH /admin/animal-types/:id", () => {
   it("should return error if animal type not found", async () => {
     const response = await supertest(web)
       .patch(`/admin/animal-types/99999`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Otter",
         description: "Mamalia setia dan bersahabat",
@@ -334,12 +334,12 @@ describe("PATCH /admin/animal-types/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .patch(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Otter",
         description: "Mamalia setia dan bersahabat",
@@ -369,7 +369,7 @@ describe("DELETE /admin/animal-types/:id", () => {
     const animalType = await AnimalTypesTest.getAnimalTypesId();
     const response = await supertest(web)
       .delete(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -380,7 +380,7 @@ describe("DELETE /admin/animal-types/:id", () => {
   it("should return error if animal type not found", async () => {
     const response = await supertest(web)
       .delete(`/admin/animal-types/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -408,12 +408,12 @@ describe("DELETE /admin/animal-types/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .delete(`/admin/animal-types/${animalType?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 

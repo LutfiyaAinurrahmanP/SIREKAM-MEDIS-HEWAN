@@ -194,7 +194,7 @@ describe("DELETE /role/user/logout", () => {
   it("should logout an existing user", async () => {
     const response = await supertest(web)
       .delete("/role/user/logout")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send();
 
     logger.debug(response.body);
@@ -237,7 +237,7 @@ describe("POST /admin/users", () => {
   it("should create a new user", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "dummy data2",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -259,7 +259,7 @@ describe("POST /admin/users", () => {
   it("should return error if username already exists", async () => {
     await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -270,7 +270,7 @@ describe("POST /admin/users", () => {
       });
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "John Doe",
@@ -289,7 +289,7 @@ describe("POST /admin/users", () => {
   it("should return error if username is required", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -310,7 +310,7 @@ describe("POST /admin/users", () => {
   it("should return error if username is too short", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "abc",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -329,7 +329,7 @@ describe("POST /admin/users", () => {
   it("should return error if fullname is required", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "",
@@ -348,7 +348,7 @@ describe("POST /admin/users", () => {
   it("should return error if email is required", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -365,7 +365,7 @@ describe("POST /admin/users", () => {
   it("should return error if password is required", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -384,7 +384,7 @@ describe("POST /admin/users", () => {
   it("should return error if password is too short", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -403,7 +403,7 @@ describe("POST /admin/users", () => {
   it("should return error if role is required", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -420,7 +420,7 @@ describe("POST /admin/users", () => {
   it("should return error if phone is required", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -437,7 +437,7 @@ describe("POST /admin/users", () => {
   it("should return error if phone is too short", async () => {
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -481,12 +481,12 @@ describe("POST /admin/users", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .post("/admin/users")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         username: "lutfiyapr",
         fullname: "Lutfiya Ainurrahman Prasetyo",
@@ -517,10 +517,10 @@ describe("GET /admin/users", () => {
   it("should return a list of users", async () => {
     const response = await supertest(web)
       .get("/admin/users")
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     expect(response.status).toBe(200);
-    expect(response.body.data.length).toBe(3);
+    expect(response.body.data.length).toBe(4);
     expect(Array.isArray(response.body.data)).toBe(true);
   });
 
@@ -542,12 +542,12 @@ describe("GET /admin/users", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get("/admin/users")
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
@@ -566,12 +566,12 @@ describe("GET /admin/users", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/users`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -593,7 +593,7 @@ describe("GET /admin/users/:id", () => {
     const user = await UserTest.getUserId();
     const response = await supertest(web)
       .get(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -605,7 +605,7 @@ describe("GET /admin/users/:id", () => {
   it("should return error if user not found", async () => {
     const response = await supertest(web)
       .get(`/admin/users/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -632,12 +632,12 @@ describe("GET /admin/users/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
@@ -661,7 +661,7 @@ describe("PATCH /admin/users/:id", () => {
     const user = await UserTest.getUserId();
     const response = await supertest(web)
       .patch(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "dummy data2",
         fullname: "Updated User Name",
@@ -685,7 +685,7 @@ describe("PATCH /admin/users/:id", () => {
     const user = await UserTest.getUserId();
     const response = await supertest(web)
       .patch(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "",
         fullname: "Updated User Name",
@@ -706,7 +706,7 @@ describe("PATCH /admin/users/:id", () => {
   it("should return error if user not found", async () => {
     const response = await supertest(web)
       .patch(`/admin/users/99999`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         username: "updateduser",
         fullname: "Updated User Name",
@@ -750,12 +750,12 @@ describe("PATCH /admin/users/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .patch(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         username: "updateduser",
         fullname: "Updated User Name",
@@ -786,7 +786,7 @@ describe("DELETE /admin/users/:id", () => {
     const user = await UserTest.getUserId();
     const response = await supertest(web)
       .delete(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -797,7 +797,7 @@ describe("DELETE /admin/users/:id", () => {
   it("should return error if user not found", async () => {
     const response = await supertest(web)
       .delete(`/admin/users/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -825,12 +825,12 @@ describe("DELETE /admin/users/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .delete(`/admin/users/${user?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 

@@ -31,7 +31,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Luna",
@@ -64,7 +64,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         name: "Luna",
         animal_type_id: animalType?.id,
@@ -89,7 +89,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "",
@@ -115,7 +115,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: longName,
@@ -138,7 +138,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Luna",
@@ -161,7 +161,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Luna",
@@ -184,7 +184,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Luna",
@@ -207,7 +207,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Luna",
@@ -257,7 +257,7 @@ describe("POST /staff/pets", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
@@ -266,7 +266,7 @@ describe("POST /staff/pets", () => {
 
     const response = await supertest(web)
       .post("/staff/pets")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         owner_id: user?.id,
         name: "Luna",
@@ -302,7 +302,7 @@ describe("GET /staff/pets", () => {
   it("should return a list of pets", async () => {
     const response = await supertest(web)
       .get("/staff/pets")
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -328,13 +328,13 @@ describe("GET /staff/pets", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .get("/staff/pets")
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -361,7 +361,7 @@ describe("GET /staff/pets/:id", () => {
     const pet = await PetsTest.getPetsId();
     const response = await supertest(web)
       .get(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -376,7 +376,7 @@ describe("GET /staff/pets/:id", () => {
   it("should return error if pet not found", async () => {
     const response = await supertest(web)
       .get(`/staff/pets/99999`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -403,13 +403,13 @@ describe("GET /staff/pets/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .get(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -439,7 +439,7 @@ describe("PATCH /staff/pets/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Max Updated",
@@ -471,7 +471,7 @@ describe("PATCH /staff/pets/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "", // Invalid empty name
@@ -496,7 +496,7 @@ describe("PATCH /staff/pets/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/pets/99999`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         owner_id: user?.id,
         name: "Luna Updated",
@@ -549,13 +549,13 @@ describe("PATCH /staff/pets/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .patch(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         owner_id: user?.id,
         name: "Luna Updated",
@@ -592,7 +592,7 @@ describe("DELETE /staff/pets/:id", () => {
     const pet = await PetsTest.getPetsId();
     const response = await supertest(web)
       .delete(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -604,7 +604,7 @@ describe("DELETE /staff/pets/:id", () => {
   it("should return error if pet not found", async () => {
     const response = await supertest(web)
       .delete(`/staff/pets/99999`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -631,13 +631,13 @@ describe("DELETE /staff/pets/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .delete(`/staff/pets/${pet?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);

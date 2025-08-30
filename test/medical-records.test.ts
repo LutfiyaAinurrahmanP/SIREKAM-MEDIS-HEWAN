@@ -45,7 +45,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -85,7 +85,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         service_id: service?.id,
         appointment_id: appointment?.id,
@@ -110,7 +110,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         appointment_id: appointment?.id,
@@ -135,7 +135,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -161,7 +161,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -187,7 +187,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -214,7 +214,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -241,7 +241,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -291,7 +291,7 @@ describe("POST /staff/medical-records", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
@@ -302,7 +302,7 @@ describe("POST /staff/medical-records", () => {
 
     const response = await supertest(web)
       .post("/staff/medical-records")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -344,7 +344,7 @@ describe("GET /staff/medical-records", () => {
   it("should return a list of medical records", async () => {
     const response = await supertest(web)
       .get("/staff/medical-records")
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -370,13 +370,13 @@ describe("GET /staff/medical-records", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .get("/staff/medical-records")
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -409,7 +409,7 @@ describe("GET /staff/medical-records/:id", () => {
     const medicalRecord = await MedicalRecordsTest.getMedicalRecordsId();
     const response = await supertest(web)
       .get(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -424,7 +424,7 @@ describe("GET /staff/medical-records/:id", () => {
   it("should return error if medical record not found", async () => {
     const response = await supertest(web)
       .get(`/staff/medical-records/99999`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -451,13 +451,13 @@ describe("GET /staff/medical-records/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .get(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -495,7 +495,7 @@ describe("PATCH /staff/medical-records/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -531,7 +531,7 @@ describe("PATCH /staff/medical-records/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         service_id: service?.id,
         appointment_id: appointment?.id,
@@ -558,7 +558,7 @@ describe("PATCH /staff/medical-records/:id", () => {
 
     const response = await supertest(web)
       .patch(`/staff/medical-records/99999`)
-      .set("SESSION-TOKEN", "token222")
+      .set("SESSION-TOKEN", "token-staff")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -615,13 +615,13 @@ describe("PATCH /staff/medical-records/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .patch(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         pet_id: pet?.id,
         service_id: service?.id,
@@ -664,7 +664,7 @@ describe("DELETE /staff/medical-records/:id", () => {
     const medicalRecord = await MedicalRecordsTest.getMedicalRecordsId();
     const response = await supertest(web)
       .delete(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -674,7 +674,7 @@ describe("DELETE /staff/medical-records/:id", () => {
   it("should return error if medical record not found", async () => {
     const response = await supertest(web)
       .delete(`/staff/medical-records/99999`)
-      .set("SESSION-TOKEN", "token222");
+      .set("SESSION-TOKEN", "token-staff");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -701,13 +701,13 @@ describe("DELETE /staff/medical-records/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
 
     const response = await supertest(web)
       .delete(`/staff/medical-records/${medicalRecord?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
