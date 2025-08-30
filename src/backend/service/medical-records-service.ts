@@ -80,4 +80,19 @@ export default class MedicalRecordsService {
 
     return toMedicalRecordsResponse(medicalRecords);
   }
+
+  static async delete(
+    medicalRecordId: number
+  ): Promise<MedicalRecordsResponse> {
+    const deleteRequest = await this.checkMedicalRecordsMustExists(
+      medicalRecordId
+    );
+    const medicalRecord = await prismaClient.medicalRecords.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+
+    return toMedicalRecordsResponse(medicalRecord);
+  }
 }

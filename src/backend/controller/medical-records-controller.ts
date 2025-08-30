@@ -57,4 +57,16 @@ export default class MedicalRecordsController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = Number(req.params.id);
+      const response = await MedicalRecordsService.delete(request);
+      res.status(200).json({
+        message: "Data rekam medis berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
