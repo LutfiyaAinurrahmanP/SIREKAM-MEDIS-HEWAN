@@ -78,7 +78,7 @@ staffRouter.delete("/appointments/:id", AppointmentsController.delete);
 staffRouter.post("/medical-records", MedicalRecordsController.create);
 staffRouter.get("/medical-records", MedicalRecordsController.list);
 staffRouter.get("/medical-records/:id", MedicalRecordsController.get);
-// staffRouter.patch("/medical-records/:id", MedicalRecordsController.update);
+staffRouter.patch("/medical-records/:id", MedicalRecordsController.update);
 // staffRouter.delete("/medical-records/:id", MedicalRecordsController.delete);
 
 apiRouter.use("/staff", staffRouter);

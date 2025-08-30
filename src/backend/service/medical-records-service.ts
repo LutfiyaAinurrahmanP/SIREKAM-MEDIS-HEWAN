@@ -4,6 +4,7 @@ import {
   CreateMedicalRecordsRequest,
   MedicalRecordsResponse,
   toMedicalRecordsResponse,
+  UpdateMedicalRecordsRequest,
 } from "../model/medical-records-model";
 import { MedicalRecordsValidation } from "../validation/medical-records-validation";
 import { Validation } from "../validation/validation";
@@ -57,5 +58,26 @@ export default class MedicalRecordsService {
       medicalRecordId
     );
     return toMedicalRecordsResponse(medicalRecord);
+  }
+
+  static async update(
+    req: UpdateMedicalRecordsRequest
+  ): Promise<MedicalRecordsResponse> {
+    const updateRequest = Validation.validate(
+      MedicalRecordsValidation.UPDATE,
+      req
+    );
+    await this.checkMedicalRecordsMustExists(updateRequest.id);
+    const medicalRecords = await prismaClient.medicalRecords.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
+    return toMedicalRecordsResponse(medicalRecords);
   }
 }
