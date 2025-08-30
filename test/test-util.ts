@@ -510,3 +510,9 @@ export class MedicalRecordsTest {
     });
   }
 }
+
+export class PrescriptionsTest {
+  static async deletePrescriptions() {
+    return await prismaClient.prescriptions.deleteMany();
+  }
+}

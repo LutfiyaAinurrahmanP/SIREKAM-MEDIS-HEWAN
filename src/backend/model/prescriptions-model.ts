@@ -4,9 +4,9 @@ export type PrescriptionsResponse = {
   id: number;
   medical_record_id: number;
   veterinarian_id: number;
-  notes: string | null;
-  created_at: Date | null;
-  updated_at: Date | null;
+  notes?: string | null;
+  created_at?: Date | null;
+  updated_at?: Date | null;
 };
 
 export type CreatePrescriptionsRequest = {

@@ -8,8 +8,8 @@ export class PrescriptionsController {
       const request: CreatePrescriptionsRequest =
         req.body as CreatePrescriptionsRequest;
       const response = await PrescriptionsService.create(request);
-      res.status(200).json({
-        message: "Data resep obat berhasil dibuat!",
+      res.status(201).json({
+        message: "Data resep berhasil dibuat!",
         data: response,
       });
     } catch (e) {
