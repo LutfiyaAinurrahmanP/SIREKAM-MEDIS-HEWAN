@@ -39,4 +39,23 @@ export default class MedicalRecordsService {
     }
     return medicalRecords.map(toMedicalRecordsResponse);
   }
+
+  static async checkMedicalRecordsMustExists(medicalRecordId: number) {
+    const medicalRecord = await prismaClient.medicalRecords.findUnique({
+      where: {
+        id: medicalRecordId,
+      },
+    });
+    if (!medicalRecord) {
+      throw new ResponseError(404, "Data rekam medis tidak ditemukan!");
+    }
+    return medicalRecord;
+  }
+
+  static async get(medicalRecordId: number): Promise<MedicalRecordsResponse> {
+    const medicalRecord = await this.checkMedicalRecordsMustExists(
+      medicalRecordId
+    );
+    return toMedicalRecordsResponse(medicalRecord);
+  }
 }

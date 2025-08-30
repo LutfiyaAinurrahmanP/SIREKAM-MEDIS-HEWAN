@@ -27,4 +27,16 @@ export default class MedicalRecordsController {
       next(e);
     }
   }
+
+  static async get(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = Number(req.params.id);
+      const response = await MedicalRecordsService.get(request);
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

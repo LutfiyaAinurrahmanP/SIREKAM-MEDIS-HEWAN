@@ -449,6 +449,14 @@ export class MedicalRecordsTest {
     return await prismaClient.medicalRecords.deleteMany();
   }
 
+  static async getMedicalRecordsId() {
+    return await prismaClient.medicalRecords.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
+
   static async createMedicalRecords() {
     const petId1: number | undefined = await this.getPetId1();
     const petId2: number | undefined = await this.getPetId2();
