@@ -191,7 +191,7 @@ model Appointments {
   pet_id Int
   created_by Int
   schedule_date DateTime @db.Date
-  schedule_time DateTime @db.Time
+  schedule_time String @db.VarChar(5)
   status AppointmentStatus @default(scheduled)
   reason String? @db.Text
   notes String? @db.Text

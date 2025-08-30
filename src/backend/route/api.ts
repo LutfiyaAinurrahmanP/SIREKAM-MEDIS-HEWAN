@@ -5,6 +5,9 @@ import { AnimalTypesController } from "../controller/animal-types-controller";
 import { roleMiddleware, UserRole } from "../middleware/role-middleware";
 import { MedicinesController } from "../controller/medicines-controller";
 import { ServiceCategoriesController } from "../controller/service-categories-controller";
+import { PetsController } from "../controller/pets-controller";
+import { AppointmentsController } from "../controller/appointments-controller";
+import MedicalRecordsController from "../controller/medical-records-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -52,3 +55,30 @@ adminRouter.delete("/users/:id", UserController.delete);
 
 // Mount admin router
 apiRouter.use("/admin", adminRouter);
+
+// Staff
+export const staffRouter = express.Router();
+staffRouter.use(roleMiddleware([UserRole.STAFF]));
+
+// Pets API
+staffRouter.post("/pets", PetsController.create);
+staffRouter.get("/pets", PetsController.list);
+staffRouter.get("/pets/:id", PetsController.get);
+staffRouter.patch("/pets/:id", PetsController.update);
+staffRouter.delete("/pets/:id", PetsController.delete);
+
+// Appointments API
+staffRouter.post("/appointments", AppointmentsController.create);
+staffRouter.get("/appointments", AppointmentsController.list);
+staffRouter.get("/appointments/:id", AppointmentsController.get);
+staffRouter.patch("/appointments/:id", AppointmentsController.update);
+staffRouter.delete("/appointments/:id", AppointmentsController.delete);
+
+// Medical Records API
+staffRouter.post("/medical-records", MedicalRecordsController.create);
+staffRouter.get("/medical-records", MedicalRecordsController.list);
+staffRouter.get("/medical-records/:id", MedicalRecordsController.get);
+staffRouter.patch("/medical-records/:id", MedicalRecordsController.update);
+staffRouter.delete("/medical-records/:id", MedicalRecordsController.delete);
+
+apiRouter.use("/staff", staffRouter);

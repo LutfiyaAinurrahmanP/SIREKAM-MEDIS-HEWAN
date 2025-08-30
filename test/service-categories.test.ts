@@ -28,7 +28,7 @@ describe("POST /admin/service-categories", () => {
   it("should create a new service category", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Konsultasi Umum",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -49,7 +49,7 @@ describe("POST /admin/service-categories", () => {
   it("should return error if name is required", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -68,7 +68,7 @@ describe("POST /admin/service-categories", () => {
   it("should return error if name is too short", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Abc",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -85,7 +85,7 @@ describe("POST /admin/service-categories", () => {
   it("should return error if price is required", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Konsultasi Umum",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -103,7 +103,7 @@ describe("POST /admin/service-categories", () => {
   it("should return error if price is not numeric", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Konsultasi Umum",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -120,7 +120,7 @@ describe("POST /admin/service-categories", () => {
   it("should return error if is_active is required", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Konsultasi Umum",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -137,7 +137,7 @@ describe("POST /admin/service-categories", () => {
   it("should return error if is_active is not boolean", async () => {
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Konsultasi Umum",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -177,12 +177,12 @@ describe("POST /admin/service-categories", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .post("/admin/service-categories")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Konsultasi Umum",
         description: "Pemeriksaan dasar hewan peliharaan oleh dokter hewan",
@@ -212,7 +212,7 @@ describe("GET /admin/service-categories", () => {
   it("should return a list of service categories", async () => {
     const response = await supertest(web)
       .get("/admin/service-categories")
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     expect(response.status).toBe(200);
     expect(response.body.data.length).toBe(2);
@@ -237,12 +237,12 @@ describe("GET /admin/service-categories", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get("/admin/service-categories")
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
@@ -261,12 +261,12 @@ describe("GET /admin/service-categories", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/service-categories`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -291,7 +291,7 @@ describe("GET /admin/service-categories/:id", () => {
       await ServiceCategoriesTest.getServiceCategoriesId();
     const response = await supertest(web)
       .get(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -305,7 +305,7 @@ describe("GET /admin/service-categories/:id", () => {
   it("should return error if service category not found", async () => {
     const response = await supertest(web)
       .get(`/admin/service-categories/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -334,12 +334,12 @@ describe("GET /admin/service-categories/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
@@ -365,7 +365,7 @@ describe("PATCH /admin/service-categories/:id", () => {
       await ServiceCategoriesTest.getServiceCategoriesId();
     const response = await supertest(web)
       .patch(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Vaksinasi",
         description:
@@ -393,7 +393,7 @@ describe("PATCH /admin/service-categories/:id", () => {
       await ServiceCategoriesTest.getServiceCategoriesId();
     const response = await supertest(web)
       .patch(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "",
         description:
@@ -413,7 +413,7 @@ describe("PATCH /admin/service-categories/:id", () => {
   it("should return error if service category not found", async () => {
     const response = await supertest(web)
       .patch(`/admin/service-categories/99999`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Vaksinasi",
         description:
@@ -457,12 +457,12 @@ describe("PATCH /admin/service-categories/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .patch(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Vaksinasi",
         description:
@@ -495,7 +495,7 @@ describe("DELETE /admin/service-categories/:id", () => {
       await ServiceCategoriesTest.getServiceCategoriesId();
     const response = await supertest(web)
       .delete(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -506,7 +506,7 @@ describe("DELETE /admin/service-categories/:id", () => {
   it("should return error if service category not found", async () => {
     const response = await supertest(web)
       .delete(`/admin/service-categories/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -536,12 +536,12 @@ describe("DELETE /admin/service-categories/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .delete(`/admin/service-categories/${serviceCategory?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 

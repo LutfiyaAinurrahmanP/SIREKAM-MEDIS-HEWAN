@@ -4,7 +4,7 @@ CREATE TABLE `appointments` (
     `pet_id` INTEGER NOT NULL,
     `created_by` INTEGER NOT NULL,
     `schedule_date` DATE NOT NULL,
-    `schedule_time` TIME NOT NULL,
+    `schedule_time` VARCHAR(5) NOT NULL,
     `status` ENUM('scheduled', 'completed', 'canceled', 'no_show') NULL DEFAULT 'scheduled',
     `reason` TEXT NULL,
     `notes` TEXT NULL,

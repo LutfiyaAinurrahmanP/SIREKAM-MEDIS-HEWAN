@@ -26,7 +26,7 @@ describe("POST /admin/medicines", () => {
   it("should create a new medicine", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Amoxicillin 500mg",
         code: "OBT-AX500",
@@ -51,7 +51,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if medicine code already exists", async () => {
     await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Amoxicillin 500mg",
         code: "OBT-AX500",
@@ -63,7 +63,7 @@ describe("POST /admin/medicines", () => {
       });
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Paracetamol 500mg",
         code: "OBT-AX500",
@@ -81,7 +81,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if name is required", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "",
         code: "OBT-AX500",
@@ -101,7 +101,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if name is too short", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Abc",
         code: "OBT-AX500",
@@ -121,7 +121,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if code is required", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Amoxicillin 500mg",
         code: "",
@@ -139,7 +139,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if stock_qty is not numeric", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Amoxicillin 500mg",
         code: "OBT-AX500",
@@ -159,7 +159,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if price is not numeric", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Amoxicillin 500mg",
         code: "OBT-AX500",
@@ -177,7 +177,7 @@ describe("POST /admin/medicines", () => {
   it("should return error if is_active is not boolean", async () => {
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Amoxicillin 500mg",
         code: "OBT-AX500",
@@ -223,12 +223,12 @@ describe("POST /admin/medicines", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .post("/admin/medicines")
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Amoxicillin 500mg",
         code: "OBT-AX500",
@@ -261,10 +261,10 @@ describe("GET /admin/medicines", () => {
   it("should return a list of medicines", async () => {
     const response = await supertest(web)
       .get("/admin/medicines")
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     expect(response.status).toBe(200);
-    expect(response.body.data.length).toBe(3);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
   });
 
@@ -286,12 +286,12 @@ describe("GET /admin/medicines", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get("/admin/medicines")
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
@@ -309,12 +309,12 @@ describe("GET /admin/medicines", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/medicines`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
     expect(response.status).toBe(403);
@@ -338,7 +338,7 @@ describe("GET /admin/medicines/:id", () => {
     const medicine = await MedicinesTest.getMedicineId();
     const response = await supertest(web)
       .get(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
@@ -350,7 +350,7 @@ describe("GET /admin/medicines/:id", () => {
   it("should return error if medicine not found", async () => {
     const response = await supertest(web)
       .get(`/admin/medicines/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
     expect(response.status).toBe(404);
@@ -377,12 +377,12 @@ describe("GET /admin/medicines/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .get(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
@@ -407,7 +407,7 @@ describe("PATCH /admin/medicines/:id", () => {
     const medicine = await MedicinesTest.getMedicineId();
     const response = await supertest(web)
       .patch(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Paracetamol 500mg",
         code: "OBT-PCX500",
@@ -434,7 +434,7 @@ describe("PATCH /admin/medicines/:id", () => {
     const medicine = await MedicinesTest.getMedicineId();
     const response = await supertest(web)
       .patch(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "",
         code: "OBT-PC500",
@@ -454,7 +454,7 @@ describe("PATCH /admin/medicines/:id", () => {
   it("should return error if medicine not found", async () => {
     const response = await supertest(web)
       .patch(`/admin/medicines/99999`)
-      .set("SESSION-TOKEN", "token123")
+      .set("SESSION-TOKEN", "token-admin")
       .send({
         name: "Paracetamol 500mg",
         code: "OBT-PC500",
@@ -500,12 +500,12 @@ describe("PATCH /admin/medicines/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .patch(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token234")
+      .set("SESSION-TOKEN", "token-client")
       .send({
         name: "Paracetamol 500mg",
         code: "OBT-PC500",
@@ -539,7 +539,7 @@ describe("DELETE /admin/medicines/:id", () => {
     const medicine = await MedicinesTest.getMedicineId();
     const response = await supertest(web)
       .delete(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -550,7 +550,7 @@ describe("DELETE /admin/medicines/:id", () => {
   it("should return error if medicine not found", async () => {
     const response = await supertest(web)
       .delete(`/admin/medicines/99999`)
-      .set("SESSION-TOKEN", "token123");
+      .set("SESSION-TOKEN", "token-admin");
 
     logger.debug(response.body);
 
@@ -578,12 +578,12 @@ describe("DELETE /admin/medicines/:id", () => {
         password: await bcrypt.hash("password", 10),
         role: "client",
         phone: "081915133813",
-        token: "token234",
+        token: "token-client",
       },
     });
     const response = await supertest(web)
       .delete(`/admin/medicines/${medicine?.id}`)
-      .set("SESSION-TOKEN", "token234");
+      .set("SESSION-TOKEN", "token-client");
 
     logger.debug(response.body);
 
