@@ -380,7 +380,125 @@ export class AppointmentsTest {
 }
 
 export class MedicalRecordsTest {
+  static async getPetId1() {
+    const pet = await prismaClient.pets.findFirst({
+      where: {
+        name: "Luna",
+      },
+    });
+    return pet?.id;
+  }
+
+  static async getPetId2() {
+    const pet = await prismaClient.pets.findFirst({
+      where: {
+        name: "Max",
+      },
+    });
+    return pet?.id;
+  }
+
+  static async getUserVeterinarianId() {
+    const veterinarian = await prismaClient.user.findFirst({
+      where: {
+        username: "veterinarian",
+      },
+    });
+    return veterinarian?.id;
+  }
+
+  static async getServiceCategoriesId1() {
+    const serviceCategories = await prismaClient.serviceCategories.findFirst({
+      where: {
+        name: "Vaksinasi",
+      },
+    });
+    return serviceCategories?.id;
+  }
+
+  static async getServiceCategoriesId2() {
+    const serviceCategories = await prismaClient.serviceCategories.findFirst({
+      where: {
+        name: "Konsultasi Umum",
+      },
+    });
+    return serviceCategories?.id;
+  }
+
+  static async getAppointmentsId1() {
+    const petId1: number | undefined = await this.getPetId1();
+    const appointmentId = await prismaClient.appointments.findFirst({
+      where: {
+        pet_id: petId1,
+      },
+    });
+    return appointmentId?.id;
+  }
+
+  static async getAppointmentsId2() {
+    const petId2: number | undefined = await this.getPetId2();
+    const appointmentId = await prismaClient.appointments.findFirst({
+      where: {
+        pet_id: petId2,
+      },
+    });
+    return appointmentId?.id;
+  }
+
   static async deleteMedicalRecords() {
     return await prismaClient.medicalRecords.deleteMany();
+  }
+
+  static async createMedicalRecords() {
+    const petId1: number | undefined = await this.getPetId1();
+    const petId2: number | undefined = await this.getPetId2();
+    const veterinarianId: number | undefined =
+      await this.getUserVeterinarianId();
+    const serviceCategoriesId1: number | undefined =
+      await this.getServiceCategoriesId1();
+    const serviceCategoriesId2: number | undefined =
+      await this.getServiceCategoriesId2();
+    const appointmentId1: number | undefined = await this.getAppointmentsId1();
+    const appointmentId2: number | undefined = await this.getAppointmentsId2();
+    return await prismaClient.medicalRecords.createMany({
+      data: [
+        {
+          pet_id: petId1!,
+          service_id: serviceCategoriesId1!,
+          appointment_id: appointmentId1!,
+          veterinarian_id: veterinarianId!,
+          visit_date: new Date("2025-08-15"),
+          subject:
+            "Pemilik melaporkan bahwa kucing tampak sehat, nafsu makan baik, dan tidak ada gejala sakit. Datang untuk vaksinasi rabies tahunan",
+          objective:
+            "Suhu tubuh 38.2°C, detak jantung 120 bpm, napas normal, bulu bersih dan rapi, mata dan telinga dalam kondisi normal",
+          assessment:
+            "Kondisi umum baik, tidak ditemukan kelainan. Layak untuk vaksinasi rabies",
+          plan: "Memberikan vaksin rabies 1 dosis, memberikan kartu vaksin baru, menyarankan pemeriksaan kesehatan rutin setiap 6 bulan",
+          weight: 12.4,
+          temperature_celsius: 38.2,
+          next_visit_date: new Date("2025-08-22"),
+          status: "final",
+        },
+        {
+          pet_id: petId2!,
+          service_id: serviceCategoriesId2!,
+          appointment_id: appointmentId2!,
+          veterinarian_id: veterinarianId!,
+          visit_date: new Date("2025-08-15"),
+          subject:
+            "Anjing mengalami pincang pada kaki belakang kiri sejak 3 hari lalu setelah bermain di taman. Pemilik melaporkan anjing menjadi kurang aktif",
+          objective:
+            "Terdapat luka terbuka ±3 cm di kaki belakang kiri, sedikit bengkak, suhu lokal meningkat. Tidak ada patah tulang terdeteksi secara palpasi",
+          assessment:
+            "Luka terbuka ringan dengan inflamasi, kemungkinan akibat goresan benda tajam",
+          plan: "Membersihkan luka dengan antiseptik, memberikan antibiotik topikal, meresepkan obat antiinflamasi selama 5 hari, kontrol ulang 1 minggu",
+          weight: 16.1,
+          temperature_celsius: 36.9,
+          next_visit_date: new Date("2025-08-22"),
+          status: "draft",
+        },
+      ],
+    });
   }
 }

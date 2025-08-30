@@ -1,4 +1,5 @@
 import { prismaClient } from "../application/database";
+import { ResponseError } from "../error/response-error";
 import {
   CreateMedicalRecordsRequest,
   MedicalRecordsResponse,
@@ -25,5 +26,17 @@ export default class MedicalRecordsService {
     });
 
     return toMedicalRecordsResponse(medicalRecords);
+  }
+
+  static async list(): Promise<MedicalRecordsResponse[]> {
+    const medicalRecords = await prismaClient.medicalRecords.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    if (!medicalRecords) {
+      throw new ResponseError(404, "Data rekam medis tidak ditemukan!");
+    }
+    return medicalRecords.map(toMedicalRecordsResponse);
   }
 }
