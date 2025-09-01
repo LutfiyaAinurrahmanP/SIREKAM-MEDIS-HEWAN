@@ -124,6 +124,13 @@ staffRouter.get("/transactions/:id", TransactionsController.get);
 staffRouter.patch("/transactions/:id", TransactionsController.update);
 staffRouter.delete("/transactions/:id", TransactionsController.delete);
 
+// User API
+staffRouter.post("/users", UserController.create);
+staffRouter.get("/users", UserController.list);
+staffRouter.get("/users/:id", UserController.get);
+staffRouter.patch("/users/:id", UserController.update);
+staffRouter.delete("/users/:id", UserController.delete);
+
 apiRouter.use("/staff", staffRouter);
 
 // Veterinarian API
