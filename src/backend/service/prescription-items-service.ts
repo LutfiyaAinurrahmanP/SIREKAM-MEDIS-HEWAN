@@ -1,4 +1,5 @@
 import { prismaClient } from "../application/database";
+import { ResponseError } from "../error/response-error";
 import {
   CreatePrescriptionItemsRequest,
   PrescriptionItemsResponse,
@@ -24,5 +25,17 @@ export class PrescriptionItemsService {
     });
 
     return toPrescriptionItemsResponse(prescriptionItems);
+  }
+
+  static async list(): Promise<PrescriptionItemsResponse[]> {
+    const prescriptionItems = await prismaClient.prescriptionItems.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    if (!prescriptionItems) {
+      throw new ResponseError(404, "Data resep obat tidak ditemukan!");
+    }
+    return prescriptionItems.map(toPrescriptionItemsResponse);
   }
 }

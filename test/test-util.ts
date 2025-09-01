@@ -567,7 +567,58 @@ export class PrescriptionsTest {
 }
 
 export class PrescriptionItemsTest {
+  static async getMedicineId() {
+    const medicine = await prismaClient.medicines.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return medicine?.id;
+  }
+
+  static async getPrescriptionsId() {
+    const prescription = await prismaClient.prescriptions.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return prescription?.id;
+  }
+
   static async deletePrescriptionItems() {
     return await prismaClient.prescriptionItems.deleteMany();
+  }
+
+  static async createPrescriptionItems() {
+    const medicinesId: number | undefined = await this.getMedicineId();
+    const prescriptionsId: number | undefined = await this.getPrescriptionsId();
+    return await prismaClient.prescriptionItems.createMany({
+      data: [
+        {
+          prescription_id: prescriptionsId!,
+          medicine_id: medicinesId!,
+          dosage: "500 mg",
+          frequency: "3 kali sehari",
+          duration_days: 7,
+          instructions: "Diminum setelah makan",
+        },
+        {
+          prescription_id: prescriptionsId!,
+          medicine_id: medicinesId!,
+          dosage: "250 mg",
+          frequency: "2 kali sehari",
+          duration_days: 14,
+          instructions: "Jangan dikunyah, telan dengan air putih",
+        },
+      ],
+    });
+  }
+
+  static async getPrescriptionItemsId() {
+    return await prismaClient.prescriptionItems.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
   }
 }

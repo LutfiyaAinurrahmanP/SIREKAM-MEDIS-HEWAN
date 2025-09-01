@@ -173,18 +173,36 @@ describe("POST /staff/prescription-items", () => {
 
 describe("GET /staff/prescription-items", () => {
   beforeEach(async () => {
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
     await UserTest.createUser();
-    await UserTest.createUser();
-    await MedicinesTest.createMedicines();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
+    await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
     await PrescriptionItemsTest.createPrescriptionItems();
   });
 
   afterEach(async () => {
     await PrescriptionItemsTest.deletePrescriptionItems();
     await PrescriptionsTest.deletePrescriptions();
-    await MedicinesTest.deleteMedicines();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should return a list of prescription items", async () => {
@@ -194,10 +212,8 @@ describe("GET /staff/prescription-items", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
-    expect(response.body.data.length).toBeGreaterThanOrEqual(2);
-    expect(response.body.meta).toBeDefined();
-    expect(response.body.meta.total).toBeGreaterThanOrEqual(2);
   });
 
   it("should return error if session is invalid", async () => {
@@ -236,18 +252,34 @@ describe("GET /staff/prescription-items", () => {
 
 describe("GET /staff/prescription-items/:id", () => {
   beforeEach(async () => {
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
-    await MedicinesTest.createMedicines();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
+    await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
-    await PrescriptionItemsTest.createPrescriptionItems();
+    await MedicinesTest.createMedicines();
   });
 
   afterEach(async () => {
     await PrescriptionItemsTest.deletePrescriptionItems();
     await PrescriptionsTest.deletePrescriptions();
-    await MedicinesTest.deleteMedicines();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should get an existing prescription item", async () => {
@@ -315,18 +347,34 @@ describe("GET /staff/prescription-items/:id", () => {
 
 describe("PATCH /staff/prescription-items/:id", () => {
   beforeEach(async () => {
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
-    await MedicinesTest.createMedicines();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
+    await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
-    await PrescriptionItemsTest.createPrescriptionItems();
+    await MedicinesTest.createMedicines();
   });
 
   afterEach(async () => {
     await PrescriptionItemsTest.deletePrescriptionItems();
     await PrescriptionsTest.deletePrescriptions();
-    await MedicinesTest.deleteMedicines();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should update an existing prescription item", async () => {
@@ -459,18 +507,34 @@ describe("PATCH /staff/prescription-items/:id", () => {
 
 describe("DELETE /staff/prescription-items/:id", () => {
   beforeEach(async () => {
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
-    await MedicinesTest.createMedicines();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
+    await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
-    await PrescriptionItemsTest.createPrescriptionItems();
+    await MedicinesTest.createMedicines();
   });
 
   afterEach(async () => {
     await PrescriptionItemsTest.deletePrescriptionItems();
     await PrescriptionsTest.deletePrescriptions();
-    await MedicinesTest.deleteMedicines();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should delete an existing prescription item", async () => {
