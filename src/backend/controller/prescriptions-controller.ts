@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CreatePrescriptionsRequest } from "../model/prescriptions-model";
+import { CreatePrescriptionsRequest, UpdatePrescriptionsRequest } from "../model/prescriptions-model";
 import { PrescriptionsService } from "../service/prescriptions-service";
 
 export class PrescriptionsController {
@@ -33,6 +33,20 @@ export class PrescriptionsController {
       const request = Number(req.params.id);
       const response = await PrescriptionsService.get(request);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdatePrescriptionsRequest = req.body as UpdatePrescriptionsRequest;
+      request.id = Number(req.params.id);
+      const response = await PrescriptionsService.update(request);
+      res.status(200).json({
+        message: "Data resep berhasil diperbarui!",
         data: response,
       });
     } catch (e) {

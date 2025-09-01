@@ -371,13 +371,11 @@ describe("PATCH /staff/prescriptions/:id", () => {
 
   it("should return error if request is invalid", async () => {
     const prescription = await PrescriptionsTest.getPrescriptionsId();
-    const veterinarian = await UserTest.getUserVeterinarianId();
 
     const response = await supertest(web)
       .patch(`/staff/prescriptions/${prescription?.id}`)
       .set("SESSION-TOKEN", "token-staff")
       .send({
-        veterinarian_id: veterinarian?.id,
         notes:
           "Kucing mengalami demam ringan dan kehilangan nafsu makan. Diberikan obat antipiretik",
         // Missing medical_record_id
@@ -388,6 +386,9 @@ describe("PATCH /staff/prescriptions/:id", () => {
     expect(response.body.errors.medical_record_id.number).toBe(
       "Rekam medis harus diisi!"
     );
+    expect(response.body.errors.veterinarian_id.number).toBe(
+      "Dokter hewan harus diisi!"
+    );
   });
 
   it("should return error if prescription not found", async () => {
@@ -395,7 +396,7 @@ describe("PATCH /staff/prescriptions/:id", () => {
     const veterinarian = await UserTest.getUserVeterinarianId();
 
     const response = await supertest(web)
-      .patch(`/staff/prescriptions/99999`)
+      .patch(`/staff/prescriptions/9999999`)
       .set("SESSION-TOKEN", "token-staff")
       .send({
         medical_record_id: medicalRecord?.id,

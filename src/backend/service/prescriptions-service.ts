@@ -4,6 +4,7 @@ import {
   CreatePrescriptionsRequest,
   PrescriptionsResponse,
   toPrescriptionsResponse,
+  UpdatePrescriptionsRequest,
 } from "../model/prescriptions-model";
 import { PrescriptionsValidation } from "../validation/prescriptions-validation";
 import { Validation } from "../validation/validation";
@@ -60,5 +61,20 @@ export class PrescriptionsService {
   static async get(prescriptionsId: number): Promise<PrescriptionsResponse> {
     const prescriptions = await this.checkPrescriptionsMustExists(prescriptionsId);
     return toPrescriptionsResponse(prescriptions);
+  }
+
+  static async update(req: UpdatePrescriptionsRequest): Promise<PrescriptionsResponse> {
+    const updateRequest = Validation.validate(PrescriptionsValidation.UPDATE, req);
+    await this.checkPrescriptionsMustExists(updateRequest.id);
+
+    const updated = await prismaClient.prescriptions.update({
+      where: { id: updateRequest.id },
+      data: {
+        ...req,
+        updated_at: new Date(),
+      },
+    });
+
+    return toPrescriptionsResponse(updated);
   }
 }
