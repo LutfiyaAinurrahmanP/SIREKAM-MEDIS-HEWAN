@@ -4,6 +4,7 @@ import {
   CreateTransactionsRequest,
   toTransactionResponse,
   TransactionsResponse,
+  UpdateTransactionsRequest,
 } from "../model/transactions-model";
 import { TransactionsValidation } from "../validation/transactions-validation";
 import { Validation } from "../validation/validation";
@@ -45,12 +46,30 @@ export class TransactionsService {
     return transaction;
   }
 
-  static async getTransactionById(
-    transactionsId: number
-  ): Promise<TransactionsResponse> {
+  static async get(transactionsId: number): Promise<TransactionsResponse> {
     const transaction = await TransactionsService.checkTransactionsMustExists(
       transactionsId
     );
     return toTransactionResponse(transaction);
+  }
+
+  static async update(
+    req: UpdateTransactionsRequest
+  ): Promise<TransactionsResponse> {
+    const updateRequest = Validation.validate(
+      TransactionsValidation.UPDATE,
+      req
+    );
+    await this.checkTransactionsMustExists(updateRequest.id);
+
+    const updatedTransaction = await prismaClient.transactions.update({
+      where: { id: updateRequest.id },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
+    return toTransactionResponse(updatedTransaction);
   }
 }

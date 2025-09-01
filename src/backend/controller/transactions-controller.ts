@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateTransactionsRequest } from "../model/transactions-model";
+import {
+  CreateTransactionsRequest,
+  UpdateTransactionsRequest,
+} from "../model/transactions-model";
 import { TransactionsService } from "../service/transactions-service";
 
 export class TransactionsController {
@@ -31,8 +34,23 @@ export class TransactionsController {
   static async get(req: Request, res: Response, next: NextFunction) {
     try {
       const request = Number(req.params.id);
-      const response = await TransactionsService.getTransactionById(request);
+      const response = await TransactionsService.get(request);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdateTransactionsRequest =
+        req.body as UpdateTransactionsRequest;
+      request.id = Number(req.params.id);
+      const response = await TransactionsService.update(request);
+      res.status(200).json({
+        message: "Data transaksi berhasil diperbarui!",
         data: response,
       });
     } catch (e) {
