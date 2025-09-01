@@ -11,6 +11,7 @@ import MedicalRecordsController from "../controller/medical-records-controller";
 import { PrescriptionsController } from "../controller/prescriptions-controller";
 import { PrescriptionItemsController } from "../controller/prescription-items-controller";
 import { TransactionsController } from "../controller/transactions-controller";
+import { TreatmentNotesController } from "../controller/treatment-notes-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -112,3 +113,22 @@ staffRouter.patch("/transactions/:id", TransactionsController.update);
 staffRouter.delete("/transactions/:id", TransactionsController.delete);
 
 apiRouter.use("/staff", staffRouter);
+
+// Veterinarian API
+export const veterinarianRouter = express.Router();
+veterinarianRouter.use(roleMiddleware([UserRole.VETERINARIAN]));
+
+// Treatment notes API
+veterinarianRouter.post("/treatment-notes", TreatmentNotesController.create);
+// veterinarianRouter.get("/treatment-notes", TreatmentNotesController.list);
+// veterinarianRouter.get("/treatment-notes/:id", TreatmentNotesController.get);
+// veterinarianRouter.patch(
+//   "/treatment-notes/:id",
+//   TreatmentNotesController.update
+// );
+// veterinarianRouter.delete(
+//   "/treatment-notes/:id",
+//   TreatmentNotesController.delete
+// );
+
+apiRouter.use("/veterinarian", veterinarianRouter);

@@ -697,3 +697,56 @@ export class TransactionsTest {
     });
   }
 }
+
+export class TreatmentNotesTest {
+  static async getMedicalRecordsId() {
+    const medicalRecord = await prismaClient.medicalRecords.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return medicalRecord?.id;
+  }
+
+  static async getUserId() {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        username: "staff",
+      },
+    });
+    return user?.id;
+  }
+
+  static async deleteTreatmentNotes() {
+    return await prismaClient.treatmentNotes.deleteMany();
+  }
+
+  static async createTreatmentNotes() {
+    const userId: number | undefined = await this.getUserId();
+    const medicalRecordId: number | undefined =
+      await this.getMedicalRecordsId();
+
+    return await prismaClient.treatmentNotes.createMany({
+      data: [
+        {
+          created_by: userId!,
+          medical_record_id: medicalRecordId!,
+          notes: "Catatan perawatan hewan peliharaan",
+        },
+        {
+          created_by: userId!,
+          medical_record_id: medicalRecordId!,
+          notes: "Perhatikan efek samping obat dalam beberapa hari",
+        },
+      ],
+    });
+  }
+
+  static async getTreatmentNotes() {
+    return await prismaClient.treatmentNotes.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
+}
