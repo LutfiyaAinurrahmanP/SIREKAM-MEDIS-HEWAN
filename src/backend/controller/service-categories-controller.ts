@@ -33,8 +33,8 @@ export class ServiceCategoriesController {
 
   static async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const serviceCategoriesId = Number(req.params.id);
-      const response = await ServiceCategoriesService.get(serviceCategoriesId);
+      const request = Number(req.params.id);
+      const response = await ServiceCategoriesService.get(request);
       res.status(200).json({
         data: response,
       });
@@ -60,13 +60,10 @@ export class ServiceCategoriesController {
 
   static async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const serviceCategoriesId = Number(req.params.id);
-      const response = await ServiceCategoriesService.delete(
-        serviceCategoriesId
-      );
+      const request = Number(req.params.id);
+      await ServiceCategoriesService.delete(request);
       res.status(200).json({
         message: "Data jenis layanan berhasil dihapus!",
-        data: response,
       });
     } catch (e) {
       next(e);

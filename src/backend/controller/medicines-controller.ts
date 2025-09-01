@@ -34,8 +34,8 @@ export class MedicinesController {
 
   static async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const medicinesId = Number(req.params.id);
-      const response = await MedicinesService.get(medicinesId);
+      const request = Number(req.params.id);
+      const response = await MedicinesService.get(request);
       res.status(200).json({
         data: response,
       });
@@ -61,8 +61,8 @@ export class MedicinesController {
 
   static async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const medicinesId = Number(req.params.id);
-      await MedicinesService.delete(medicinesId);
+      const request = Number(req.params.id);
+      await MedicinesService.delete(request);
       res.status(200).json({
         message: "Data obat berhasil dihapus!",
       });

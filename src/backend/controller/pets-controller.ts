@@ -29,8 +29,8 @@ export class PetsController {
 
   static async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const petsId = Number(req.params.id);
-      const response = await PetsService.get(petsId);
+      const request = Number(req.params.id);
+      const response = await PetsService.get(request);
       res.status(200).json({
         data: response,
       });
@@ -55,8 +55,8 @@ export class PetsController {
 
   static async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const petsId = Number(req.params.id);
-      const response = await PetsService.delete(petsId);
+      const request = Number(req.params.id);
+      await PetsService.delete(request);
       res.status(200).json({
         message: "Data hewan peliharaan berhasil dihapus!",
       });

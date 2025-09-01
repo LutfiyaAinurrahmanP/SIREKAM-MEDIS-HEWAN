@@ -33,8 +33,8 @@ export class AppointmentsController {
 
   static async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const appointmentsId = Number(req.params.id);
-      const response = await AppointmentsService.get(appointmentsId);
+      const request = Number(req.params.id);
+      const response = await AppointmentsService.get(request);
       res.status(200).json({
         data: response,
       });

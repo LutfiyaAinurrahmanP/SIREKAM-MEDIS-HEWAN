@@ -71,8 +71,8 @@ export class UserController {
 
   static async get(req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = Number(req.params.id);
-      const response = await UserService.get(userId);
+      const request = Number(req.params.id);
+      const response = await UserService.get(request);
       res.status(200).json({
         data: response,
       });
@@ -97,8 +97,8 @@ export class UserController {
 
   static async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const userId = Number(req.params.id);
-      const response = await UserService.delete(userId);
+      const request = Number(req.params.id);
+      await UserService.delete(request);
       res.status(200).json({
         message: "Data user berhasil dihapus!",
       });

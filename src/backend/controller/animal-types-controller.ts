@@ -34,8 +34,8 @@ export class AnimalTypesController {
 
   static async get(req: UserRequest, res: Response, next: NextFunction) {
     try {
-      const animalTypesId = Number(req.params.id);
-      const response = await AnimalTypesService.get(animalTypesId);
+      const request = Number(req.params.id);
+      const response = await AnimalTypesService.get(request);
       res.status(200).json({
         data: response,
       });
@@ -61,8 +61,8 @@ export class AnimalTypesController {
 
   static async delete(req: UserRequest, res: Response, next: NextFunction) {
     try {
-      const animalTypesId = Number(req.params.id);
-      await AnimalTypesService.delete(animalTypesId);
+      const request = Number(req.params.id);
+      await AnimalTypesService.delete(request);
       res.status(200).json({
         message: "Data jenis hewan berhasil dihapus!",
       });
