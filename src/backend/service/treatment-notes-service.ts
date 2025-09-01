@@ -31,7 +31,14 @@ export class TreatmentNotesService {
   }
 
   static async list(): Promise<TreatmentNotesResponse[]> {
-    const treatmentNotes = await prismaClient.treatmentNotes.findMany();
+    const treatmentNotes = await prismaClient.treatmentNotes.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    if (!treatmentNotes) {
+      throw new ResponseError(404, "Data catatan perawatan tidak ditemukan!");
+    }
     return treatmentNotes.map(toTreatmentNotesResponse);
   }
 
@@ -77,7 +84,9 @@ export class TreatmentNotesService {
     return toTreatmentNotesResponse(treatmentNotes);
   }
 
-  static async delete(treatmentNotesId: number) {
+  static async delete(
+    treatmentNotesId: number
+  ): Promise<TreatmentNotesResponse> {
     const deleteRequest = await this.checkTreatmentNotesMustExists(
       treatmentNotesId
     );

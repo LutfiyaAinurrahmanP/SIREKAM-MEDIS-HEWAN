@@ -140,6 +140,9 @@ export class UserService {
         id: "desc",
       },
     });
+    if (!user) {
+      throw new ResponseError(404, "Data user tidak ditemukan!");
+    }
 
     return user.map(toUserResponse);
   }
@@ -175,7 +178,7 @@ export class UserService {
         updated_at: new Date(),
       },
     });
-    return toUserResponse(user!);
+    return toUserResponse(user);
   }
 
   static async delete(userId: number): Promise<UserResponse> {

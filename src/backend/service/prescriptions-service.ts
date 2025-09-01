@@ -70,7 +70,7 @@ export class PrescriptionsService {
     const updated = await prismaClient.prescriptions.update({
       where: { id: updateRequest.id },
       data: {
-        ...req,
+        ...updateRequest,
         updated_at: new Date(),
       },
     });

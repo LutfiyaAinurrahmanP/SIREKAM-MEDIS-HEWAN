@@ -68,7 +68,7 @@ export class AnimalTypesService {
 
   static async get(animalTypesId: number): Promise<AnimalTypesResponse> {
     const animalTypes = await this.checkAnimalTypesMustExists(animalTypesId);
-    return toAnimalTypesResponse(animalTypes!);
+    return toAnimalTypesResponse(animalTypes);
   }
 
   static async update(
@@ -94,12 +94,13 @@ export class AnimalTypesService {
     return toAnimalTypesResponse(animalTypes!);
   }
 
-  static async delete(animalTypesId: number): Promise<void> {
-    await this.checkAnimalTypesMustExists(animalTypesId);
-    await prismaClient.animalTypes.delete({
+  static async delete(animalTypesId: number): Promise<AnimalTypesResponse> {
+    const deleteRequest = await this.checkAnimalTypesMustExists(animalTypesId);
+    const animalServices = await prismaClient.animalTypes.delete({
       where: {
-        id: animalTypesId,
+        id: deleteRequest.id,
       },
     });
+    return animalServices;
   }
 }

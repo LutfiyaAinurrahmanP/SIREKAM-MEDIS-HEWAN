@@ -64,7 +64,7 @@ export class MedicinesService {
 
   static async get(medicinesId: number) {
     const medicines = await this.checkMedicinesMustExists(medicinesId);
-    return toMedicinesResponse(medicines!);
+    return toMedicinesResponse(medicines);
   }
 
   static async update(req: UpdateMedicinesRequest): Promise<MedicinesResponse> {

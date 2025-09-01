@@ -92,7 +92,6 @@ export default class MedicalRecordsService {
         id: deleteRequest.id,
       },
     });
-
     return toMedicalRecordsResponse(medicalRecord);
   }
 }

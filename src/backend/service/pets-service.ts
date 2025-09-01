@@ -56,7 +56,7 @@ export class PetsService {
 
   static async get(petsId: number): Promise<PetsResponse> {
     const pets = await this.checkPetsMustExists(petsId);
-    return toPetsResponse(pets!);
+    return toPetsResponse(pets);
   }
 
   static async update(req: UpdatePetsRequest): Promise<PetsResponse> {

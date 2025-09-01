@@ -31,7 +31,15 @@ export class TransactionsService {
   }
 
   static async list(): Promise<TransactionsResponse[]> {
-    const transactions = await prismaClient.transactions.findMany();
+    const transactions = await prismaClient.transactions.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    if (!transactions) {
+      throw new ResponseError(404, "Data transaksi tidak ditemukan!");
+    }
+
     return transactions.map(toTransactionResponse);
   }
 
