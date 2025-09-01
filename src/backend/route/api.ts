@@ -176,10 +176,55 @@ veterinarianRouter.delete(
 );
 
 // User API
-veterinarianRouter.post("/users", UserController.create);
 veterinarianRouter.get("/users", UserController.list);
 veterinarianRouter.get("/users/:id", UserController.get);
 veterinarianRouter.patch("/users/:id", UserController.update);
 veterinarianRouter.delete("/users/:id", UserController.delete);
 
 apiRouter.use("/veterinarian", veterinarianRouter);
+
+// CLIENT
+export const clientRouter = express.Router();
+clientRouter.use(roleMiddleware([UserRole.CLIENT]));
+
+// Treatment notes API
+clientRouter.get("/treatment-notes", TreatmentNotesController.list);
+clientRouter.get("/treatment-notes/:id", TreatmentNotesController.get);
+
+// User API
+clientRouter.get("/users", UserController.list);
+clientRouter.get("/users/:id", UserController.get);
+clientRouter.patch("/users/:id", UserController.update);
+clientRouter.delete("/users/:id", UserController.delete);
+
+// Appointments API
+clientRouter.post("/appointments", AppointmentsController.create);
+clientRouter.get("/appointments", AppointmentsController.list);
+clientRouter.get("/appointments/:id", AppointmentsController.get);
+clientRouter.patch("/appointments/:id", AppointmentsController.update);
+clientRouter.delete("/appointments/:id", AppointmentsController.delete);
+
+// Pets API
+clientRouter.post("/pets", PetsController.create);
+clientRouter.get("/pets", PetsController.list);
+clientRouter.get("/pets/:id", PetsController.get);
+clientRouter.patch("/pets/:id", PetsController.update);
+clientRouter.delete("/pets/:id", PetsController.delete);
+
+// Medical Records API
+clientRouter.get("/medical-records", MedicalRecordsController.list);
+clientRouter.get("/medical-records/:id", MedicalRecordsController.get);
+
+// Prescription API
+clientRouter.get("/prescriptions", PrescriptionsController.list);
+clientRouter.get("/prescriptions/:id", PrescriptionsController.get);
+
+// Prescription items API
+clientRouter.get("/prescription-items", PrescriptionItemsController.list);
+clientRouter.get("/prescription-items/:id", PrescriptionItemsController.get);
+
+// Transactions API
+clientRouter.get("/transactions", TransactionsController.list);
+clientRouter.get("/transactions/:id", TransactionsController.get);
+
+apiRouter.use("/client", clientRouter);
