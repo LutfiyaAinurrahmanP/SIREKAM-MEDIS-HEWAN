@@ -137,6 +137,10 @@ apiRouter.use("/staff", staffRouter);
 export const veterinarianRouter = express.Router();
 veterinarianRouter.use(roleMiddleware([UserRole.VETERINARIAN]));
 
+// Medicines API
+veterinarianRouter.get("/medicines", MedicinesController.list);
+veterinarianRouter.get("/medicines/:id", MedicinesController.get);
+
 // Treatment notes API
 veterinarianRouter.post("/treatment-notes", TreatmentNotesController.create);
 veterinarianRouter.get("/treatment-notes", TreatmentNotesController.list);
@@ -149,5 +153,33 @@ veterinarianRouter.delete(
   "/treatment-notes/:id",
   TreatmentNotesController.delete
 );
+
+// Pets API
+veterinarianRouter.get("/pets", PetsController.list);
+veterinarianRouter.get("/pets/:id", PetsController.get);
+
+// Appointments API
+veterinarianRouter.get("/appointments", AppointmentsController.list);
+veterinarianRouter.get("/appointments/:id", AppointmentsController.get);
+
+// Medical Records API
+veterinarianRouter.post("/medical-records", MedicalRecordsController.create);
+veterinarianRouter.get("/medical-records", MedicalRecordsController.list);
+veterinarianRouter.get("/medical-records/:id", MedicalRecordsController.get);
+veterinarianRouter.patch(
+  "/medical-records/:id",
+  MedicalRecordsController.update
+);
+veterinarianRouter.delete(
+  "/medical-records/:id",
+  MedicalRecordsController.delete
+);
+
+// User API
+veterinarianRouter.post("/users", UserController.create);
+veterinarianRouter.get("/users", UserController.list);
+veterinarianRouter.get("/users/:id", UserController.get);
+veterinarianRouter.patch("/users/:id", UserController.update);
+veterinarianRouter.delete("/users/:id", UserController.delete);
 
 apiRouter.use("/veterinarian", veterinarianRouter);
