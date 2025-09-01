@@ -57,4 +57,16 @@ export class PrescriptionItemsController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = Number(req.params.id);
+      await PrescriptionItemsService.delete(request);
+      res.status(200).json({
+        message: "Data resep obat berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

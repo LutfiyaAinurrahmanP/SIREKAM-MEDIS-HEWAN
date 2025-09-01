@@ -79,4 +79,16 @@ export class PrescriptionItemsService {
 
     return toPrescriptionItemsResponse(prescriptionItems);
   }
+
+  static async delete(prescriptionItemsId: number) {
+    const deleteRequest = await this.checkPrescriptionItemsMustExists(
+      prescriptionItemsId
+    );
+    const prescriptionItems = await prismaClient.prescriptionItems.delete({
+      where: {
+        id: prescriptionItemsId,
+      },
+    });
+    return prescriptionItems;
+  }
 }

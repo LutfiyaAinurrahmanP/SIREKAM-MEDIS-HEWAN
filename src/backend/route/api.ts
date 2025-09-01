@@ -98,9 +98,9 @@ staffRouter.patch(
   "/prescription-items/:id",
   PrescriptionItemsController.update
 );
-// staffRouter.delete(
-//   "/prescription-items/:id",
-//   PrescriptionItemsController.delete
-// );
+staffRouter.delete(
+  "/prescription-items/:id",
+  PrescriptionItemsController.delete
+);
 
 apiRouter.use("/staff", staffRouter);
