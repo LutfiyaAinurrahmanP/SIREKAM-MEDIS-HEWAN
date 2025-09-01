@@ -41,7 +41,7 @@ adminRouter.get("/medicines/:id", MedicinesController.get);
 adminRouter.patch("/medicines/:id", MedicinesController.update);
 adminRouter.delete("/medicines/:id", MedicinesController.delete);
 
-// // Service Categories API
+// Service Categories API
 adminRouter.post("/service-categories", ServiceCategoriesController.create);
 adminRouter.get("/service-categories", ServiceCategoriesController.list);
 adminRouter.get("/service-categories/:id", ServiceCategoriesController.get);
@@ -53,6 +53,14 @@ adminRouter.delete(
   "/service-categories/:id",
   ServiceCategoriesController.delete
 );
+
+// Transactions API
+adminRouter.get("/transactions", TransactionsController.list);
+adminRouter.get("/transactions/:id", TransactionsController.get);
+
+// Medical Records API
+adminRouter.get("/medical-records", MedicalRecordsController.list);
+adminRouter.get("/medical-records/:id", MedicalRecordsController.get);
 
 // User API
 adminRouter.post("/users", UserController.create);

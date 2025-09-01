@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 export class UserTest {
   static async deleteUser() {
-    await prismaClient.user.deleteMany();
+    return await prismaClient.user.deleteMany();
   }
 
   static async createUser() {

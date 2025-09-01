@@ -27,63 +27,58 @@ export async function deleteData() {
 }
 
 export async function createData(type?: string) {
-  await UserTest.createUser();
-
   switch (type) {
     case "users":
-      await UserTest.createUser(); // ✅ Buat User
-      return; // ✅ Stop di sini, tidak buat AnimalTypes dan seterusnya
+      await UserTest.createUser();
+      return;
 
     case "animal-types":
-      await AnimalTypesTest.createAnimalTypes(); // ✅ Buat AnimalTypes
-      return; // ✅ Stop di sini, tidak buat Pets dan seterusnya
+      await UserTest.createUser();
+      await AnimalTypesTest.createAnimalTypes();
+      return;
 
     case "pets":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
-      await PetsTest.createPets(); // ✅ Buat sampai Pets
+      await PetsTest.createPets();
       return;
 
     case "service-categories":
-      await AnimalTypesTest.createAnimalTypes();
-      await PetsTest.createPets();
-      await ServiceCategoriesTest.createServiceCategories(); // ✅ Buat sampai ServiceCategories
-      return;
-
-    case "appointments":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
-      await AppointmentsTest.createAppointments(); // ✅ Buat sampai Appointments
       return;
 
-    case "medicines":
+    case "appointments":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
       await AppointmentsTest.createAppointments();
-      await MedicinesTest.createMedicines(); // ✅ Buat sampai Medicines
       return;
 
-    case "medical-records":
+    case "medicines":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
       await AppointmentsTest.createAppointments();
       await MedicinesTest.createMedicines();
-      await MedicalRecordsTest.createMedicalRecords(); // ✅ Buat sampai MedicalRecords
       return;
 
-    case "prescriptions":
+    case "medical-records":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
       await AppointmentsTest.createAppointments();
       await MedicinesTest.createMedicines();
       await MedicalRecordsTest.createMedicalRecords();
-      await PrescriptionsTest.createPrescriptions(); // ✅ Buat sampai Prescriptions
       return;
 
-    case "prescription-items":
+    case "prescriptions":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
@@ -91,10 +86,10 @@ export async function createData(type?: string) {
       await MedicinesTest.createMedicines();
       await MedicalRecordsTest.createMedicalRecords();
       await PrescriptionsTest.createPrescriptions();
-      await PrescriptionItemsTest.createPrescriptionItems(); // ✅ Buat sampai PrescriptionItems
       return;
 
-    case "transactions":
+    case "prescription-items":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
@@ -103,10 +98,10 @@ export async function createData(type?: string) {
       await MedicalRecordsTest.createMedicalRecords();
       await PrescriptionsTest.createPrescriptions();
       await PrescriptionItemsTest.createPrescriptionItems();
-      await TransactionsTest.createTransactions(); // ✅ Buat sampai Transactions
       return;
 
-    case "treatment-notes":
+    case "transactions":
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
@@ -116,11 +111,24 @@ export async function createData(type?: string) {
       await PrescriptionsTest.createPrescriptions();
       await PrescriptionItemsTest.createPrescriptionItems();
       await TransactionsTest.createTransactions();
-      await TreatmentNotesTest.createTreatmentNotes(); // ✅ Buat semua
+      return;
+
+    case "treatment-notes":
+      await UserTest.createUser();
+      await AnimalTypesTest.createAnimalTypes();
+      await PetsTest.createPets();
+      await ServiceCategoriesTest.createServiceCategories();
+      await AppointmentsTest.createAppointments();
+      await MedicinesTest.createMedicines();
+      await MedicalRecordsTest.createMedicalRecords();
+      await PrescriptionsTest.createPrescriptions();
+      await PrescriptionItemsTest.createPrescriptionItems();
+      await TransactionsTest.createTransactions();
+      await TreatmentNotesTest.createTreatmentNotes();
       return;
 
     default:
-      // Jika tidak ada type yang match, buat semua data
+      await UserTest.createUser();
       await AnimalTypesTest.createAnimalTypes();
       await PetsTest.createPets();
       await ServiceCategoriesTest.createServiceCategories();
