@@ -292,24 +292,42 @@ describe("GET /veterinarian/treatment-notes", () => {
 
 describe("GET /veterinarian/treatment-notes/:id", () => {
   beforeEach(async () => {
+    await TreatmentNotesTest.deleteTreatmentNotes();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await MedicinesTest.deleteMedicines();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createVeterinarian();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
+    await TransactionsTest.createTransactions();
     await TreatmentNotesTest.createTreatmentNotes();
   });
 
   afterEach(async () => {
     await TreatmentNotesTest.deleteTreatmentNotes();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should get an existing treatment note", async () => {
@@ -376,24 +394,42 @@ describe("GET /veterinarian/treatment-notes/:id", () => {
 
 describe("PATCH /veterinarian/treatment-notes/:id", () => {
   beforeEach(async () => {
+    await TreatmentNotesTest.deleteTreatmentNotes();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await MedicinesTest.deleteMedicines();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createVeterinarian();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
+    await TransactionsTest.createTransactions();
     await TreatmentNotesTest.createTreatmentNotes();
   });
 
   afterEach(async () => {
     await TreatmentNotesTest.deleteTreatmentNotes();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should update an existing treatment note", async () => {
@@ -535,24 +571,42 @@ describe("PATCH /veterinarian/treatment-notes/:id", () => {
 
 describe("DELETE /veterinarian/treatment-notes/:id", () => {
   beforeEach(async () => {
+    await TreatmentNotesTest.deleteTreatmentNotes();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await MedicinesTest.deleteMedicines();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createVeterinarian();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
+    await TransactionsTest.createTransactions();
     await TreatmentNotesTest.createTreatmentNotes();
   });
 
   afterEach(async () => {
     await TreatmentNotesTest.deleteTreatmentNotes();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should delete an existing treatment note", async () => {

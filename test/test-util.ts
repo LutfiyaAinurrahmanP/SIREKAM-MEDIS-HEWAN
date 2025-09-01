@@ -742,7 +742,7 @@ export class TreatmentNotesTest {
     });
   }
 
-  static async getTreatmentNotes() {
+  static async getTreatmentNotesId() {
     return await prismaClient.treatmentNotes.findFirst({
       orderBy: {
         id: "desc",

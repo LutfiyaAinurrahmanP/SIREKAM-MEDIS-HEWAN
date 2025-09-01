@@ -1,4 +1,5 @@
 import { prismaClient } from "../application/database";
+import { ResponseError } from "../error/response-error";
 import {
   CreateTreatmentNotesRequest,
   toTreatmentNotesResponse,
@@ -31,5 +32,25 @@ export class TreatmentNotesService {
   static async list(): Promise<TreatmentNotesResponse[]> {
     const treatmentNotes = await prismaClient.treatmentNotes.findMany();
     return treatmentNotes.map(toTreatmentNotesResponse);
+  }
+
+  static async checkTreatmentNotesMustExists(treatmentNotesId: number) {
+    const treatmentNotes = await prismaClient.treatmentNotes.findUnique({
+      where: {
+        id: treatmentNotesId,
+      },
+    });
+
+    if (!treatmentNotes) {
+      throw new ResponseError(404, "Data catatan perawatan tidak ditemukan!");
+    }
+    return treatmentNotes;
+  }
+
+  static async get(treatmentNotesId: number): Promise<TreatmentNotesResponse> {
+    const treatmentNotes = await this.checkTreatmentNotesMustExists(
+      treatmentNotesId
+    );
+    return toTreatmentNotesResponse(treatmentNotes);
   }
 }
