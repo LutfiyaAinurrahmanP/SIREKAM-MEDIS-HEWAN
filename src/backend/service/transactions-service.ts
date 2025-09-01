@@ -72,4 +72,16 @@ export class TransactionsService {
 
     return toTransactionResponse(updatedTransaction);
   }
+
+  static async delete(transactionsId: number) {
+    const deleteRequest = await this.checkTransactionsMustExists(
+      transactionsId
+    );
+    const transactions = await prismaClient.transactions.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+    return transactions;
+  }
 }

@@ -57,4 +57,17 @@ export class TransactionsController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = Number(req.params.id);
+      const response = await TransactionsService.delete(request);
+      res.status(200).json({
+        message: "Data transaksi berhasil dihapus!",
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }
