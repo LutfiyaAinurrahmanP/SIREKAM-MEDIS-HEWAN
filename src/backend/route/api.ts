@@ -126,9 +126,9 @@ veterinarianRouter.patch(
   "/treatment-notes/:id",
   TreatmentNotesController.update
 );
-// veterinarianRouter.delete(
-//   "/treatment-notes/:id",
-//   TreatmentNotesController.delete
-// );
+veterinarianRouter.delete(
+  "/treatment-notes/:id",
+  TreatmentNotesController.delete
+);
 
 apiRouter.use("/veterinarian", veterinarianRouter);

@@ -57,4 +57,16 @@ export class TreatmentNotesController {
       next(e);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request = Number(req.params.id);
+      await TreatmentNotesService.delete(request);
+      res.status(200).json({
+        message: "Data catatan perawatan berhasil dihapus!",
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

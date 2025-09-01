@@ -76,4 +76,16 @@ export class TreatmentNotesService {
 
     return toTreatmentNotesResponse(treatmentNotes);
   }
+
+  static async delete(treatmentNotesId: number) {
+    const deleteRequest = await this.checkTreatmentNotesMustExists(
+      treatmentNotesId
+    );
+    const treatmentNotes = await prismaClient.treatmentNotes.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+    return treatmentNotes;
+  }
 }
