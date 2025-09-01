@@ -27,4 +27,9 @@ export class TransactionsService {
 
     return toTransactionResponse(transactions);
   }
+
+  static async list(): Promise<TransactionsResponse[]> {
+    const transactions = await prismaClient.transactions.findMany();
+    return transactions.map(toTransactionResponse);
+  }
 }

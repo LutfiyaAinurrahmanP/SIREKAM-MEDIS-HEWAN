@@ -16,4 +16,15 @@ export class TransactionsController {
       next(e);
     }
   }
+
+  static async list(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await TransactionsService.list();
+      res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
 }

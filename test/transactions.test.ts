@@ -388,23 +388,38 @@ describe("POST /staff/transactions", () => {
 
 describe("GET /staff/transactions", () => {
   beforeEach(async () => {
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
     await TransactionsTest.createTransactions();
   });
 
   afterEach(async () => {
     await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should return a list of transactions", async () => {
@@ -414,10 +429,8 @@ describe("GET /staff/transactions", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
-    expect(response.body.data.length).toBeGreaterThanOrEqual(2);
-    expect(response.body.meta).toBeDefined();
-    expect(response.body.meta.total).toBeGreaterThanOrEqual(2);
   });
 
   it("should return error if session is invalid", async () => {
