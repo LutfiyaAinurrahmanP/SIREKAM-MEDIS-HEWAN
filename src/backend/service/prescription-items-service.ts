@@ -4,6 +4,7 @@ import {
   CreatePrescriptionItemsRequest,
   PrescriptionItemsResponse,
   toPrescriptionItemsResponse,
+  UpdatePrescriptionItemsRequest,
 } from "../model/prescription-items-model";
 import { PrescriptionItemsValidation } from "../validation/prescription-items-validation";
 import { Validation } from "../validation/validation";
@@ -52,14 +53,30 @@ export class PrescriptionItemsService {
   }
 
   static async get(prescriptionItemsId: number) {
-    const prescriptionItems = await prismaClient.prescriptionItems.findUnique({
+    const prescriptionItems = await this.checkPrescriptionItemsMustExists(
+      prescriptionItemsId
+    );
+    return toPrescriptionItemsResponse(prescriptionItems);
+  }
+
+  static async update(
+    req: UpdatePrescriptionItemsRequest
+  ): Promise<PrescriptionItemsResponse> {
+    const updateRequest = Validation.validate(
+      PrescriptionItemsValidation.UPDATE,
+      req
+    );
+    await this.checkPrescriptionItemsMustExists(updateRequest.id);
+    const prescriptionItems = await prismaClient.prescriptionItems.update({
       where: {
-        id: prescriptionItemsId,
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
       },
     });
-    if (!prescriptionItems) {
-      throw new ResponseError(404, "Data resep obat tidak ditemukan!");
-    }
-    return prescriptionItems;
+
+    return toPrescriptionItemsResponse(prescriptionItems);
   }
 }

@@ -94,10 +94,10 @@ staffRouter.delete("/prescriptions/:id", PrescriptionsController.delete);
 staffRouter.post("/prescription-items", PrescriptionItemsController.create);
 staffRouter.get("/prescription-items", PrescriptionItemsController.list);
 staffRouter.get("/prescription-items/:id", PrescriptionItemsController.get);
-// staffRouter.patch(
-//   "/prescription-items/:id",
-//   PrescriptionItemsController.update
-// );
+staffRouter.patch(
+  "/prescription-items/:id",
+  PrescriptionItemsController.update
+);
 // staffRouter.delete(
 //   "/prescription-items/:id",
 //   PrescriptionItemsController.delete
