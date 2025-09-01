@@ -3,19 +3,7 @@ import bcrypt from "bcrypt";
 
 export class UserTest {
   static async deleteUser() {
-    await prismaClient.user.deleteMany({
-      where: {
-        username: {
-          in: [
-            "lutfiyapr",
-            "dummy data",
-            "dummy data2",
-            "staff",
-            "veterinarian",
-          ],
-        },
-      },
-    });
+    await prismaClient.user.deleteMany();
   }
 
   static async createUser() {
@@ -106,21 +94,7 @@ export class AnimalTypesTest {
     });
   }
   static async deleteAnimalTypes() {
-    await prismaClient.animalTypes.deleteMany({
-      where: {
-        name: "Kucing",
-      },
-    });
-    await prismaClient.animalTypes.deleteMany({
-      where: {
-        name: "Anjing",
-      },
-    });
-    await prismaClient.animalTypes.deleteMany({
-      where: {
-        name: "Otter",
-      },
-    });
+    await prismaClient.animalTypes.deleteMany();
   }
 }
 
@@ -196,13 +170,7 @@ export class PetsTest {
   }
 
   static async deletePets() {
-    await prismaClient.pets.deleteMany({
-      where: {
-        name: {
-          in: ["Luna", "Max", "Max Updated"],
-        },
-      },
-    });
+    await prismaClient.pets.deleteMany();
   }
 
   static async getPetsId() {
@@ -216,13 +184,7 @@ export class PetsTest {
 
 export class MedicinesTest {
   static async deleteMedicines() {
-    await prismaClient.medicines.deleteMany({
-      where: {
-        code: {
-          in: ["OBT-AX500", "OBT-PC500", "OBT-PCX500"],
-        },
-      },
-    });
+    await prismaClient.medicines.deleteMany();
   }
 
   static async createMedicines() {
@@ -262,13 +224,7 @@ export class MedicinesTest {
 
 export class ServiceCategoriesTest {
   static async deleteServiceCategories() {
-    return await prismaClient.serviceCategories.deleteMany({
-      where: {
-        name: {
-          in: ["Konsultasi Umum", "Vaksinasi"],
-        },
-      },
-    });
+    return await prismaClient.serviceCategories.deleteMany();
   }
 
   static async createServiceCategories() {

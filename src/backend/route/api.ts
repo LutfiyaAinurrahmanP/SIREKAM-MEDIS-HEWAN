@@ -18,6 +18,10 @@ apiRouter.use(authMiddleware);
 
 // User API
 apiRouter.delete("/role/user/logout", UserController.logout);
+apiRouter.delete("/admin/user/logout", UserController.logout);
+apiRouter.delete("/staff/user/logout", UserController.logout);
+apiRouter.delete("/veterinarian/user/logout", UserController.logout);
+apiRouter.delete("/client/user/logout", UserController.logout);
 
 // ADMIN
 export const adminRouter = express.Router();

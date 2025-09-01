@@ -1,0 +1,255 @@
+import supertest from "supertest";
+import {
+  AnimalTypesTest,
+  MedicinesTest,
+  PetsTest,
+  UserTest,
+} from "../test-util";
+import { web } from "../../src/backend/application/web";
+import { logger } from "../../src/backend/application/logging";
+import { prismaClient } from "../../src/backend/application/database";
+import bcrypt from "bcrypt";
+
+// AUTH Spec API
+describe("POST /register", () => {
+  beforeEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+  });
+
+  it("should create a new user", async () => {
+    const response = await supertest(web).post("/register").send({
+      username: "lutfiyapr",
+      fullname: "Lutfiya Ainurrahman Prasetyo",
+      email: "lutfiyapr.stu@pnc.ac.id",
+      password: "password",
+      role: "admin",
+      phone: "081915133813",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(201);
+    expect(response.body.message).toBe("User berhasil dibuat!");
+    expect(response.body.data.username).toBe("lutfiyapr");
+    expect(response.body.data.fullname).toBe("Lutfiya Ainurrahman Prasetyo");
+    expect(response.body.data.email).toBe("lutfiyapr.stu@pnc.ac.id");
+    expect(response.body.data.role).toBe("admin");
+    expect(response.body.data.phone).toBe("081915133813");
+  });
+
+  it("should return error if username already exists", async () => {
+    await supertest(web).post("/register").send({
+      username: "lutfiyapr",
+      fullname: "Lutfiya Ainurrahman Prasetyo",
+      email: "dummy@example.com",
+      password: "password",
+      role: "admin",
+      phone: "081915133813",
+    });
+
+    const response = await supertest(web).post("/register").send({
+      username: "lutfiyapr",
+      fullname: "Lutfiya Ainurrahman Prasetyo",
+      email: "lutfiyapr.stu@pnc.ac.id",
+      password: "password",
+      role: "admin",
+      phone: "081915133813",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+    expect(response.body.errors.username).toBeDefined();
+    expect(response.body.errors.username.unique).toBe(
+      "Username sudah dipakai!"
+    );
+  });
+
+  it("should return error if email already exists", async () => {
+    await supertest(web).post("/register").send({
+      username: "dummy data",
+      fullname: "Lutfiya Ainurrahman Prasetyo",
+      email: "lutfiyapr.stu@pnc.ac.id",
+      password: "password",
+      role: "admin",
+      phone: "081915133813",
+    });
+
+    const response = await supertest(web).post("/register").send({
+      username: "lutfiyapr",
+      fullname: "Lutfiya Ainurrahman Prasetyo",
+      email: "lutfiyapr.stu@pnc.ac.id",
+      password: "password",
+      role: "admin",
+      phone: "081915133813",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+    expect(response.body.errors.email).toBeDefined();
+    expect(response.body.errors.email.unique).toBe("Email sudah dipakai!");
+  });
+
+  it("should return error for invalid request data", async () => {
+    const response = await supertest(web).post("/register").send({
+      username: "",
+      fullname: "",
+      email: "",
+      password: "",
+      role: "",
+      phone: "",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+    expect(response.body.errors.username.required).toBe(
+      "Username harus diisi!"
+    );
+    expect(response.body.errors.username.min).toBe(
+      "Username memiliki minimal 5 karakter!"
+    );
+    expect(response.body.errors.fullname.min).toBe(
+      "Nama lengkap memiliki minimal 5 karakter!"
+    );
+    expect(response.body.errors.email.min).toBe(
+      "Email memiliki minimal 5 karakter!"
+    );
+    expect(response.body.errors.password.min).toBe(
+      "Password memiliki minimal 8 karakter!"
+    );
+    expect(response.body.errors.role.enum).toBe("Hak akses harus dipilih!");
+    expect(response.body.errors.phone.min).toBe(
+      "Nomor telp memiliki minimal 11 angka!"
+    );
+  });
+});
+
+describe("POST /login", () => {
+  beforeEach(async () => {
+    await UserTest.createUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+  });
+
+  it("should login an existing user", async () => {
+    const response = await supertest(web).post("/login").send({
+      username: "lutfiyapr",
+      password: "password",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.username).toBe("lutfiyapr");
+    expect(response.body.data.fullname).toBe("Lutfiya Ainurrahman Prasetyo");
+    expect(response.body.data.email).toBe("lutfiyapr.stu@pnc.ac.id");
+    expect(response.body.data.role).toBe("admin");
+    expect(response.body.data.phone).toBe("081915133813");
+  });
+
+  it("should return error if username invalid", async () => {
+    const response = await supertest(web).post("/login").send({
+      username: "salah",
+      password: "password",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBe("Username atau kata sandi salah!");
+  });
+
+  it("should return error if password invalid", async () => {
+    const response = await supertest(web).post("/login").send({
+      username: "lutfiyapr",
+      password: "salah",
+    });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBe("Username atau kata sandi salah!");
+  });
+});
+
+describe("DELETE /role/user/logout", () => {
+  beforeEach(async () => {
+    await UserTest.createUser();
+  });
+  afterEach(async () => {
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
+  });
+
+  it("should logout admin", async () => {
+    const response = await supertest(web)
+      .delete("/admin/user/logout")
+      .set("SESSION-TOKEN", "token-admin")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("User berhasil logout!");
+  });
+
+  it("should logout staff", async () => {
+    const response = await supertest(web)
+      .delete("/staff/user/logout")
+      .set("SESSION-TOKEN", "token-staff")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("User berhasil logout!");
+  });
+
+  it("should logout veterinarian", async () => {
+    const response = await supertest(web)
+      .delete("/veterinarian/user/logout")
+      .set("SESSION-TOKEN", "token-veterinarian")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("User berhasil logout!");
+  });
+
+  it("should logout client", async () => {
+    const response = await supertest(web)
+      .delete("/client/user/logout")
+      .set("SESSION-TOKEN", "token-client")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe("User berhasil logout!");
+  });
+
+  it("should error if user not logged in", async () => {
+    const response = await supertest(web)
+      .delete("/role/user/logout")
+      .set("SESSION-TOKEN", "invalid_token")
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(401);
+    expect(response.body.errors).toBe("Unauthorized");
+  });
+
+  it("should return error if user not authenticated", async () => {
+    const response = await supertest(web).delete("/role/user/logout").send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(401);
+    expect(response.body.errors).toBe("Unauthorized");
+  });
+});
