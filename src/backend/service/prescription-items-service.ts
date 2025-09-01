@@ -38,4 +38,28 @@ export class PrescriptionItemsService {
     }
     return prescriptionItems.map(toPrescriptionItemsResponse);
   }
+
+  static async checkPrescriptionItemsMustExists(prescriptionItemsId: number) {
+    const prescriptionItems = await prismaClient.prescriptionItems.findUnique({
+      where: {
+        id: prescriptionItemsId,
+      },
+    });
+    if (!prescriptionItems) {
+      throw new ResponseError(404, "Data resep obat tidak ditemukan!");
+    }
+    return prescriptionItems;
+  }
+
+  static async get(prescriptionItemsId: number) {
+    const prescriptionItems = await prismaClient.prescriptionItems.findUnique({
+      where: {
+        id: prescriptionItemsId,
+      },
+    });
+    if (!prescriptionItems) {
+      throw new ResponseError(404, "Data resep obat tidak ditemukan!");
+    }
+    return prescriptionItems;
+  }
 }

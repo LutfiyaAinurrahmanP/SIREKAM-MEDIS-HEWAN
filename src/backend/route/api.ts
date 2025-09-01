@@ -93,7 +93,7 @@ staffRouter.delete("/prescriptions/:id", PrescriptionsController.delete);
 // Prescription items API
 staffRouter.post("/prescription-items", PrescriptionItemsController.create);
 staffRouter.get("/prescription-items", PrescriptionItemsController.list);
-// staffRouter.get("/prescription-items/:id", PrescriptionItemsController.get);
+staffRouter.get("/prescription-items/:id", PrescriptionItemsController.get);
 // staffRouter.patch(
 //   "/prescription-items/:id",
 //   PrescriptionItemsController.update

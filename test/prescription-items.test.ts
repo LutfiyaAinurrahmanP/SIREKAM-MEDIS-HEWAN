@@ -268,6 +268,7 @@ describe("GET /staff/prescription-items/:id", () => {
     await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
     await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
   });
 
   afterEach(async () => {
