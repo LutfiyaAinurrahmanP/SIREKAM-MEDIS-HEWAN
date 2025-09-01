@@ -27,4 +27,18 @@ export class PrescriptionsService {
 
     return toPrescriptionsResponse(prescriptions);
   }
+
+  static async list(): Promise<PrescriptionsResponse[]> {
+    const prescriptions = await prismaClient.prescriptions.findMany({
+      orderBy: {
+        id: "desc"
+      }
+    });
+
+    if (!prescriptions) {
+      throw new Error("Data resep tidak ditemukan!");
+    }
+    
+    return prescriptions.map(toPrescriptionsResponse);
+  }
 }

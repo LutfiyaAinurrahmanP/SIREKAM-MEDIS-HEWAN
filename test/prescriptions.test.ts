@@ -157,8 +157,18 @@ describe("POST /staff/prescriptions", () => {
 
 describe("GET /staff/prescriptions", () => {
   beforeEach(async () => {
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
   });
@@ -166,6 +176,10 @@ describe("GET /staff/prescriptions", () => {
   afterEach(async () => {
     await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
   });
 
@@ -176,10 +190,8 @@ describe("GET /staff/prescriptions", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
-    expect(response.body.data.length).toBeGreaterThanOrEqual(2);
-    expect(response.body.meta).toBeDefined();
-    expect(response.body.meta.total).toBeGreaterThanOrEqual(2);
   });
 
   it("should return error if session is invalid", async () => {

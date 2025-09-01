@@ -512,7 +512,48 @@ export class MedicalRecordsTest {
 }
 
 export class PrescriptionsTest {
+  static async getUserVeterinarianId() {
+    const veterinarian = await prismaClient.user.findFirst({
+      where: {
+        username: "veterinarian",
+      },
+    });
+    return veterinarian?.id;
+  }
+
+  static async getMedicalRecordsId() {
+    const medicalRecord = await prismaClient.medicalRecords.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return medicalRecord?.id;
+  }
+  
   static async deletePrescriptions() {
     return await prismaClient.prescriptions.deleteMany();
+  }
+
+  static async createPrescriptions() {
+    const veterinarianId: number | undefined =
+      await this.getUserVeterinarianId();
+    const medicalRecordId: number | undefined =
+      await this.getMedicalRecordsId();
+    await prismaClient.prescriptions.createMany({
+      data: [
+        {
+          medical_record_id: medicalRecordId!,
+          veterinarian_id: veterinarianId!,
+        notes:
+          "Kucing mengalami demam ringan dan kehilangan nafsu makan. Diberikan obat antipiretik",
+        },
+        {
+          medical_record_id: medicalRecordId!,
+          veterinarian_id: veterinarianId!,
+        notes:
+          "Kelinci diperiksa rutin, kondisi sehat, hanya disarankan untuk memperbaiki pola makan",
+        },
+      ]
+    })
   }
 }
