@@ -85,7 +85,7 @@ staffRouter.delete("/medical-records/:id", MedicalRecordsController.delete);
 // Prescription API
 staffRouter.post("/prescriptions", PrescriptionsController.create);
 staffRouter.get("/prescriptions", PrescriptionsController.list);
-// staffRouter.get("/prescriptions/:id", PrescriptionsController.get);
+staffRouter.get("/prescriptions/:id", PrescriptionsController.get);
 // staffRouter.patch("/prescriptions/:id", PrescriptionsController.update);
 // staffRouter.delete("/prescriptions/:id", PrescriptionsController.delete);
 

@@ -556,4 +556,12 @@ export class PrescriptionsTest {
       ]
     })
   }
+
+  static async getPrescriptionsId() {
+    return await prismaClient.prescriptions.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
 }

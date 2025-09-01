@@ -1,4 +1,5 @@
 import { prismaClient } from "../application/database";
+import { ResponseError } from "../error/response-error";
 import {
   CreatePrescriptionsRequest,
   PrescriptionsResponse,
@@ -36,9 +37,28 @@ export class PrescriptionsService {
     });
 
     if (!prescriptions) {
-      throw new Error("Data resep tidak ditemukan!");
+      throw new ResponseError(404, "Data resep tidak ditemukan!");
     }
-    
+
     return prescriptions.map(toPrescriptionsResponse);
+  }
+
+  static async checkPrescriptionsMustExists(prescriptionsId: number) {
+    const prescriptions = await prismaClient.prescriptions.findUnique({
+      where: {
+        id: prescriptionsId
+      }
+    });
+
+    if (!prescriptions) {
+      throw new ResponseError(404, "Data resep tidak ditemukan!");
+    }
+
+    return prescriptions;
+  }
+
+  static async get(prescriptionsId: number): Promise<PrescriptionsResponse> {
+    const prescriptions = await this.checkPrescriptionsMustExists(prescriptionsId);
+    return toPrescriptionsResponse(prescriptions);
   }
 }

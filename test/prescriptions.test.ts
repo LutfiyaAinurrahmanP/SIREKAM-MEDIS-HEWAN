@@ -230,8 +230,18 @@ describe("GET /staff/prescriptions", () => {
 
 describe("GET /staff/prescriptions/:id", () => {
   beforeEach(async () => {
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
   });
@@ -239,6 +249,10 @@ describe("GET /staff/prescriptions/:id", () => {
   afterEach(async () => {
     await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
   });
 
@@ -304,8 +318,18 @@ describe("GET /staff/prescriptions/:id", () => {
 
 describe("PATCH /staff/prescriptions/:id", () => {
   beforeEach(async () => {
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
   });
@@ -313,6 +337,10 @@ describe("PATCH /staff/prescriptions/:id", () => {
   afterEach(async () => {
     await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
   });
 
@@ -437,8 +465,18 @@ describe("PATCH /staff/prescriptions/:id", () => {
 
 describe("DELETE /staff/prescriptions/:id", () => {
   beforeEach(async () => {
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
-    await UserTest.createUser();
+    await AnimalTypesTest.createAnimalTypes();
+    await PetsTest.createPets();
+    await ServiceCategoriesTest.createServiceCategories();
+    await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
     await PrescriptionsTest.createPrescriptions();
   });
@@ -446,6 +484,10 @@ describe("DELETE /staff/prescriptions/:id", () => {
   afterEach(async () => {
     await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
   });
 
