@@ -120,7 +120,7 @@ veterinarianRouter.use(roleMiddleware([UserRole.VETERINARIAN]));
 
 // Treatment notes API
 veterinarianRouter.post("/treatment-notes", TreatmentNotesController.create);
-// veterinarianRouter.get("/treatment-notes", TreatmentNotesController.list);
+veterinarianRouter.get("/treatment-notes", TreatmentNotesController.list);
 // veterinarianRouter.get("/treatment-notes/:id", TreatmentNotesController.get);
 // veterinarianRouter.patch(
 //   "/treatment-notes/:id",

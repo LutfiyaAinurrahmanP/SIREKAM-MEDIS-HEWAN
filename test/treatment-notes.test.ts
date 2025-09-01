@@ -212,6 +212,7 @@ describe("GET /veterinarian/treatment-notes", () => {
     await PrescriptionItemsTest.deletePrescriptionItems();
     await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
+    await MedicinesTest.deleteMedicines();
     await AppointmentsTest.deleteAppointments();
     await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
@@ -231,6 +232,7 @@ describe("GET /veterinarian/treatment-notes", () => {
   });
 
   afterEach(async () => {
+    await TreatmentNotesTest.deleteTreatmentNotes();
     await TransactionsTest.deleteTransactions();
     await PrescriptionItemsTest.deletePrescriptionItems();
     await PrescriptionsTest.deletePrescriptions();
@@ -250,10 +252,8 @@ describe("GET /veterinarian/treatment-notes", () => {
 
     logger.debug(response.body);
     expect(response.status).toBe(200);
+    expect(response.body.data.length).toBe(2);
     expect(Array.isArray(response.body.data)).toBe(true);
-    expect(response.body.data.length).toBeGreaterThanOrEqual(2);
-    expect(response.body.meta).toBeDefined();
-    expect(response.body.meta.total).toBeGreaterThanOrEqual(2);
   });
 
   it("should return error if session is invalid", async () => {

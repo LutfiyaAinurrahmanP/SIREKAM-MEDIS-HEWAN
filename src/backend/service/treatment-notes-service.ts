@@ -27,4 +27,9 @@ export class TreatmentNotesService {
 
     return toTreatmentNotesResponse(treatmentNotes);
   }
+
+  static async list(): Promise<TreatmentNotesResponse[]> {
+    const treatmentNotes = await prismaClient.treatmentNotes.findMany();
+    return treatmentNotes.map(toTreatmentNotesResponse);
+  }
 }
