@@ -122,10 +122,10 @@ veterinarianRouter.use(roleMiddleware([UserRole.VETERINARIAN]));
 veterinarianRouter.post("/treatment-notes", TreatmentNotesController.create);
 veterinarianRouter.get("/treatment-notes", TreatmentNotesController.list);
 veterinarianRouter.get("/treatment-notes/:id", TreatmentNotesController.get);
-// veterinarianRouter.patch(
-//   "/treatment-notes/:id",
-//   TreatmentNotesController.update
-// );
+veterinarianRouter.patch(
+  "/treatment-notes/:id",
+  TreatmentNotesController.update
+);
 // veterinarianRouter.delete(
 //   "/treatment-notes/:id",
 //   TreatmentNotesController.delete

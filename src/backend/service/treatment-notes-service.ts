@@ -4,6 +4,7 @@ import {
   CreateTreatmentNotesRequest,
   toTreatmentNotesResponse,
   TreatmentNotesResponse,
+  UpdateTreatmentNotesRequest,
 } from "../model/treatment-notes-model";
 import { TreatmentNotesValidation } from "../validation/treatment-notes-validation";
 import { Validation } from "../validation/validation";
@@ -51,6 +52,28 @@ export class TreatmentNotesService {
     const treatmentNotes = await this.checkTreatmentNotesMustExists(
       treatmentNotesId
     );
+    return toTreatmentNotesResponse(treatmentNotes);
+  }
+
+  static async update(
+    res: UpdateTreatmentNotesRequest
+  ): Promise<TreatmentNotesResponse> {
+    const updateRequest = Validation.validate(
+      TreatmentNotesValidation.UPDATE,
+      res
+    );
+    await this.checkTreatmentNotesMustExists(updateRequest.id);
+
+    const treatmentNotes = await prismaClient.treatmentNotes.update({
+      where: {
+        id: updateRequest.id,
+      },
+      data: {
+        ...updateRequest,
+        updated_at: new Date(),
+      },
+    });
+
     return toTreatmentNotesResponse(treatmentNotes);
   }
 }

@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateTreatmentNotesRequest } from "../model/treatment-notes-model";
+import {
+  CreateTreatmentNotesRequest,
+  UpdateTreatmentNotesRequest,
+} from "../model/treatment-notes-model";
 import { TreatmentNotesService } from "../service/treatment-notes-service";
 
 export class TreatmentNotesController {
@@ -33,6 +36,21 @@ export class TreatmentNotesController {
       const request = Number(req.params.id);
       const response = await TreatmentNotesService.get(request);
       res.status(200).json({
+        data: response,
+      });
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      const request: UpdateTreatmentNotesRequest =
+        req.body as UpdateTreatmentNotesRequest;
+      request.id = Number(req.params.id);
+      const response = await TreatmentNotesService.update(request);
+      res.status(200).json({
+        message: "Data catatan perawatan berhasil diperbarui!",
         data: response,
       });
     } catch (e) {
