@@ -469,24 +469,38 @@ describe("GET /staff/transactions", () => {
 
 describe("GET /staff/transactions/:id", () => {
   beforeEach(async () => {
-    await UserTest.createUser();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
     await TransactionsTest.createTransactions();
   });
 
   afterEach(async () => {
     await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should get an existing transaction", async () => {
@@ -555,24 +569,38 @@ describe("GET /staff/transactions/:id", () => {
 
 describe("PATCH /staff/transactions/:id", () => {
   beforeEach(async () => {
-    await UserTest.createUser();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
     await TransactionsTest.createTransactions();
   });
 
   afterEach(async () => {
     await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should update an existing transaction", async () => {
@@ -727,24 +755,38 @@ describe("PATCH /staff/transactions/:id", () => {
 
 describe("DELETE /staff/transactions/:id", () => {
   beforeEach(async () => {
-    await UserTest.createUser();
+    await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
+    await MedicalRecordsTest.deleteMedicalRecords();
+    await AppointmentsTest.deleteAppointments();
+    await ServiceCategoriesTest.deleteServiceCategories();
+    await PetsTest.deletePets();
+    await AnimalTypesTest.deleteAnimalTypes();
+    await UserTest.deleteUser();
     await UserTest.createUser();
     await AnimalTypesTest.createAnimalTypes();
     await PetsTest.createPets();
-    await ServicesTest.createServices();
+    await ServiceCategoriesTest.createServiceCategories();
     await AppointmentsTest.createAppointments();
     await MedicalRecordsTest.createMedicalRecords();
+    await PrescriptionsTest.createPrescriptions();
+    await MedicinesTest.createMedicines();
+    await PrescriptionItemsTest.createPrescriptionItems();
     await TransactionsTest.createTransactions();
   });
 
   afterEach(async () => {
     await TransactionsTest.deleteTransactions();
+    await PrescriptionItemsTest.deletePrescriptionItems();
+    await PrescriptionsTest.deletePrescriptions();
     await MedicalRecordsTest.deleteMedicalRecords();
     await AppointmentsTest.deleteAppointments();
-    await ServicesTest.deleteServices();
+    await ServiceCategoriesTest.deleteServiceCategories();
     await PetsTest.deletePets();
     await AnimalTypesTest.deleteAnimalTypes();
     await UserTest.deleteUser();
+    await MedicinesTest.deleteMedicines();
   });
 
   it("should delete an existing transaction", async () => {

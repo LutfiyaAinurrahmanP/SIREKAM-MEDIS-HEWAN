@@ -107,7 +107,7 @@ staffRouter.delete(
 // Transactions API
 staffRouter.post("/transactions", TransactionsController.create);
 staffRouter.get("/transactions", TransactionsController.list);
-// staffRouter.get("/transactions/:id", TransactionsController.get);
+staffRouter.get("/transactions/:id", TransactionsController.get);
 // staffRouter.patch("/transactions/:id", TransactionsController.update);
 // staffRouter.delete("/transactions/:id", TransactionsController.delete);
 
