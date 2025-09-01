@@ -87,6 +87,6 @@ staffRouter.post("/prescriptions", PrescriptionsController.create);
 staffRouter.get("/prescriptions", PrescriptionsController.list);
 staffRouter.get("/prescriptions/:id", PrescriptionsController.get);
 staffRouter.patch("/prescriptions/:id", PrescriptionsController.update);
-// staffRouter.delete("/prescriptions/:id", PrescriptionsController.delete);
+staffRouter.delete("/prescriptions/:id", PrescriptionsController.delete);
 
 apiRouter.use("/staff", staffRouter);

@@ -77,4 +77,14 @@ export class PrescriptionsService {
 
     return toPrescriptionsResponse(updated);
   }
+
+  static async delete(prescriptionsId: number) {
+    const deleteRequest = await this.checkPrescriptionsMustExists(prescriptionsId);
+    const prescriptions = await prismaClient.prescriptions.delete({
+      where: {
+        id: deleteRequest.id,
+      },
+    });
+    return prescriptions;
+  }
 }
