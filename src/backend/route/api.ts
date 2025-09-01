@@ -9,6 +9,7 @@ import { PetsController } from "../controller/pets-controller";
 import { AppointmentsController } from "../controller/appointments-controller";
 import MedicalRecordsController from "../controller/medical-records-controller";
 import { PrescriptionsController } from "../controller/prescriptions-controller";
+import { PrescriptionItemsController } from "../controller/prescription-items-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -88,5 +89,18 @@ staffRouter.get("/prescriptions", PrescriptionsController.list);
 staffRouter.get("/prescriptions/:id", PrescriptionsController.get);
 staffRouter.patch("/prescriptions/:id", PrescriptionsController.update);
 staffRouter.delete("/prescriptions/:id", PrescriptionsController.delete);
+
+// Prescription items API
+staffRouter.post("/prescription-items", PrescriptionItemsController.create);
+// staffRouter.get("/prescription-items", PrescriptionItemsController.list);
+// staffRouter.get("/prescription-items/:id", PrescriptionItemsController.get);
+// staffRouter.patch(
+//   "/prescription-items/:id",
+//   PrescriptionItemsController.update
+// );
+// staffRouter.delete(
+//   "/prescription-items/:id",
+//   PrescriptionItemsController.delete
+// );
 
 apiRouter.use("/staff", staffRouter);

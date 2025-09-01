@@ -529,7 +529,7 @@ export class PrescriptionsTest {
     });
     return medicalRecord?.id;
   }
-  
+
   static async deletePrescriptions() {
     return await prismaClient.prescriptions.deleteMany();
   }
@@ -544,17 +544,17 @@ export class PrescriptionsTest {
         {
           medical_record_id: medicalRecordId!,
           veterinarian_id: veterinarianId!,
-        notes:
-          "Kucing mengalami demam ringan dan kehilangan nafsu makan. Diberikan obat antipiretik",
+          notes:
+            "Kucing mengalami demam ringan dan kehilangan nafsu makan. Diberikan obat antipiretik",
         },
         {
           medical_record_id: medicalRecordId!,
           veterinarian_id: veterinarianId!,
-        notes:
-          "Kelinci diperiksa rutin, kondisi sehat, hanya disarankan untuk memperbaiki pola makan",
+          notes:
+            "Kelinci diperiksa rutin, kondisi sehat, hanya disarankan untuk memperbaiki pola makan",
         },
-      ]
-    })
+      ],
+    });
   }
 
   static async getPrescriptionsId() {
@@ -563,5 +563,11 @@ export class PrescriptionsTest {
         id: "desc",
       },
     });
+  }
+}
+
+export class PrescriptionItemsTest {
+  static async deletePrescriptionItems() {
+    return await prismaClient.prescriptionItems.deleteMany();
   }
 }
