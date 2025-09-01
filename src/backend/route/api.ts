@@ -10,6 +10,7 @@ import { AppointmentsController } from "../controller/appointments-controller";
 import MedicalRecordsController from "../controller/medical-records-controller";
 import { PrescriptionsController } from "../controller/prescriptions-controller";
 import { PrescriptionItemsController } from "../controller/prescription-items-controller";
+import { TransactionsController } from "../controller/transactions-controller";
 
 export const apiRouter = express.Router();
 apiRouter.use(authMiddleware);
@@ -102,5 +103,12 @@ staffRouter.delete(
   "/prescription-items/:id",
   PrescriptionItemsController.delete
 );
+
+// Transactions API
+staffRouter.post("/transactions", TransactionsController.create);
+// staffRouter.get("/transactions", TransactionsController.list);
+// staffRouter.get("/transactions/:id", TransactionsController.get);
+// staffRouter.patch("/transactions/:id", TransactionsController.update);
+// staffRouter.delete("/transactions/:id", TransactionsController.delete);
 
 apiRouter.use("/staff", staffRouter);

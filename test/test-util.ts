@@ -622,3 +622,78 @@ export class PrescriptionItemsTest {
     });
   }
 }
+
+export class TransactionsTest {
+  static async getMedicalRecordsId() {
+    const medicalRecord = await prismaClient.medicalRecords.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return medicalRecord?.id;
+  }
+
+  static async getUserId() {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        username: "staff",
+      },
+    });
+    return user?.id;
+  }
+
+  static async getPetId() {
+    const pet = await prismaClient.pets.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+    return pet?.id;
+  }
+
+  static async deleteTransactions() {
+    return await prismaClient.transactions.deleteMany();
+  }
+
+  static async createTransactions() {
+    const userId: number | undefined = await this.getUserId();
+    const petId: number | undefined = await this.getPetId();
+    const medicalRecordId: number | undefined =
+      await this.getMedicalRecordsId();
+
+    await prismaClient.transactions.createMany({
+      data: [
+        {
+          created_by: userId!,
+          pet_id: petId!,
+          medical_record_id: medicalRecordId!,
+          total_amount: 280000.0,
+          paid_amount: 300000.0,
+          payment_status: "pending",
+          payment_method: "cash",
+          invoice_date: new Date("2025-08-17"),
+          notes: "Perhatikan perkembangan kesehatan hewan peliharaan",
+        },
+        {
+          created_by: userId!,
+          pet_id: petId!,
+          medical_record_id: medicalRecordId!,
+          total_amount: 120000.0,
+          paid_amount: 150000.0,
+          payment_status: "paid",
+          payment_method: "transfer",
+          invoice_date: new Date("2025-08-17"),
+          notes: "Perhatikan perkembangan kesehatan hewan peliharaan",
+        },
+      ],
+    });
+  }
+
+  static async getTransactionsId() {
+    return await prismaClient.transactions.findFirst({
+      orderBy: {
+        id: "desc",
+      },
+    });
+  }
+}
