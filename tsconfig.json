@@ -2,6 +2,11 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "include": ["./src/backend/**/*"],
   "exclude": ["./src/backend/**/*.spec.ts", "./src/backend/**/*.test.ts"],
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
   "compilerOptions": {
     // File Layout
     "rootDir": "./src/backend",
