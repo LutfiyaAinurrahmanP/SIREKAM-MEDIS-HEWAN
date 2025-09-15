@@ -8,6 +8,7 @@ import {
   BoxCubeIcon,
   CalenderIcon,
   CartIcon,
+  CatIcon,
   ChevronDownIcon,
   DollarLineIcon,
   FolderIcon,
@@ -15,12 +16,21 @@ import {
   GroupIcon,
   HorizontaLDots,
   ListIcon,
+  MedicalIcon,
+  MedicalServiceIcon,
+  MedicineOutlineIcon,
+  MoreDotIcon,
+  NoteIcon,
   PageIcon,
   PawIcon,
   PencilIcon,
   PieChartIcon,
   PlugInIcon,
+  PrescriptionIcon,
+  PrescriptionItemIcon,
   TableIcon,
+  TaskIcon,
+  TransactionIcon,
   UserCircleIcon,
   UserIcon,
   UserLineIcon,
@@ -36,137 +46,160 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navStaffItems: NavItem[] = [
-  {
-    icon: <GridIcon />,
-    name: "Dashboard",
-    path: "/staff/dashboard",
-  },
-];
-
-const medicalStaffItems: NavItem[] = [
-  {
-    icon: <CalenderIcon />,
-    name: "Medical Records",
-    path: "/staff/medical-records",
-  },
-  {
-    icon: <PencilIcon />,
-    name: "Appointments",
-    path: "/staff/appointments",
-  },
-  {
-    icon: <PageIcon />,
-    name: "Prescriptions",
-    path: "/staff/prescriptions",
-  },
-  {
-    icon: <ListIcon />,
-    name: "Prescription Items",
-    path: "/staff/prescription-items",
-  },
-  {
-    icon: <FolderIcon />,
-    name: "Pets",
-    path: "/staff/pets",
-  },
-  {
-    icon: <GroupIcon />,
-    name: "Client Accounts",
-    path: "/staff/users/:id",
-  },
-];
-
-const financeStaffItems: NavItem[] = [
-  {
-    icon: <DollarLineIcon />,
-    name: "Transactions",
-    path: "/staff/transactions",
-  },
-];
-
-const accountStaffItems: NavItem[] = [
-  {
-    icon: <UserLineIcon />,
-    name: "Profile",
-    path: "/staff/users/:id",
-  },
-];
-
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    path: "/",
-    // subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-  },
-  {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
-  },
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    path: "/role/dashboard",
   },
 ];
 
-const othersItems: NavItem[] = [
+const dataItems: NavItem[] = [
   {
-    icon: <PieChartIcon />,
-    name: "Charts",
-    subItems: [
-      { name: "Line Chart", path: "/line-chart", pro: false },
-      { name: "Bar Chart", path: "/bar-chart", pro: false },
-    ],
+    icon: <PawIcon />,
+    name: "Animal types",
+    path: "/role/animal-types",
   },
   {
-    icon: <BoxCubeIcon />,
-    name: "UI Elements",
-    subItems: [
-      { name: "Alerts", path: "/alerts", pro: false },
-      { name: "Avatar", path: "/avatars", pro: false },
-      { name: "Badge", path: "/badge", pro: false },
-      { name: "Buttons", path: "/buttons", pro: false },
-      { name: "Images", path: "/images", pro: false },
-      { name: "Videos", path: "/videos", pro: false },
-    ],
+    icon: <MedicalServiceIcon />,
+    name: "Service categories",
+    path: "/role/animal-types",
   },
   {
-    icon: <PlugInIcon />,
-    name: "Authentication",
-    subItems: [
-      { name: "Sign In", path: "/signin", pro: false },
-      { name: "Sign Up", path: "/signup", pro: false },
-    ],
+    icon: <MedicineOutlineIcon />,
+    name: "Medicines",
+    path: "/role/medicines",
   },
 ];
+
+const medicalItems: NavItem[] = [
+  {
+    icon: <MedicalIcon />,
+    name: "Medical records",
+    path: "/role/medical-records",
+  },
+  {
+    icon: <PencilIcon />,
+    name: "Appointments",
+    path: "/role/appointments",
+  },
+  {
+    icon: <PrescriptionIcon />,
+    name: "Prescriptions",
+    path: "/role/prescriptions",
+  },
+  {
+    icon: <PrescriptionItemIcon />,
+    name: "Prescription items",
+    path: "/role/prescription-items",
+  },
+  {
+    icon: <NoteIcon />,
+    name: "Treatment notes",
+    path: "/role/treatment-notes",
+  },
+  {
+    icon: <CatIcon />,
+    name: "Pets",
+    path: "/role/pets",
+  },
+  {
+    icon: <GroupIcon />,
+    name: "Client accounts",
+    path: "/role/users/:id",
+  },
+];
+
+const financeItems: NavItem[] = [
+  {
+    icon: <TransactionIcon />,
+    name: "Transactions",
+    path: "/role/transactions",
+  },
+];
+
+const accountItems: NavItem[] = [
+  {
+    icon: <UserLineIcon />,
+    name: "Profile",
+    path: "/role/users/:id",
+  },
+];
+
+// const navItems: NavItem[] = [
+//   {
+//     icon: <GridIcon />,
+//     name: "Dashboard",
+//     path: "/",
+//     // subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+//   },
+//   {
+//     icon: <CalenderIcon />,
+//     name: "Calendar",
+//     path: "/calendar",
+//   },
+//   {
+//     icon: <UserCircleIcon />,
+//     name: "User Profile",
+//     path: "/profile",
+//   },
+//   {
+//     name: "Forms",
+//     icon: <ListIcon />,
+//     subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
+//   },
+//   {
+//     name: "Tables",
+//     icon: <TableIcon />,
+//     subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
+//   },
+//   {
+//     name: "Pages",
+//     icon: <PageIcon />,
+//     subItems: [
+//       { name: "Blank Page", path: "/blank", pro: false },
+//       { name: "404 Error", path: "/error-404", pro: false },
+//     ],
+//   },
+// ];
+
+// const othersItems: NavItem[] = [
+//   {
+//     icon: <PieChartIcon />,
+//     name: "Charts",
+//     subItems: [
+//       { name: "Line Chart", path: "/line-chart", pro: false },
+//       { name: "Bar Chart", path: "/bar-chart", pro: false },
+//     ],
+//   },
+//   {
+//     icon: <BoxCubeIcon />,
+//     name: "UI Elements",
+//     subItems: [
+//       { name: "Alerts", path: "/alerts", pro: false },
+//       { name: "Avatar", path: "/avatars", pro: false },
+//       { name: "Badge", path: "/badge", pro: false },
+//       { name: "Buttons", path: "/buttons", pro: false },
+//       { name: "Images", path: "/images", pro: false },
+//       { name: "Videos", path: "/videos", pro: false },
+//     ],
+//   },
+//   {
+//     icon: <PlugInIcon />,
+//     name: "Authentication",
+//     subItems: [
+//       { name: "Sign In", path: "/signin", pro: false },
+//       { name: "Sign Up", path: "/signup", pro: false },
+//     ],
+//   },
+// ];
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const location = useLocation();
 
   const [openSubmenu, setOpenSubmenu] = useState<{
-    type: "main" | "others";
+    type: "main" | "medical" | "finance" | "data" | "setting";
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
@@ -182,14 +215,19 @@ const AppSidebar: React.FC = () => {
 
   useEffect(() => {
     let submenuMatched = false;
-    ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
+    ["main", "medical", "finance", "data", "setting"].forEach((menuType) => {
+      const items = menuType === "main" ? navItems : accountItems;
       items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
             if (isActive(subItem.path)) {
               setOpenSubmenu({
-                type: menuType as "main" | "others",
+                type: menuType as
+                  | "main"
+                  | "medical"
+                  | "finance"
+                  | "data"
+                  | "setting",
                 index,
               });
               submenuMatched = true;
@@ -216,7 +254,10 @@ const AppSidebar: React.FC = () => {
     }
   }, [openSubmenu]);
 
-  const handleSubmenuToggle = (index: number, menuType: "main" | "others") => {
+  const handleSubmenuToggle = (
+    index: number,
+    menuType: "main" | "medical" | "finance" | "data" | "setting"
+  ) => {
     setOpenSubmenu((prevOpenSubmenu) => {
       if (
         prevOpenSubmenu &&
@@ -229,7 +270,10 @@ const AppSidebar: React.FC = () => {
     });
   };
 
-  const renderMenuItems = (items: NavItem[], menuType: "main" | "others") => (
+  const renderMenuItems = (
+    items: NavItem[],
+    menuType: "main" | "medical" | "finance" | "data" | "setting"
+  ) => (
     <ul className="flex flex-col gap-4">
       {items.map((nav, index) => (
         <li key={nav.name}>
@@ -392,7 +436,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/logo-icon.svg"
+              src="/images/logo/pet-care-logo.png"
               alt="Logo"
               width={32}
               height={32}
@@ -417,8 +461,9 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots className="size-6" />
                 )}
               </h2>
-              {renderMenuItems(navStaffItems, "main")}
+              {renderMenuItems(navItems, "main")}
             </div>
+
             <div>
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
@@ -433,23 +478,7 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots className="size-6" />
                 )}
               </h2>
-              {renderMenuItems(medicalStaffItems, "medical")}
-            </div>
-            <div>
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Finance"
-                ) : (
-                  <HorizontaLDots className="size-6" />
-                )}
-              </h2>
-              {renderMenuItems(financeStaffItems, "finance")}
+              {renderMenuItems(medicalItems, "medical")}
             </div>
             <div className="">
               <h2
@@ -460,16 +489,51 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Accounts"
+                  "Finance"
                 ) : (
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(accountStaffItems, "others")}
+              {renderMenuItems(financeItems, "finance")}
+            </div>
+            <div>
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Data"
+                ) : (
+                  <HorizontaLDots className="size-6" />
+                )}
+              </h2>
+              {renderMenuItems(dataItems, "data")}
+            </div>
+            <div className="">
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Settings"
+                ) : (
+                  <HorizontaLDots />
+                )}
+              </h2>
+              {renderMenuItems(accountItems, "setting")}
             </div>
           </div>
         </nav>
-        {/* {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null} */}
+        {/* Sidebar Widget at bottom */}
+        {(isExpanded || isHovered || isMobileOpen) && (
+          <div className="px-0 pb-16">{/* <SidebarWidget /> */}</div>
+        )}{" "}
       </div>
     </aside>
   );

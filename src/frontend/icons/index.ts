@@ -60,6 +60,16 @@ import PawIcon from "./paw.svg?react";
 import BarChartIcon from "./bar-chart.svg?react";
 import UserMultipleIcon from "./user-multiple.svg?react";
 import UserIcon from "./user.svg?react";
+import MedicineOutlineIcon from "./medicines.svg?react";
+import AnimalIcon from "./animal.svg?react";
+import BoneIcon from "./bone.svg?react";
+import CatIcon from "./cat.svg?react";
+import MedicalServiceIcon from "./medical-services.svg?react";
+import MedicalIcon from "./medical-square.svg?react";
+import NoteIcon from "./notes.svg?react";
+import PrescriptionIcon from "./prescription.svg?react";
+import PrescriptionItemIcon from "./prescriptions-outline-sharp.svg?react";
+import TransactionIcon from "./transaction.svg?react";
 
 export {
   ErrorHexaIcon,
@@ -124,4 +134,14 @@ export {
   BarChartIcon,
   UserMultipleIcon,
   UserLineIcon,
+  MedicineOutlineIcon,
+  AnimalIcon,
+  BoneIcon,
+  CatIcon,
+  MedicalServiceIcon,
+  MedicalIcon,
+  NoteIcon,
+  PrescriptionIcon,
+  PrescriptionItemIcon,
+  TransactionIcon,
 };
