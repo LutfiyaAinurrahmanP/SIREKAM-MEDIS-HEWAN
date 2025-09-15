@@ -32,7 +32,7 @@ import ChevronUpIcon from "./chevron-up.svg?react";
 import PaperPlaneIcon from "./paper-plane.svg?react";
 import LockIcon from "./lock.svg?react";
 import EnvelopeIcon from "./envelope.svg?react";
-import UserIcon from "./user-line.svg?react";
+import UserLineIcon from "./user-line.svg?react";
 import CalenderIcon from "./calender-line.svg?react";
 import EyeIcon from "./eye.svg?react";
 import EyeCloseIcon from "./eye-close.svg?react";
@@ -54,6 +54,12 @@ import ChatIcon from "./chat.svg?react";
 import MoreDotIcon from "./moredot.svg?react";
 import AlertHexaIcon from "./alert-hexa.svg?react";
 import ErrorHexaIcon from "./info-hexa.svg?react";
+import BookmartIcon from "./bookmark.svg?react";
+import CartIcon from "./cart.svg?react";
+import PawIcon from "./paw.svg?react";
+import BarChartIcon from "./bar-chart.svg?react";
+import UserMultipleIcon from "./user-multiple.svg?react";
+import UserIcon from "./user.svg?react";
 
 export {
   ErrorHexaIcon,
@@ -112,4 +118,10 @@ export {
   ChatIcon,
   AngleLeftIcon,
   AngleRightIcon,
+  BookmartIcon,
+  CartIcon,
+  PawIcon,
+  BarChartIcon,
+  UserMultipleIcon,
+  UserLineIcon,
 };

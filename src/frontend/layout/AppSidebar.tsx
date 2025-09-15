@@ -3,17 +3,28 @@ import { Link, useLocation } from "react-router";
 
 // Assume these icons are imported from an icon library
 import {
+  BarChartIcon,
+  BookmartIcon,
   BoxCubeIcon,
   CalenderIcon,
+  CartIcon,
   ChevronDownIcon,
+  DollarLineIcon,
+  FolderIcon,
   GridIcon,
+  GroupIcon,
   HorizontaLDots,
   ListIcon,
   PageIcon,
+  PawIcon,
+  PencilIcon,
   PieChartIcon,
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  UserIcon,
+  UserLineIcon,
+  UserMultipleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
@@ -25,11 +36,69 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
+const navStaffItems: NavItem[] = [
+  {
+    icon: <GridIcon />,
+    name: "Dashboard",
+    path: "/staff/dashboard",
+  },
+];
+
+const medicalStaffItems: NavItem[] = [
+  {
+    icon: <CalenderIcon />,
+    name: "Medical Records",
+    path: "/staff/medical-records",
+  },
+  {
+    icon: <PencilIcon />,
+    name: "Appointments",
+    path: "/staff/appointments",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Prescriptions",
+    path: "/staff/prescriptions",
+  },
+  {
+    icon: <ListIcon />,
+    name: "Prescription Items",
+    path: "/staff/prescription-items",
+  },
+  {
+    icon: <FolderIcon />,
+    name: "Pets",
+    path: "/staff/pets",
+  },
+  {
+    icon: <GroupIcon />,
+    name: "Client Accounts",
+    path: "/staff/users/:id",
+  },
+];
+
+const financeStaffItems: NavItem[] = [
+  {
+    icon: <DollarLineIcon />,
+    name: "Transactions",
+    path: "/staff/transactions",
+  },
+];
+
+const accountStaffItems: NavItem[] = [
+  {
+    icon: <UserLineIcon />,
+    name: "Profile",
+    path: "/staff/users/:id",
+  },
+];
+
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    path: "/",
+    // subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
   {
     icon: <CalenderIcon />,
@@ -308,14 +377,14 @@ const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo.svg"
+                src="/images/logo/pet-care-logo.png"
                 alt="Logo"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src="/images/logo/pet-care-logo.png"
                 alt="Logo"
                 width={150}
                 height={40}
@@ -348,7 +417,39 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots className="size-6" />
                 )}
               </h2>
-              {renderMenuItems(navItems, "main")}
+              {renderMenuItems(navStaffItems, "main")}
+            </div>
+            <div>
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Medical"
+                ) : (
+                  <HorizontaLDots className="size-6" />
+                )}
+              </h2>
+              {renderMenuItems(medicalStaffItems, "medical")}
+            </div>
+            <div>
+              <h2
+                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                  !isExpanded && !isHovered
+                    ? "lg:justify-center"
+                    : "justify-start"
+                }`}
+              >
+                {isExpanded || isHovered || isMobileOpen ? (
+                  "Finance"
+                ) : (
+                  <HorizontaLDots className="size-6" />
+                )}
+              </h2>
+              {renderMenuItems(financeStaffItems, "finance")}
             </div>
             <div className="">
               <h2
@@ -359,16 +460,16 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
+                  "Accounts"
                 ) : (
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(othersItems, "others")}
+              {renderMenuItems(accountStaffItems, "others")}
             </div>
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
+        {/* {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null} */}
       </div>
     </aside>
   );
