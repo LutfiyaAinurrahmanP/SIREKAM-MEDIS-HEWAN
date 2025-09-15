@@ -118,14 +118,6 @@ const financeItems: NavItem[] = [
   },
 ];
 
-const accountItems: NavItem[] = [
-  {
-    icon: <UserLineIcon />,
-    name: "Profile",
-    path: "/role/users/:id",
-  },
-];
-
 // const navItems: NavItem[] = [
 //   {
 //     icon: <GridIcon />,
@@ -199,7 +191,7 @@ const AppSidebar: React.FC = () => {
   const location = useLocation();
 
   const [openSubmenu, setOpenSubmenu] = useState<{
-    type: "main" | "medical" | "finance" | "data" | "setting";
+    type: "main" | "medical" | "finance" | "data";
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
@@ -215,19 +207,14 @@ const AppSidebar: React.FC = () => {
 
   useEffect(() => {
     let submenuMatched = false;
-    ["main", "medical", "finance", "data", "setting"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : accountItems;
+    ["main", "medical", "finance", "data"].forEach((menuType) => {
+      const items = menuType === "main" ? navItems : medicalItems;
       items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
             if (isActive(subItem.path)) {
               setOpenSubmenu({
-                type: menuType as
-                  | "main"
-                  | "medical"
-                  | "finance"
-                  | "data"
-                  | "setting",
+                type: menuType as "main" | "medical" | "finance" | "data",
                 index,
               });
               submenuMatched = true;
@@ -256,7 +243,7 @@ const AppSidebar: React.FC = () => {
 
   const handleSubmenuToggle = (
     index: number,
-    menuType: "main" | "medical" | "finance" | "data" | "setting"
+    menuType: "main" | "medical" | "finance" | "data"
   ) => {
     setOpenSubmenu((prevOpenSubmenu) => {
       if (
@@ -272,7 +259,7 @@ const AppSidebar: React.FC = () => {
 
   const renderMenuItems = (
     items: NavItem[],
-    menuType: "main" | "medical" | "finance" | "data" | "setting"
+    menuType: "main" | "medical" | "finance" | "data"
   ) => (
     <ul className="flex flex-col gap-4">
       {items.map((nav, index) => (
@@ -436,7 +423,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/pet-care-logo.png"
+              src="/images/logo/pet-care-logo-block.png"
               alt="Logo"
               width={32}
               height={32}
@@ -511,22 +498,6 @@ const AppSidebar: React.FC = () => {
                 )}
               </h2>
               {renderMenuItems(dataItems, "data")}
-            </div>
-            <div className="">
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Settings"
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(accountItems, "setting")}
             </div>
           </div>
         </nav>
