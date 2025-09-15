@@ -18,6 +18,10 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import AdminRoutes from "./routes/AdminRoutes";
+import StaffRoutes from "./routes/StaffRoutes";
+import VeterinarianRoutes from "./routes/VeterinarianRoutes";
+import ClientRoutes from "./routes/ClientRoutes";
 
 export default function App() {
   return (
@@ -28,7 +32,6 @@ export default function App() {
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
-
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/calendar" element={<Calendar />} />
@@ -51,6 +54,15 @@ export default function App() {
             {/* Charts */}
             <Route path="/line-chart" element={<LineChart />} />
             <Route path="/bar-chart" element={<BarChart />} />
+
+            {/* Admin */}
+            {AdminRoutes()}
+            {/* Staff */}
+            {StaffRoutes()}
+            {/* Veterinarian */}
+            {VeterinarianRoutes()}
+            {/* Client */}
+            {ClientRoutes()}
           </Route>
 
           {/* Auth Layout */}
