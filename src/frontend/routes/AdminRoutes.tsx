@@ -20,6 +20,8 @@ import AdminMedicinesIndex from "../pages/Admin/Medicines/Index";
 import AdminTransactionsIndex from "../pages/Admin/Transactions/Index";
 import AdminMedicalRecordsIndex from "../pages/Admin/MedicalRecords/Index";
 import AdminUsersIndex from "../pages/Admin/Users/Index";
+import AdminProfileIndex from "../pages/Admin/Profile/Index";
+import AdminProfileEdit from "../pages/Admin/Profile/Edit";
 
 export default function AdminRoutes() {
   return (
@@ -57,11 +59,16 @@ export default function AdminRoutes() {
         <Route path="show/:id" element={<AdminMedicalRecordsShow />} />
       </Route>
       {/* Users */}
-      <Route path="users">
+      <Route path="employees">
         <Route index element={<AdminUsersIndex />} />
         <Route path="create" element={<AdminUsersCreate />} />
         <Route path="show/:id" element={<AdminUsersShow />} />
         <Route path="edit/:id" element={<AdminUsersEdit />} />
+      </Route>
+      {/* Personal account */}
+      <Route path="profile">
+        <Route index element={<AdminProfileIndex />} />
+        <Route path="edit" element={<AdminProfileEdit />} />
       </Route>
     </Route>
   );

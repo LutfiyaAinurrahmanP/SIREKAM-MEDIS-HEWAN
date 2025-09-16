@@ -4,11 +4,30 @@ import { Link } from "react-router";
 import { useSidebar } from "../context/SidebarContext";
 import { ThemeToggleButton } from "../components/common/ThemeToggleButton";
 import UserDropdown from "../components/header/UserDropdown";
+import { useUserRole } from "../hooks/useUserRole";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
+
+  const { role } = useUserRole();
+
+  // Function untuk mendapatkan home path berdasarkan role
+  const getHomePath = () => {
+    switch (role) {
+      case "admin":
+        return "/admin";
+      case "veterinarian":
+        return "/veterinarian";
+      case "staff":
+        return "/staff";
+      case "client":
+        return "/client";
+      default:
+        return "/"; // fallback ke root
+    }
+  };
 
   const handleToggle = () => {
     if (window.innerWidth >= 1024) {
@@ -82,7 +101,7 @@ const AppHeader: React.FC = () => {
             {/* Cross Icon */}
           </button>
 
-          <Link to="/" className="lg:hidden">
+          <Link to={getHomePath()} className="lg:hidden">
             <img
               className="dark:hidden"
               src="/images/logo/pet-care-logo.png"
