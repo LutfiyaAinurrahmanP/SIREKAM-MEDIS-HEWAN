@@ -70,6 +70,9 @@ import NoteIcon from "./notes.svg?react";
 import PrescriptionIcon from "./prescription.svg?react";
 import PrescriptionItemIcon from "./prescriptions-outline-sharp.svg?react";
 import TransactionIcon from "./transaction.svg?react";
+import ShowIcon from "./show.svg?react";
+import EditIcon from "./edit.svg?react";
+import FilterIcon from "./filter.svg?react";
 
 export {
   ErrorHexaIcon,
@@ -144,4 +147,7 @@ export {
   PrescriptionIcon,
   PrescriptionItemIcon,
   TransactionIcon,
+  ShowIcon,
+  EditIcon,
+  FilterIcon,
 };

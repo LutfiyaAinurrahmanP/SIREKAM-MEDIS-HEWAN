@@ -7,13 +7,18 @@ import {
 } from "../../ui/table";
 
 import Badge from "../../ui/badge/Badge";
+import { useState, useRef } from "react";
+import {
+  HorizontaLDots,
+  PencilIcon,
+  ShowIcon,
+  TrashBinIcon,
+} from "../../../icons";
 
 interface Order {
   id: number;
   user: {
-    image: string;
     name: string;
-    role: string;
   };
   projectName: string;
   team: {
@@ -28,9 +33,7 @@ const tableData: Order[] = [
   {
     id: 1,
     user: {
-      image: "/images/user/user-17.jpg",
       name: "Lindsey Curtis",
-      role: "Web Designer",
     },
     projectName: "Agency Website",
     team: {
@@ -46,9 +49,7 @@ const tableData: Order[] = [
   {
     id: 2,
     user: {
-      image: "/images/user/user-18.jpg",
       name: "Kaiya George",
-      role: "Project Manager",
     },
     projectName: "Technology",
     team: {
@@ -60,9 +61,7 @@ const tableData: Order[] = [
   {
     id: 3,
     user: {
-      image: "/images/user/user-17.jpg",
       name: "Zain Geidt",
-      role: "Content Writing",
     },
     projectName: "Blog Writing",
     team: {
@@ -74,9 +73,7 @@ const tableData: Order[] = [
   {
     id: 4,
     user: {
-      image: "/images/user/user-20.jpg",
       name: "Abram Schleifer",
-      role: "Digital Marketer",
     },
     projectName: "Social Media",
     team: {
@@ -92,9 +89,79 @@ const tableData: Order[] = [
   {
     id: 5,
     user: {
-      image: "/images/user/user-21.jpg",
       name: "Carla George",
-      role: "Front-end Developer",
+    },
+    projectName: "Website",
+    team: {
+      images: [
+        "/images/user/user-31.jpg",
+        "/images/user/user-32.jpg",
+        "/images/user/user-33.jpg",
+      ],
+    },
+    budget: "4.5K",
+    status: "Active",
+  },
+  {
+    id: 6,
+    user: {
+      name: "Lindsey Curtis",
+    },
+    projectName: "Agency Website",
+    team: {
+      images: [
+        "/images/user/user-22.jpg",
+        "/images/user/user-23.jpg",
+        "/images/user/user-24.jpg",
+      ],
+    },
+    budget: "3.9K",
+    status: "Active",
+  },
+  {
+    id: 7,
+    user: {
+      name: "Kaiya George",
+    },
+    projectName: "Technology",
+    team: {
+      images: ["/images/user/user-25.jpg", "/images/user/user-26.jpg"],
+    },
+    budget: "24.9K",
+    status: "Pending",
+  },
+  {
+    id: 8,
+    user: {
+      name: "Zain Geidt",
+    },
+    projectName: "Blog Writing",
+    team: {
+      images: ["/images/user/user-27.jpg"],
+    },
+    budget: "12.7K",
+    status: "Active",
+  },
+  {
+    id: 9,
+    user: {
+      name: "Abram Schleifer",
+    },
+    projectName: "Social Media",
+    team: {
+      images: [
+        "/images/user/user-28.jpg",
+        "/images/user/user-29.jpg",
+        "/images/user/user-30.jpg",
+      ],
+    },
+    budget: "2.8K",
+    status: "Cancel",
+  },
+  {
+    id: 10,
+    user: {
+      name: "Carla George",
     },
     projectName: "Website",
     team: {
@@ -109,7 +176,62 @@ const tableData: Order[] = [
   },
 ];
 
-export default function BasicTableOne() {
+export default function CompactTableOne() {
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<"bottom" | "top">(
+    "bottom"
+  );
+  const buttonRefs = useRef<Record<number, HTMLButtonElement | null>>({});
+
+  const handleShow = (id: number) => {
+    console.log("Show item with id:", id);
+    setOpenDropdown(null);
+    // Add your show logic here
+  };
+
+  const handleEdit = (id: number) => {
+    console.log("Edit item with id:", id);
+    setOpenDropdown(null);
+    // Add your edit logic here
+  };
+
+  const handleDelete = (id: number) => {
+    console.log("Delete item with id:", id);
+    setOpenDropdown(null);
+    // Add your delete logic here
+  };
+
+  const toggleDropdown = (id: number) => {
+    if (openDropdown === id) {
+      setOpenDropdown(null);
+      return;
+    }
+
+    // Calculate dropdown position
+    const buttonElement = buttonRefs.current[id];
+    if (buttonElement) {
+      const rect = buttonElement.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const dropdownHeight = 120;
+
+      // Ambil index dari data
+      const currentIndex = tableData.findIndex((item) => item.id === id);
+
+      // Kombinasi: viewport check DAN index check
+      const shouldShowAbove =
+        rect.bottom + dropdownHeight > viewportHeight ||
+        currentIndex >= tableData.length - 2;
+
+      setDropdownPosition(shouldShowAbove ? "top" : "bottom");
+    }
+
+    setOpenDropdown(id);
+  };
+
+  const closeDropdown = () => {
+    setOpenDropdown(null);
+  };
+
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -119,33 +241,39 @@ export default function BasicTableOne() {
             <TableRow>
               <TableCell
                 isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                className="px-5 py-4 font-semibold text-gray-700 text-start text-sm dark:text-gray-300"
               >
                 User
               </TableCell>
               <TableCell
                 isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                className="px-5 py-4 font-semibold text-gray-700 text-start text-sm dark:text-gray-300"
               >
                 Project Name
               </TableCell>
               <TableCell
                 isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                className="px-5 py-4 font-semibold text-gray-700 text-start text-sm dark:text-gray-300"
               >
                 Team
               </TableCell>
               <TableCell
                 isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                className="px-5 py-4 font-semibold text-gray-700 text-start text-sm dark:text-gray-300"
               >
                 Status
               </TableCell>
               <TableCell
                 isHeader
-                className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                className="px-5 py-4 font-semibold text-gray-700 text-start text-sm dark:text-gray-300"
               >
                 Budget
+              </TableCell>
+              <TableCell
+                isHeader
+                className="px-5 py-4 font-semibold text-gray-700 text-center text-sm dark:text-gray-300"
+              >
+                Actions
               </TableCell>
             </TableRow>
           </TableHeader>
@@ -154,30 +282,15 @@ export default function BasicTableOne() {
           <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
             {tableData.map((order) => (
               <TableRow key={order.id}>
-                <TableCell className="px-5 py-4 sm:px-6 text-start">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 overflow-hidden rounded-full">
-                      <img
-                        width={40}
-                        height={40}
-                        src={order.user.image}
-                        alt={order.user.name}
-                      />
-                    </div>
-                    <div>
-                      <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                        {order.user.name}
-                      </span>
-                      <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                        {order.user.role}
-                      </span>
-                    </div>
-                  </div>
+                <TableCell className="px-5 py-3.5 text-start">
+                  <span className="font-medium text-gray-800 text-sm dark:text-white/90">
+                    {order.user.name}
+                  </span>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-3.5 text-gray-600 text-start text-sm dark:text-gray-400">
                   {order.projectName}
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-3.5 text-gray-600 text-start text-sm dark:text-gray-400">
                   <div className="flex -space-x-2">
                     {order.team.images.map((teamImage, index) => (
                       <div
@@ -195,7 +308,7 @@ export default function BasicTableOne() {
                     ))}
                   </div>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-3.5 text-gray-600 text-start text-sm dark:text-gray-400">
                   <Badge
                     size="sm"
                     color={
@@ -209,8 +322,57 @@ export default function BasicTableOne() {
                     {order.status}
                   </Badge>
                 </TableCell>
-                <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                <TableCell className="px-4 py-3.5 text-gray-600 text-sm dark:text-gray-400">
                   {order.budget}
+                </TableCell>
+                <TableCell className="px-4 py-3.5 text-center">
+                  <div className="relative text-gray-600 dark:text-gray-400">
+                    <button
+                      ref={(el) => {
+                        buttonRefs.current[order.id] = el;
+                      }}
+                      onClick={() => toggleDropdown(order.id)}
+                      className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    >
+                      <HorizontaLDots />
+                    </button>
+
+                    {openDropdown === order.id && (
+                      <div
+                        className={`absolute z-40 right-0 w-40 rounded-xl border border-gray-200 bg-white shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark ${
+                          dropdownPosition === "top"
+                            ? "bottom-full mb-2"
+                            : "top-full mt-2"
+                        }`}
+                      >
+                        <div>
+                          <button
+                            onClick={() => handleShow(order.id)}
+                            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-800 dark:text-gray-400 first:rounded-t-xl transition-colors"
+                          >
+                            <ShowIcon />
+                            Show
+                          </button>
+
+                          <button
+                            onClick={() => handleEdit(order.id)}
+                            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-800 dark:text-gray-400 transition-colors"
+                          >
+                            <PencilIcon />
+                            Edit
+                          </button>
+
+                          <button
+                            onClick={() => handleDelete(order.id)}
+                            className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-900/20 dark:hover:text-red-400 last:rounded-b-xl transition-colors"
+                          >
+                            <TrashBinIcon />
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

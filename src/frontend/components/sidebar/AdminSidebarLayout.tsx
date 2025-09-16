@@ -18,7 +18,7 @@ export default function AdminSidebarLayout() {
     },
     {
       icon: <GroupIcon />,
-      name: "Employee accounts",
+      name: "Employees",
       path: "/admin/employees",
     },
   ];

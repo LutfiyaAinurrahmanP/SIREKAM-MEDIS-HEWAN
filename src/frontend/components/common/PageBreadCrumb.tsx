@@ -1,26 +1,45 @@
 import { Link } from "react-router";
+import { useUserRole } from "../../hooks/useUserRole";
 
 interface BreadcrumbProps {
   pageTitle: string;
 }
 
 const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
+  const { role } = useUserRole();
+
+  // Function untuk mendapatkan home path berdasarkan role
+  const getHomePath = () => {
+    switch (role) {
+      case "admin":
+        return "/admin";
+      case "veterinarian":
+        return "/veterinarian";
+      case "staff":
+        return "/staff";
+      case "client":
+        return "/client";
+      default:
+        return "/"; // fallback ke root
+    }
+  };
+
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
-      <h2
+    <div className="flex flex-wrap items-center justify-start gap-3 mb-6">
+      {/* <h2
         className="text-xl font-semibold text-gray-800 dark:text-white/90"
         x-text="pageName"
       >
         {pageTitle}
-      </h2>
+      </h2> */}
       <nav>
         <ol className="flex items-center gap-1.5">
           <li>
             <Link
               className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
-              to="/"
+              to={getHomePath()}
             >
-              Home
+              Dashboard
               <svg
                 className="stroke-current"
                 width="17"
