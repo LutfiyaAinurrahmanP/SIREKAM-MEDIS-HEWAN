@@ -1,56 +1,66 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FormState, RegisterFormData, UserRoleEnum } from '../../types/auth';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  RegisterFormData,
+  RegisterFormState,
+  UserRoleEnum,
+} from "../../../types/auth";
 
-const initialState: FormState = {
+const initialState: RegisterFormState = {
   formData: {
-    username: '',
-    fullname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    fullname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
     role: UserRoleEnum.CLIENT,
-    phone: '',
+    phone: "",
   },
   showPassword: false,
   showConfirmPassword: false,
   isChecked: false,
 };
 
-const formSlice = createSlice({
-  name: 'form',
+const registerFormSlice = createSlice({
+  name: "registerForm",
   initialState,
   reducers: {
     // Action untuk update field form
-    updateField: (state, action: PayloadAction<{ field: keyof RegisterFormData; value: string | UserRoleEnum }>) => {
+    updateField: (
+      state,
+      action: PayloadAction<{
+        field: keyof RegisterFormData;
+        value: string | UserRoleEnum;
+      }>
+    ) => {
       const { field, value } = action.payload;
-      state.formData[field] = value as any;
+      (state.formData[field] as string | UserRoleEnum) = value;
     },
-    
+
     // Action untuk toggle password visibility
     toggleShowPassword: (state) => {
       state.showPassword = !state.showPassword;
     },
-    
+
     // Action untuk toggle confirm password visibility
     toggleShowConfirmPassword: (state) => {
       state.showConfirmPassword = !state.showConfirmPassword;
     },
-    
+
     // Action untuk toggle checkbox
     toggleCheckbox: (state) => {
       state.isChecked = !state.isChecked;
     },
-    
+
     // Action untuk reset form
     resetForm: (state) => {
       state.formData = {
-        username: '',
-        fullname: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+        username: "",
+        fullname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
         role: UserRoleEnum.CLIENT,
-        phone: '',
+        phone: "",
       };
       state.showPassword = false;
       state.showConfirmPassword = false;
@@ -65,6 +75,6 @@ export const {
   toggleShowConfirmPassword,
   toggleCheckbox,
   resetForm,
-} = formSlice.actions;
+} = registerFormSlice.actions;
 
-export default formSlice.reducer;
+export default registerFormSlice.reducer;

@@ -11,13 +11,13 @@ import {
   toggleShowConfirmPassword,
   toggleCheckbox,
   resetForm,
-} from "../../store/slices/formSlice";
+} from "../../store/slices/auth/registerFormSlice";
 import {
   setLoading,
   setError,
-  setSuccess,
+  setRegisterSuccess,
   clearMessages,
-} from "../../store/slices/authSlice";
+} from "../../store/slices/auth/authSlice";
 import { registerUser } from "../../services/authService";
 import { alertError, alertSuccess } from "../../lib/alert";
 import { RegisterFormData } from "../../types/auth";
@@ -32,7 +32,7 @@ export default function SignUpForm() {
     (state) => state.auth
   );
   const { formData, showPassword, showConfirmPassword, isChecked } =
-    useAppSelector((state) => state.form);
+    useAppSelector((state) => state.registerForm);
 
   // Validasi form
   const validateForm = (): boolean => {
@@ -64,7 +64,7 @@ export default function SignUpForm() {
       await registerUser(formData);
 
       // Dispatch action untuk success
-      dispatch(setSuccess("User created successfully!"));
+      dispatch(setRegisterSuccess("User created successfully!"));
       await alertSuccess("User created successfully!");
 
       // Reset form dan navigate ke login

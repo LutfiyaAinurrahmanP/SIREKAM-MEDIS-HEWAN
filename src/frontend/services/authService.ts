@@ -1,5 +1,5 @@
-import { userRegister } from "../lib/api/AuthApi";
-import { RegisterFormData } from "../types/auth";
+import { userLogin, userRegister } from "../lib/api/AuthApi";
+import { LoginFormData, RegisterFormData } from "../types/auth";
 
 export const registerUser = async (data: RegisterFormData): Promise<any> => {
   const response = await userRegister({
@@ -29,6 +29,33 @@ export const registerUser = async (data: RegisterFormData): Promise<any> => {
       } else if (typeof responseBody.errors === "object") {
         const firstError = Object.values(responseBody.errors)[0];
         errorMessage = Array.isArray(firstError) ? firstError[0] : firstError;
+      }
+    } else if (responseBody.message) {
+      errorMessage = responseBody.message;
+    }
+
+    throw new Error(errorMessage);
+  }
+};
+
+export const loginUser = async (data: LoginFormData): Promise<any> => {
+  const response = await userLogin({
+    username: data.username,
+    password: data.password,
+  });
+
+  const responseBody = await response.json();
+
+  if (response.status === 200) {
+    return responseBody;
+  } else {
+    let errorMessage = "Username of password is wrong!";
+
+    if (responseBody.errors) {
+      if (responseBody.errors.username) {
+        errorMessage = "Username of password is wrong!";
+      } else if (responseBody.errors.password) {
+        errorMessage = "Username of password is wrong!";
       }
     } else if (responseBody.message) {
       errorMessage = responseBody.message;

@@ -1,3 +1,5 @@
+import { LoginFormData } from "../../types/auth";
+
 export enum UserRoleEnum {
   ADMIN = "admin",
   STAFF = "staff",
@@ -35,6 +37,20 @@ export const userRegister = async ({
       password,
       role,
       phone,
+    }),
+  });
+};
+
+export const userLogin = async ({ username, password }: LoginFormData) => {
+  return await fetch(`${import.meta.env.VITE_API_PATH}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      username,
+      password,
     }),
   });
 };
