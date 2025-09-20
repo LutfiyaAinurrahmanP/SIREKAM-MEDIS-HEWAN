@@ -22,38 +22,33 @@ import { registerUser } from "../../services/authService";
 import { alertError, alertSuccess } from "../../lib/alert";
 import { RegisterFormData } from "../../types/auth";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { userRegisterValidateToast } from "../../validation/auth/userRegisterValidation";
 
 export default function SignUpForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   // Ambil state dari Redux store
-  const { isLoading, error, successMessage } = useAppSelector(
-    (state) => state.auth
-  );
+  const { isLoading } = useAppSelector((state) => state.auth);
   const { formData, showPassword, showConfirmPassword, isChecked } =
     useAppSelector((state) => state.registerForm);
 
   // Validasi form
-  const validateForm = (): boolean => {
+  const validateForm = async (): Promise<boolean> => {
     if (!isChecked) {
-      alertError("Please confirm terms and conditions!");
+      alertError("Harap konfirmasi syarat dan ketentuan!");
       return false;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      alertError("Password don't match!");
-      return false;
-    }
-
-    return true;
+    return await userRegisterValidateToast(formData);
   };
 
   // Handle submit form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validateForm()) return;
+    const isValid = await validateForm();
+    if (!isValid) return;
 
     // Dispatch action untuk mulai loading
     dispatch(setLoading(true));
@@ -71,7 +66,7 @@ export default function SignUpForm() {
       setTimeout(() => {
         dispatch(resetForm());
         navigate("/login");
-      }, 1500);
+      }, 2000);
     } catch (error: any) {
       // Dispatch action untuk error
       dispatch(setError(error.message || "Registration failed!"));
@@ -86,15 +81,15 @@ export default function SignUpForm() {
 
   return (
     <div className="flex flex-col flex-1 w-full overflow-y-auto lg:w-1/2 no-scrollbar">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Register
+              Daftar akun
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your data to register!
+              Masukkan data yang valid untuk mendaftar!
             </p>
           </div>
 
@@ -110,7 +105,7 @@ export default function SignUpForm() {
                     type="text"
                     id="username"
                     name="username"
-                    placeholder="Enter your username"
+                    placeholder="Masukkan username"
                     required={true}
                     value={formData.username}
                     onChange={(e) =>
@@ -122,13 +117,13 @@ export default function SignUpForm() {
                 {/* Full Name */}
                 <div className="sm:col-span-1">
                   <Label>
-                    Fullname<span className="text-error-500">*</span>
+                    Nama lengkap<span className="text-error-500">*</span>
                   </Label>
                   <Input
                     type="text"
                     id="fullname"
                     name="fullname"
-                    placeholder="Enter your fullname"
+                    placeholder="Masukkan nama lengkap"
                     required={true}
                     value={formData.fullname}
                     onChange={(e) =>
@@ -140,13 +135,13 @@ export default function SignUpForm() {
                 {/* Phone */}
                 <div className="sm:col-span-1">
                   <Label>
-                    Phone<span className="text-error-500">*</span>
+                    Nomor telepon<span className="text-error-500">*</span>
                   </Label>
                   <Input
                     type="text"
                     id="phone"
                     name="phone"
-                    placeholder="Enter your phone number"
+                    placeholder="Masukkan nomor telepon"
                     required={true}
                     value={formData.phone}
                     onChange={(e) => handleFieldChange("phone", e.target.value)}
@@ -162,7 +157,7 @@ export default function SignUpForm() {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="Enter your email"
+                    placeholder="Masukkan email"
                     required={true}
                     value={formData.email}
                     onChange={(e) => handleFieldChange("email", e.target.value)}
@@ -176,7 +171,7 @@ export default function SignUpForm() {
                   </Label>
                   <div className="relative">
                     <Input
-                      placeholder="Enter your password"
+                      placeholder="Masukkan password"
                       type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
@@ -202,11 +197,11 @@ export default function SignUpForm() {
                 {/* Confirm Password */}
                 <div>
                   <Label>
-                    Confirm password<span className="text-error-500">*</span>
+                    Konfirmasi password<span className="text-error-500">*</span>
                   </Label>
                   <div className="relative">
                     <Input
-                      placeholder="Enter your confirm password"
+                      placeholder="Masukkan konfirmasi password"
                       type={showConfirmPassword ? "text" : "password"}
                       id="confirm_password"
                       name="confirm_password"
@@ -237,14 +232,15 @@ export default function SignUpForm() {
                     onChange={() => dispatch(toggleCheckbox())}
                   />
                   <p className="inline-block font-normal text-gray-500 dark:text-gray-400">
-                    By creating an account means you agree to the{" "}
+                    Dengan membuat akun berarti anda setuju dengan{" "}
                     <span className="text-gray-800 dark:text-white/90">
-                      Terms and Conditions,
+                      Syarat dan Ketentuan,
                     </span>{" "}
-                    and our{" "}
+                    serta{" "}
                     <span className="text-gray-800 dark:text-white">
-                      Privacy Policy
+                      Kebijakan Privasi{" "}
                     </span>
+                    kami.
                   </p>
                 </div>
 
@@ -255,7 +251,7 @@ export default function SignUpForm() {
                     disabled={isLoading}
                     className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isLoading ? "Registering..." : "Register"}
+                    {isLoading ? "Proses daftar..." : "Daftar"}
                   </button>
                 </div>
               </div>
@@ -263,12 +259,12 @@ export default function SignUpForm() {
 
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                Already have an account? {""}
+                Sudah memiliki akun? {""}
                 <Link
                   to="/login"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
                 >
-                  Login
+                  Masuk
                 </Link>
               </p>
             </div>
