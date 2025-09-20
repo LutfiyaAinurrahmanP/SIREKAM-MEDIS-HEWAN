@@ -22,10 +22,11 @@ import AdminMedicalRecordsIndex from "../pages/Admin/MedicalRecords/Index";
 import AdminUsersIndex from "../pages/Admin/Users/Index";
 import AdminProfileIndex from "../pages/Admin/Profile/Index";
 import AdminProfileEdit from "../pages/Admin/Profile/Edit";
+import { AdminRoute } from "../components/auth/RoleGuards";
 
 export default function AdminRoutes() {
   return (
-    <Route path="/admin">
+    <Route path="/admin" element={<AdminRoute />}>
       <Route index element={<Home />} />
       {/* Animal types */}
       <Route path="animal-types">

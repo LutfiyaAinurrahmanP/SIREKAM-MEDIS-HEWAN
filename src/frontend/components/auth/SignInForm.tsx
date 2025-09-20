@@ -2,14 +2,15 @@ import { Link, useNavigate } from "react-router";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
-import Checkbox from "../form/input/Checkbox";
+// import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import { alertError, alertSuccess } from "../../lib/alert";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   clearMessages,
+  restoreAuth,
   setError,
   setLoading,
   setLoginSuccess,
@@ -22,56 +23,87 @@ import {
   updateField,
 } from "../../store/slices/auth/loginFormSlice";
 import { Toaster } from "react-hot-toast";
+import { getRoleBasedRoute, getRoleDisplayName } from "../../utils/authUtils";
 
 export default function SignInForm() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  // Redux state
+  const { isLoading, isAuthenticated, user } = useAppSelector(
+    (state) => state.auth
+  );
   const { formData, showPassword } = useAppSelector((state) => state.loginForm);
 
-  const validateForm = (): boolean => {
-    if (!formData.username.trim()) {
-      alertError("Username is required");
-      return false;
-    }
-    if (!formData.password.trim()) {
-      alertError("Password is required");
-      return false;
-    }
-    return true;
-  };
+  useEffect(() => {
+    dispatch(restoreAuth());
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      const redirectPath = getRoleBasedRoute(user.role);
+      navigate(redirectPath, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
+
+  // Handle submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
 
     dispatch(setLoading(true));
     dispatch(clearMessages());
 
     try {
-      const userData = await loginUser(formData);
-      dispatch(setLoginSuccess(userData));
-      await alertSuccess("Login successfull!");
+      // Call login API
+      const response = await loginUser(formData);
 
+      // Set login success with user data and token
+      dispatch(
+        setLoginSuccess({
+          user: response.user,
+          token: response.token,
+        })
+      );
+
+      // Show success message with role
+      const roleDisplayName = getRoleDisplayName(response.user.role);
+      const successMessage = `Login berhasil sebagai ${roleDisplayName}!`;
+      await alertSuccess(successMessage);
+
+      // Get role-based route
+      const redirectPath = getRoleBasedRoute(response.user.role);
+
+      // Reset form and navigate to role-based dashboard
       setTimeout(() => {
         dispatch(resetForm());
-        navigate("/admin");
-      }, 1000);
+        navigate(redirectPath, { replace: true });
+      }, 1500);
     } catch (error: any) {
-      dispatch(setError(error.message || "Login failed!"));
-      await alertError(error.message || "Login failed!");
+      const errorMessage = error.message || "Login gagal!";
+      dispatch(setError(errorMessage));
+      await alertError(errorMessage);
     }
   };
 
+  // Handle field change
   const handleFieldChange = (field: keyof LoginFormData, value: string) => {
     dispatch(updateField({ field, value }));
   };
 
+  // Don't render form if already authenticated
+  if (isAuthenticated && user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-lg">Redirecting to dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col flex-1">
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
         <div>
           <div className="mb-5 sm:mb-8">

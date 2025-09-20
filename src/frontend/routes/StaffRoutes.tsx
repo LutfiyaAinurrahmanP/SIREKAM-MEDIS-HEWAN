@@ -30,10 +30,11 @@ import StaffUsersIndex from "../pages/Staff/Users/Index";
 import StaffUsersCreate from "../pages/Staff/Users/Create";
 import StaffUsersShow from "../pages/Staff/Users/Show";
 import StaffUsersEdit from "../pages/Staff/Users/Edit";
+import { StaffRoute } from "../components/auth/RoleGuards";
 
 export default function StaffRoutes() {
   return (
-    <Route path="/staff">
+    <Route path="/staff" element={<StaffRoute />}>
       <Route index element={<Home />} />
       {/* Prescriptions */}
       <Route path="prescriptions">

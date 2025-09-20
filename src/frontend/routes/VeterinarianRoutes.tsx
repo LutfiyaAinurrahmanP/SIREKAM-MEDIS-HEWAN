@@ -16,10 +16,11 @@ import VeterinarianMedicalRecordsShow from "../pages/Veterinarian/MedicalRecords
 import VeterinarianMedicalRecordsEdit from "../pages/Veterinarian/MedicalRecords/Edit";
 import VeterinarianProfileIndex from "../pages/Veterinarian/Profile/Index";
 import VeterinarianProfileEdit from "../pages/Veterinarian/Profile/Edit";
+import { VeterinarianRoute } from "../components/auth/RoleGuards";
 
 export default function VeterinarianRoutes() {
   return (
-    <Route path="/veterinarian">
+    <Route path="/veterinarian" element={<VeterinarianRoute />}>
       <Route index element={<Home />} />
       {/* Medicines */}
       <Route path="medicines">

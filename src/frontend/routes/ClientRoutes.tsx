@@ -20,10 +20,11 @@ import ClientPrescriptionItemsIndex from "../pages/Client/PrescriptionItems/Inde
 import ClientPrescriptionItemsShow from "../pages/Client/PrescriptionItems/Show";
 import ClientTransactionsIndex from "../pages/Client/Transactions/Index";
 import ClientTransactionsShow from "../pages/Client/Transactions/Show";
+import { ClientRoute } from "../components/auth/RoleGuards";
 
 export default function ClientRoutes() {
   return (
-    <Route path="/client">
+    <Route path="/client" element={<ClientRoute />}>
       <Route index element={<Home />} />
       {/* Treatment notes */}
       <Route path="treatment-notes">

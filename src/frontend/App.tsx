@@ -22,6 +22,7 @@ import AdminRoutes from "./routes/AdminRoutes";
 import StaffRoutes from "./routes/StaffRoutes";
 import VeterinarianRoutes from "./routes/VeterinarianRoutes";
 import ClientRoutes from "./routes/ClientRoutes";
+import Unauthorized from "./pages/OtherPage/Unauthorized";
 
 export default function App() {
   return (
@@ -29,40 +30,42 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Routes>
-          {/* Dashboard Layout */}
-          <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
-            {/* Others Page */}
-            <Route path="/profile" element={<UserProfiles />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/blank" element={<Blank />} />
+          <Route>
+            {/* Dashboard Layout */}
+            <Route element={<AppLayout />}>
+              <Route index path="/" element={<Home />} />
+              {/* Others Page */}
+              <Route path="/profile" element={<UserProfiles />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/blank" element={<Blank />} />
 
-            {/* Forms */}
-            <Route path="/form-elements" element={<FormElements />} />
+              {/* Forms */}
+              <Route path="/form-elements" element={<FormElements />} />
 
-            {/* Tables */}
-            <Route path="/basic-tables" element={<BasicTables />} />
+              {/* Tables */}
+              <Route path="/basic-tables" element={<BasicTables />} />
 
-            {/* Ui Elements */}
-            <Route path="/alerts" element={<Alerts />} />
-            <Route path="/avatars" element={<Avatars />} />
-            <Route path="/badge" element={<Badges />} />
-            <Route path="/buttons" element={<Buttons />} />
-            <Route path="/images" element={<Images />} />
-            <Route path="/videos" element={<Videos />} />
+              {/* Ui Elements */}
+              <Route path="/alerts" element={<Alerts />} />
+              <Route path="/avatars" element={<Avatars />} />
+              <Route path="/badge" element={<Badges />} />
+              <Route path="/buttons" element={<Buttons />} />
+              <Route path="/images" element={<Images />} />
+              <Route path="/videos" element={<Videos />} />
 
-            {/* Charts */}
-            <Route path="/line-chart" element={<LineChart />} />
-            <Route path="/bar-chart" element={<BarChart />} />
+              {/* Charts */}
+              <Route path="/line-chart" element={<LineChart />} />
+              <Route path="/bar-chart" element={<BarChart />} />
 
-            {/* Admin */}
-            {AdminRoutes()}
-            {/* Staff */}
-            {StaffRoutes()}
-            {/* Veterinarian */}
-            {VeterinarianRoutes()}
-            {/* Client */}
-            {ClientRoutes()}
+              {/* Admin */}
+              {AdminRoutes()}
+              {/* Staff */}
+              {StaffRoutes()}
+              {/* Veterinarian */}
+              {VeterinarianRoutes()}
+              {/* Client */}
+              {ClientRoutes()}
+            </Route>
           </Route>
 
           {/* Auth Layout */}
@@ -70,6 +73,7 @@ export default function App() {
           <Route path="/register" element={<SignUp />} />
 
           {/* Fallback Route */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

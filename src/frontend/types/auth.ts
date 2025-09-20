@@ -5,12 +5,21 @@ export enum UserRoleEnum {
   CLIENT = "client",
 }
 
+export interface User {
+  username: string;
+  fullname: string;
+  email: string;
+  role: UserRoleEnum;
+  phone: string;
+}
+
 export interface AuthState {
   isLoading: boolean;
   error: string | null;
   successMessage: string | null;
-  user: any | null;
+  user: User | null;
   isAuthenticated: boolean;
+  token: string | null;
 }
 
 export interface RegisterFormData {
@@ -39,3 +48,10 @@ export interface LoginFormState {
   formData: LoginFormData;
   showPassword: boolean;
 }
+
+export const ROLE_ROUTES = {
+  [UserRoleEnum.ADMIN]: "/admin",
+  [UserRoleEnum.STAFF]: "/staff",
+  [UserRoleEnum.VETERINARIAN]: "/veterinarian",
+  [UserRoleEnum.CLIENT]: "/client",
+} as const;
