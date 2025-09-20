@@ -22,7 +22,6 @@ import { registerUser } from "../../services/authService";
 import { alertError, alertSuccess } from "../../lib/alert";
 import { RegisterFormData } from "../../types/auth";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { userRegisterValidateToast } from "../../validation/auth/userRegisterValidation";
 
 export default function SignUpForm() {
   const dispatch = useAppDispatch();
@@ -34,21 +33,26 @@ export default function SignUpForm() {
     useAppSelector((state) => state.registerForm);
 
   // Validasi form
-  const validateForm = async (): Promise<boolean> => {
+  const validateForm = (): boolean => {
     if (!isChecked) {
-      alertError("Harap konfirmasi syarat dan ketentuan!");
+      alertError("Harap setujui syarat dan ketentuan!");
       return false;
     }
 
-    return await userRegisterValidateToast(formData);
+    // Cek confirm password
+    if (formData.password !== formData.confirmPassword) {
+      alertError("Konfirmasi password tidak sama!");
+      return false;
+    }
+
+    return true;
   };
 
   // Handle submit form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const isValid = await validateForm();
-    if (!isValid) return;
+    if (!validateForm()) return;
 
     // Dispatch action untuk mulai loading
     dispatch(setLoading(true));
@@ -59,8 +63,9 @@ export default function SignUpForm() {
       await registerUser(formData);
 
       // Dispatch action untuk success
-      dispatch(setRegisterSuccess("User created successfully!"));
-      await alertSuccess("User created successfully!");
+      const successMessage = "Data akun berhasil dibuat!";
+      dispatch(setRegisterSuccess(successMessage));
+      await alertSuccess(successMessage);
 
       // Reset form dan navigate ke login
       setTimeout(() => {
@@ -68,9 +73,9 @@ export default function SignUpForm() {
         navigate("/login");
       }, 2000);
     } catch (error: any) {
-      // Dispatch action untuk error
-      dispatch(setError(error.message || "Registration failed!"));
-      await alertError(error.message || "Registration failed!");
+      const errorMessage = error.message || "Registrasi gagal!";
+      dispatch(setError(errorMessage));
+      await alertError(errorMessage);
     }
   };
 
@@ -138,7 +143,7 @@ export default function SignUpForm() {
                     Nomor telepon<span className="text-error-500">*</span>
                   </Label>
                   <Input
-                    type="text"
+                    type="number"
                     id="phone"
                     name="phone"
                     placeholder="Masukkan nomor telepon"

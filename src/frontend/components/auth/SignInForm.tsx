@@ -76,10 +76,10 @@ export default function SignInForm() {
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Login
+              Masuk
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your username and password to login!
+              Harap masukkan username dan password yang valid!
             </p>
           </div>
           <div>
@@ -93,7 +93,7 @@ export default function SignInForm() {
                     type="text"
                     id="username"
                     name="username"
-                    placeholder="Enter your username"
+                    placeholder="Masukkan username"
                     required={true}
                     value={formData.username}
                     onChange={(e) =>
@@ -107,7 +107,7 @@ export default function SignInForm() {
                   </Label>
                   <div className="relative">
                     <Input
-                      placeholder="Enter your password"
+                      placeholder="Masukkan password"
                       type={showPassword ? "text" : "password"}
                       id="password"
                       name="password"
@@ -140,7 +140,7 @@ export default function SignInForm() {
                     to="/reset-password"
                     className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
                   >
-                    Forgot password?
+                    Lupa password?
                   </Link>
                 </div>
                 <div>
@@ -150,7 +150,7 @@ export default function SignInForm() {
                     disabled={isLoading}
                     type="submit"
                   >
-                    Login
+                    Masuk
                   </Button>
                 </div>
               </div>
@@ -158,12 +158,12 @@ export default function SignInForm() {
 
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                Don&apos;t have an account? {""}
+                Tidak memiliki akun? {""}
                 <Link
                   to="/register"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
                 >
-                  Register
+                  Daftar
                 </Link>
               </p>
             </div>
