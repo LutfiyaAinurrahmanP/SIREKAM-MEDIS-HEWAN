@@ -20,6 +20,7 @@ export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   token: string | null;
+  isLoggingOut: boolean;
 }
 
 export interface RegisterFormData {
@@ -47,6 +48,11 @@ export interface LoginFormData {
 export interface LoginFormState {
   formData: LoginFormData;
   showPassword: boolean;
+}
+
+export interface logoutResponse {
+  success: boolean;
+  message: string;
 }
 
 export const ROLE_ROUTES = {

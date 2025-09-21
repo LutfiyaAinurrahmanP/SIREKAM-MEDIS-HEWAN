@@ -1,4 +1,4 @@
-import { userLogin, userRegister } from "../lib/api/AuthApi";
+import { userLogin, userLogout, userRegister } from "../lib/api/AuthApi";
 import { LoginFormData, RegisterFormData } from "../types/auth";
 
 export const registerUser = async (data: RegisterFormData): Promise<any> => {
@@ -21,7 +21,7 @@ export const registerUser = async (data: RegisterFormData): Promise<any> => {
   }
 };
 
-// 👈 Update login service untuk handle token
+// Update login service untuk handle token
 export const loginUser = async (data: LoginFormData): Promise<any> => {
   const response = await userLogin({
     username: data.username,
@@ -47,32 +47,40 @@ export const loginUser = async (data: LoginFormData): Promise<any> => {
   }
 };
 
-export const logoutUser = async (): Promise<void> => {
-  // Get token from localStorage or Redux state
+export const logoutUser = async (): Promise<LogoutResponse> => {
   const token = localStorage.getItem("auth_token");
 
-  if (!token) return;
+  if (!token) {
+    throw new Error("Tidak ada session yang aktif!");
+  }
 
   try {
-    // Call logout endpoint based on user role
-    // You'll need to adjust this based on your backend API
-    const response = await fetch("/api/logout", {
-      method: "DELETE",
-      headers: {
-        "SESSION-TOKEN": token,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await userLogout();
+    const responseBody = await response.json();
 
-    // Handle response if needed
-    if (!response.ok) {
-      console.warn("Logout request failed, but continuing with local logout");
+    if (response.status === 200 || response.status === 204) {
+      return {
+        success: true,
+        message: responseBody.message || "Logout berhasil!",
+      };
+    } else {
+      // Jika backend error, tetap lakukan logout local
+      console.warn("Backend logout failed, performing local logout");
+      return {
+        success: true,
+        message: "Logout berhasil!",
+      };
     }
-  } catch (error) {
+  } catch (error: any) {
+    // Jika network error, tetap lakukan logout local
     console.warn(
-      "Logout request failed, but continuing with local logout:",
+      "Network error during logout, performing local logout:",
       error
     );
+    return {
+      success: true,
+      message: "Logout berhasil!",
+    };
   }
 };
 

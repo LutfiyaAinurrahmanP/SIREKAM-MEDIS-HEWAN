@@ -54,3 +54,16 @@ export const userLogin = async ({ username, password }: LoginFormData) => {
     }),
   });
 };
+
+export const userLogout = async (): Promise<Response> => {
+  const token = localStorage.getItem("auth_token");
+
+  return await fetch(`${import.meta.env.VITE_API_PATH}/logout`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "TOKEN-SESSION": token || "",
+    },
+  });
+};

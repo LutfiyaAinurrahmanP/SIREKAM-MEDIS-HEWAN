@@ -14,6 +14,7 @@ const initializeAuthState = (): AuthState => {
     user: user,
     isAuthenticated: isAuthenticated,
     token: token,
+    isLoggingOut: false,
   };
 };
 
@@ -58,6 +59,14 @@ const authSlice = createSlice({
       authStorage.setUser(user);
     },
 
+    setLogoutLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoggingOut = action.payload;
+      if (action.payload) {
+        state.error = null;
+        state.successMessage = null;
+      }
+    },
+
     setLogoutSuccess: (state, action: PayloadAction<string>) => {
       state.user = null;
       state.token = null;
@@ -66,6 +75,18 @@ const authSlice = createSlice({
       state.error = null;
       state.user = null;
       state.isAuthenticated = false;
+      state.isLoggingOut = false;
+
+      authStorage.clearAuth();
+    },
+
+    setLogoutError: (state, action: PayloadAction<string>) => {
+      state.user = null;
+      state.token = null;
+      state.error = action.payload;
+      state.user = null;
+      state.isAuthenticated = false;
+      authStorage.clearAuth();
 
       authStorage.clearAuth();
     },
@@ -94,7 +115,9 @@ export const {
   setError,
   setRegisterSuccess,
   setLoginSuccess,
+  setLogoutLoading,
   setLogoutSuccess,
+  setLogoutError,
   clearMessages,
   restoreAuth,
 } = authSlice.actions;
