@@ -1,15 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PageBreadcrumb from "../../../components/common/PageBreadCrumb";
 import PageMeta from "../../../components/common/PageMeta";
-import BasicTableOne from "../../../components/tables/BasicTables/BasicTableOne";
 import Button from "../../../components/ui/button/Button";
 import { Pagination } from "../../../components/ui/pagination/Pagination";
 import Search from "../../../components/form/input/SearchInput";
 import TableHeading from "../../../components/ui/table/TableHeading";
 import { FilterIcon, PlusIcon } from "../../../icons";
+import { useEmployees } from "../../../hooks/admin/useEmployees";
+import { useNavigate } from "react-router";
+import EmployeesTable from "../../../components/tables/EmployeesTable";
+import Paginator from "../../../components/ui/pagination/Paginator";
 
 export default function AdminUsersIndex() {
+  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+
+  const {
+    employees,
+    isLoading,
+    isDeleting,
+    error,
+    successMessage,
+    currentPage,
+    totalPages,
+    totalEmployees,
+    loadEmployees,
+    deleteEmployee,
+    handleSearch,
+    handlePageChange,
+    clearFilters,
+  } = useEmployees();
+
+  // Load data on mount and whenever dependencies in the hook change
+  useEffect(() => {
+    loadEmployees();
+  }, [loadEmployees]);
+
+  const onSubmitSearch = (value: string) => {
+    handleSearch(value);
+    // loadEmployees akan otomatis terpanggil via dependency di hook
+  };
+
+  const onEditEmployee = (employee: any) => {
+    navigate(`/employees/edit/${employee.id}`);
+  };
+
+  const onDeleteEmployee = async (id: string) => {
+    await deleteEmployee(id);
+  };
 
   return (
     <>
@@ -23,16 +61,25 @@ export default function AdminUsersIndex() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex lg:justify-end lg:gap-4 xl:gap-6">
-            <Button size="sm" variant="outline" startIcon={<FilterIcon />}>
+            <Button
+              size="sm"
+              variant="outline"
+              startIcon={<FilterIcon />}
+              onClick={clearFilters}
+            >
               Filter data
             </Button>
             <Search
               value={searchValue}
               onChange={setSearchValue}
-              onSubmit={(value) => console.log("Search:", value)}
+              onSubmit={onSubmitSearch}
               className="xl:w-auto"
             />
-            <Button size="sm" variant="primary">
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => navigate("/employees/create")}
+            >
               Create data
             </Button>
           </div>
@@ -42,7 +89,7 @@ export default function AdminUsersIndex() {
             <Search
               value={searchValue}
               onChange={setSearchValue}
-              onSubmit={(value) => console.log("Search:", value)}
+              onSubmit={onSubmitSearch}
               placeholder="Search employees..."
               showShortcut={false}
               className="w-full"
@@ -54,6 +101,7 @@ export default function AdminUsersIndex() {
                 variant="outline"
                 startIcon={<FilterIcon />}
                 className="flex-1"
+                onClick={clearFilters}
               >
                 Filter
               </Button>
@@ -62,6 +110,7 @@ export default function AdminUsersIndex() {
                 variant="primary"
                 startIcon={<PlusIcon />}
                 className="flex-1"
+                onClick={() => navigate("/employees/create")}
               >
                 Create
               </Button>
@@ -69,20 +118,45 @@ export default function AdminUsersIndex() {
           </div>
         </div>
 
+        {/* Alert messages */}
+        {error && (
+          <div className="px-4 py-3 bg-red-50 border-l-4 border-red-400 rounded">
+            <p className="text-sm text-red-700">{error}</p>
+          </div>
+        )}
+        {successMessage && (
+          <div className="px-4 py-3 bg-green-50 border-l-4 border-green-400 rounded">
+            <p className="text-sm text-green-700">{successMessage}</p>
+          </div>
+        )}
+
         {/* Table Section */}
         <div className="w-full overflow-hidden">
-          <BasicTableOne />
+          <EmployeesTable
+            data={employees}
+            isLoading={isLoading || isDeleting}
+            onEdit={onEditEmployee}
+            onDelete={onDeleteEmployee}
+          />
         </div>
 
         {/* Pagination Section */}
         <div className="w-full">
-          <Pagination
-            currentPage={1}
-            totalPages={10}
-            totalItems={100}
+          {/* <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalEmployees}
             itemsPerPage={10}
-            onPageChange={(page) => console.log("Page changed:", page)}
-          />
+            onPageChange={(page) => {
+              handlePageChange(page);
+              // loadEmployees akan terpanggil oleh effect via dependency di hook
+            }}
+          /> */}
+          <Paginator
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
         </div>
       </div>
     </>

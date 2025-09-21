@@ -1,5 +1,5 @@
 import { userLogin, userLogout, userRegister } from "../lib/api/AuthApi";
-import { LoginFormData, RegisterFormData } from "../types/auth";
+import { LoginFormData, logoutResponse, RegisterFormData } from "../types/auth";
 
 export const registerUser = async (data: RegisterFormData): Promise<any> => {
   const response = await userRegister({
@@ -47,7 +47,7 @@ export const loginUser = async (data: LoginFormData): Promise<any> => {
   }
 };
 
-export const logoutUser = async (): Promise<LogoutResponse> => {
+export const logoutUser = async (): Promise<logoutResponse> => {
   const token = localStorage.getItem("auth_token");
 
   if (!token) {
