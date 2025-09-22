@@ -19,7 +19,7 @@ export interface EmployeesApiResponse {
 // INTERFACE LAMA: Tetap digunakan untuk internal state management
 export interface EmployeesListResponse {
   data: Employees[];
-  pagination: {
+  pagination?: {
     current_page: number;
     total_pages: number;
     total_items: number;

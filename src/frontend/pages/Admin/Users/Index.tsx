@@ -10,6 +10,8 @@ import { useEmployees } from "../../../hooks/admin/useEmployees";
 import { useNavigate } from "react-router";
 import EmployeesTable from "../../../components/tables/EmployeesTable";
 import Paginator from "../../../components/ui/pagination/Paginator";
+import BasicTables from "../../Tables/BasicTables";
+import EmployeesCompactTable from "../../../components/tables/BasicTables/BasicTableOne";
 
 export default function AdminUsersIndex() {
   const navigate = useNavigate();
@@ -51,13 +53,16 @@ export default function AdminUsersIndex() {
 
   return (
     <>
-      <PageMeta title="Employees page" description="Employees page pet care" />
-      <PageBreadcrumb pageTitle="Employees" />
+      <PageMeta
+        title="Halaman karyawan"
+        description="Halaman karyawan pet care"
+      />
+      <PageBreadcrumb pageTitle="Karyawan" />
 
       <div className="flex flex-col gap-4 lg:gap-6">
         {/* Header Section */}
         <div className="flex flex-col gap-4 lg:flex-row lg:gap-6 lg:justify-between lg:items-start">
-          <TableHeading className="pt-2">Employees</TableHeading>
+          <TableHeading className="pt-2">Karyawan</TableHeading>
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex lg:justify-end lg:gap-4 xl:gap-6">
@@ -80,7 +85,7 @@ export default function AdminUsersIndex() {
               variant="primary"
               onClick={() => navigate("/employees/create")}
             >
-              Create data
+              Tambah data
             </Button>
           </div>
 
@@ -90,7 +95,7 @@ export default function AdminUsersIndex() {
               value={searchValue}
               onChange={setSearchValue}
               onSubmit={onSubmitSearch}
-              placeholder="Search employees..."
+              placeholder="Cari data karyawan..."
               showShortcut={false}
               className="w-full"
             />
@@ -132,7 +137,7 @@ export default function AdminUsersIndex() {
 
         {/* Table Section */}
         <div className="w-full overflow-hidden">
-          <EmployeesTable
+          <EmployeesCompactTable
             data={employees}
             isLoading={isLoading || isDeleting}
             onEdit={onEditEmployee}
@@ -142,7 +147,7 @@ export default function AdminUsersIndex() {
 
         {/* Pagination Section */}
         <div className="w-full">
-          {/* <Pagination
+          <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             totalItems={totalEmployees}
@@ -151,12 +156,12 @@ export default function AdminUsersIndex() {
               handlePageChange(page);
               // loadEmployees akan terpanggil oleh effect via dependency di hook
             }}
+          />
+          {/* <Paginator
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
           /> */}
-          <Paginator
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
         </div>
       </div>
     </>

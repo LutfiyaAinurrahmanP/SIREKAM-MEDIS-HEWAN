@@ -14,9 +14,7 @@ import {
   setSearchQuery,
   setSuccessMessage,
 } from "../../store/slices/employees/employeesSlice";
-import {
-  fetchEmployees,
-} from "../../services/employeesService";
+import { fetchEmployees } from "../../services/employeesService";
 import { UserRoleEnum } from "../../types/auth";
 
 export const useEmployees = () => {
@@ -35,12 +33,7 @@ export const useEmployees = () => {
         per_page: 10,
       };
 
-      console.log("🔄 Loading employees with filters:", filters);
       const result = await fetchEmployees(filters);
-
-      console.log("✅ Employees loaded successfully:", result);
-
-      // Validate result structure before dispatching
       if (!result || !result.data || !result.pagination) {
         throw new Error("Data tidak valid dari server");
       }
@@ -54,20 +47,13 @@ export const useEmployees = () => {
         })
       );
     } catch (error: any) {
-      console.error("❌ Load employees error:", error);
-
-      // Handle specific error types
       if (
         error.message.includes("Sesi Anda telah berakhir") ||
         error.message.includes("Token tidak ditemukan") ||
         error.message.includes("Unauthorized")
       ) {
-        // Clear invalid token
         localStorage.removeItem("auth_token");
         dispatch(setError("Sesi Anda telah berakhir. Silakan login kembali."));
-
-        // Optional: Redirect to login
-        // window.location.href = "/login";
       } else {
         dispatch(setError(error.message || "Gagal memuat data employees"));
       }
@@ -94,8 +80,6 @@ export const useEmployees = () => {
         dispatch(removeEmployeeAction(id));
         dispatch(setSuccessMessage("p"));
       } catch (error: any) {
-        console.error("❌ Delete employee error:", error);
-
         if (
           error.message.includes("Sesi Anda telah berakhir") ||
           error.message.includes("Unauthorized")

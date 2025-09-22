@@ -31,18 +31,20 @@ export const loginUser = async (data: LoginFormData): Promise<any> => {
   const responseBody = await response.json();
 
   if (response.status === 200) {
-    // Assuming backend returns token in response
-    // Adjust based on your actual API response structure
+    let token = null;
+    if (responseBody.data.token) {
+      token = responseBody.data.token;
+    }
+    if (!token) {
+      token = response.headers.get("SESSION-TOKEN");
+    }
+    localStorage.setItem("auth_token", token);
     return {
       user: responseBody.data,
-      token:
-        responseBody.token ||
-        response.headers.get("SESSION-TOKEN") ||
-        "default-token",
+      token: token,
     };
   } else {
-    const errorMessage =
-      responseBody.errors || "Username atau kata sandi salah!";
+    const errorMessage = extractRegisterErrorMessage(responseBody);
     throw new Error(errorMessage);
   }
 };

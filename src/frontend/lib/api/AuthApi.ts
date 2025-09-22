@@ -63,7 +63,7 @@ export const userLogout = async (): Promise<Response> => {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "TOKEN-SESSION": token || "",
+      "SESSION-TOKEN": token || "",
     },
   });
 };
