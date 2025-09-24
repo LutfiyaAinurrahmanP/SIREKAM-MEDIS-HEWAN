@@ -134,17 +134,39 @@ export class UserService {
     return toUserResponse(user);
   }
 
-  static async list(): Promise<UserResponse[]> {
-    const user = await prismaClient.user.findMany({
-      orderBy: {
-        id: "desc",
-      },
-    });
-    if (!user) {
+  static async list(
+    page: number = 1,
+    perPage: number = 10
+  ): Promise<{
+    data: UserResponse[];
+    pagination: {
+      current_page: number;
+      total_pages: number;
+      total_items: number;
+      per_page: number;
+    };
+  }> {
+    const totalItems = await prismaClient.user.count();
+
+    if (totalItems === 0) {
       throw new ResponseError(404, "Data user tidak ditemukan!");
     }
 
-    return user.map(toUserResponse);
+    const users = await prismaClient.user.findMany({
+      orderBy: { id: "desc" },
+      skip: (page - 1) * perPage,
+      take: perPage,
+    });
+
+    return {
+      data: users.map(toUserResponse),
+      pagination: {
+        current_page: page,
+        total_pages: Math.ceil(totalItems / perPage),
+        total_items: totalItems,
+        per_page: perPage,
+      },
+    };
   }
 
   static async checkUserMustExists(userId: number) {

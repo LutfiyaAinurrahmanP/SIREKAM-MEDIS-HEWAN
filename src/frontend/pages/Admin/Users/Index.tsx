@@ -12,6 +12,7 @@ import EmployeesTable from "../../../components/tables/EmployeesTable";
 import Paginator from "../../../components/ui/pagination/Paginator";
 import BasicTables from "../../Tables/BasicTables";
 import EmployeesCompactTable from "../../../components/tables/BasicTables/BasicTableOne";
+import ReactPaginate from "react-paginate";
 
 export default function AdminUsersIndex() {
   const navigate = useNavigate();
@@ -147,7 +148,28 @@ export default function AdminUsersIndex() {
 
         {/* Pagination Section */}
         <div className="w-full">
-          <Pagination
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            previousLabel="Prev"
+            onPageChange={(event) => {
+              if (event.selected + 1 !== currentPage) {
+                handlePageChange({ selected: event.selected });
+              }
+            }}
+            pageRangeDisplayed={3}
+            marginPagesDisplayed={2}
+            pageCount={totalPages}
+            containerClassName="flex gap-2 justify-center mt-4"
+            pageClassName="px-3 py-1 border rounded cursor-pointer"
+            activeClassName="bg-brand-500 text-white"
+            previousClassName="px-3 py-1 border rounded cursor-pointer"
+            nextClassName="px-3 py-1 border rounded cursor-pointer"
+            breakClassName="px-3 py-1"
+            forcePage={currentPage - 1}
+          />
+
+          {/* <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
             totalItems={totalEmployees}
@@ -156,7 +178,7 @@ export default function AdminUsersIndex() {
               handlePageChange(page);
               // loadEmployees akan terpanggil oleh effect via dependency di hook
             }}
-          />
+          /> */}
           {/* <Paginator
             currentPage={currentPage}
             totalPages={totalPages}

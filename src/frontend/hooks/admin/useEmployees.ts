@@ -3,7 +3,6 @@ import { useAppDispatch } from "../useAppDispatch";
 import { useAppSelector } from "../useAppSelector";
 import {
   clearMessages,
-  removeEmployee,
   removeEmployee as removeEmployeeAction,
   setCurrentPage,
   setDeleting,
@@ -30,7 +29,7 @@ export const useEmployees = () => {
         search: employeesState.searchQuery,
         role: employeesState.roleFilter,
         page: employeesState.currentPage,
-        per_page: 10,
+        per_page: employeesState.perPage ?? 10,
       };
 
       const result = await fetchEmployees(filters);
@@ -41,9 +40,10 @@ export const useEmployees = () => {
       dispatch(
         setEmployees({
           employees: result.data || [],
-          totalPages: result.pagination?.total_pages || 1,
-          totalEmployees: result.pagination?.total_items || 0,
-          currentPage: result.pagination?.current_page || 1,
+          totalPages: result.pagination.total_pages,
+          totalEmployees: result.pagination.total_items,
+          currentPage: result.pagination.current_page,
+          perPage: result.pagination.per_page, // 👈 simpan juga
         })
       );
     } catch (error: any) {
@@ -63,6 +63,7 @@ export const useEmployees = () => {
     employeesState.searchQuery,
     employeesState.roleFilter,
     employeesState.currentPage,
+    employeesState.perPage,
   ]);
 
   const deleteEmployee = useCallback(
@@ -75,10 +76,9 @@ export const useEmployees = () => {
       dispatch(clearMessages());
 
       try {
-        // const message = await removeEmployee(id);
-
+        // TODO: panggil API delete employee di backend
         dispatch(removeEmployeeAction(id));
-        dispatch(setSuccessMessage("p"));
+        dispatch(setSuccessMessage("Employee berhasil dihapus"));
       } catch (error: any) {
         if (
           error.message.includes("Sesi Anda telah berakhir") ||
@@ -110,9 +110,10 @@ export const useEmployees = () => {
     [dispatch]
   );
 
+  // 👇 untuk ReactPaginate (page index mulai dari 0)
   const handlePageChange = useCallback(
-    (page: number) => {
-      dispatch(setCurrentPage(page));
+    (selectedItem: { selected: number }) => {
+      dispatch(setCurrentPage(selectedItem.selected + 1));
     },
     [dispatch]
   );
@@ -131,5 +132,9 @@ export const useEmployees = () => {
     handleRoleFilter,
     handlePageChange,
     clearFilters,
+
+    // tambahan khusus react-paginate
+    pageCount: employeesState.totalPages, // total halaman
+    forcePage: employeesState.currentPage - 1, // index dimulai dari 0
   };
 };

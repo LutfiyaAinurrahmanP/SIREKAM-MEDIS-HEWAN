@@ -14,6 +14,7 @@ const initialState: EmployeesState = {
   currentPage: 1,
   totalPages: 1,
   totalEmployees: 0,
+  perPage: 10, // 👈 tambahkan ini
   searchQuery: "",
   roleFilter: null,
 };
@@ -51,7 +52,6 @@ const employeesSlice = createSlice({
       }
     },
 
-    // Data actions
     setEmployees: (
       state,
       action: PayloadAction<{
@@ -59,14 +59,16 @@ const employeesSlice = createSlice({
         totalPages: number;
         totalEmployees: number;
         currentPage: number;
+        perPage: number; // 👈 ikutkan
       }>
     ) => {
-      const { employees, totalPages, totalEmployees, currentPage } =
+      const { employees, totalPages, totalEmployees, currentPage, perPage } =
         action.payload;
       state.employees = employees;
       state.totalPages = totalPages;
       state.totalEmployees = totalEmployees;
       state.currentPage = currentPage;
+      state.perPage = perPage; // 👈 simpan
       state.isLoading = false;
       state.error = null;
     },

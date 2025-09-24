@@ -60,10 +60,13 @@ export class UserController {
 
   static async list(req: Request, res: Response, next: NextFunction) {
     try {
-      const response = await UserService.list();
-      res.status(200).json({
-        data: response,
-      });
+      // Ambil query param page & perPage (default: 1 & 10)
+      const page = parseInt(req.query.page as string) || 1;
+      const perPage = parseInt(req.query.perPage as string) || 10;
+
+      const response = await UserService.list(page, perPage);
+
+      res.status(200).json(response);
     } catch (e) {
       next(e);
     }

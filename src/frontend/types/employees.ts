@@ -11,15 +11,10 @@ export interface Employees {
   updated_at: string;
 }
 
-// INTERFACE BARU: Sesuai dengan response backend actual
+// Response dari backend
 export interface EmployeesApiResponse {
   data: Employees[];
-}
-
-// INTERFACE LAMA: Tetap digunakan untuk internal state management
-export interface EmployeesListResponse {
-  data: Employees[];
-  pagination?: {
+  pagination: {
     current_page: number;
     total_pages: number;
     total_items: number;
@@ -27,15 +22,16 @@ export interface EmployeesListResponse {
   };
 }
 
+// Filters untuk query
 export interface EmployeeFilters {
-  search: string;
-  role: UserRoleEnum | null;
-  page: number;
-  per_page: number;
+  search?: string;
+  role?: UserRoleEnum | null;
+  page?: number;
+  per_page?: number;
 }
 
+// State Redux/frontend
 export interface EmployeesState {
-  // Data state
   employees: Employees[];
   selectedEmployee: Employees | null;
 
@@ -52,6 +48,7 @@ export interface EmployeesState {
   // Pagination & filters
   currentPage: number;
   totalPages: number;
+  perPage: number;
   totalEmployees: number;
   searchQuery: string;
   roleFilter: UserRoleEnum | null;
